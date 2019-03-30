@@ -21,6 +21,12 @@ import { ViewUserComponent } from './view-user/view-user.component';
 import { AddVoteSetComponent } from './add-vote-set/add-vote-set.component';
 import { EditVoteSetComponent } from './edit-vote-set/edit-vote-set.component';
 import { ViewVoteSetComponent } from './view-vote-set/view-vote-set.component';
+import { ViewAlbumsComponent } from './view-albums/view-albums.component';
+import { ViewArtistsComponent } from './view-artists/view-artists.component';
+import { ViewRoundsComponent } from './view-rounds/view-rounds.component';
+import { ViewTracksComponent } from './view-tracks/view-tracks.component';
+import { ViewUsersComponent } from './view-users/view-users.component';
+import { ViewVoteSetsComponent } from './view-vote-sets/view-vote-sets.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +48,13 @@ import { ViewVoteSetComponent } from './view-vote-set/view-vote-set.component';
     ViewUserComponent,
     AddVoteSetComponent,
     EditVoteSetComponent,
-    ViewVoteSetComponent
+    ViewVoteSetComponent,
+    ViewAlbumsComponent,
+    ViewArtistsComponent,
+    ViewRoundsComponent,
+    ViewTracksComponent,
+    ViewUsersComponent,
+    ViewVoteSetsComponent
   ],
   imports: [
     BrowserModule,
