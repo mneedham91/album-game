@@ -11,12 +11,16 @@ import { Album } from '../album';
 export class ViewAlbumsComponent implements OnInit {
   albums: Album[];
 
-  constructor(private albumService: AlbumService) { }
+  constructor(private albumService: AlbumService, private router: Router) { }
 
   ngOnInit() {
   	this.albumService.getAlbums().subscribe( data => {
   		this.albums = data;
   	});
+  }
+
+  viewAlbum(id: string): void {
+    this.router.navigate(['view-album', id])
   }
 
 }
