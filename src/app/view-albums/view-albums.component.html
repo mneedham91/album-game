@@ -1,3 +1,10 @@
 <p>
   view-albums works!
 </p>
+<p *ngFor="let album of albums">
+	{{ album.name }}
+	Artist: {{ album.artist }}
+	Year: {{ album.year }}
+	Nominator: {{ album.nominator }}
+	Round: {{ album.round }}
+</p>
