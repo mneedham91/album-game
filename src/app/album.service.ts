@@ -11,7 +11,7 @@ export class AlbumService {
   constructor(private http: HttpClient) { }
   baseUrl: string = environment.baseUrl;
 
-  getAlbums(query: object) {
+  getAlbums(query?: object) {
   	return this.http.get<Album[]>(this.baseUrl + 'album')
   }
 
