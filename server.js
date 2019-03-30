@@ -154,12 +154,12 @@ app.patch(base_url + 'voteset/:id', function(req, res) {
 app.delete(base_url + 'voteset/:id', function(req, res) {
 	var resp = factory.deleteVoteSet(req.params.id, res);
 });
-
+/*
 // Catch-all Route
 app.use('/*',function(req, res) {
     var resp = res.send('Server is running');
 });
-
+*/
 app.listen(process.env.PORT || 8080);
 
 db.on('error', function callback() {
