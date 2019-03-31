@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Artist } from './artst';
+import { Artist } from './artist';
 import { environment } from '../environments/environment';
 
 @Injectable({
