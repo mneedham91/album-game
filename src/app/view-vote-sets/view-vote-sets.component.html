@@ -1,3 +1,5 @@
-<p>
-  view-vote-sets works!
-</p>
+<ul>
+	<li *ngFor="let voteSet of voteSets">
+		<a (click)="viewVoteSet(voteSet._id)">{{ voteSet?.name }}</a>
+	</li>
+</ul>

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { VoteSetService } from '../vote-set.service';
+import { VoteSet } from '../vote-set';
 
 @Component({
   selector: 'app-view-vote-sets',
@@ -6,10 +9,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./view-vote-sets.component.css']
 })
 export class ViewVoteSetsComponent implements OnInit {
+  voteSets: VoteSet[];
 
-  constructor() { }
+  constructor(private voteSetService: VoteSetService, private router: Router) { }
 
   ngOnInit() {
+  	this.voteSetService.getVoteSets().subscribe(data => {
+  		this.voteSets = data;
+  	});
+  }
+
+  viewVoteSet(id: string): void {
+    this.router.navigate(['view-vote-set', id])
   }
 
 }
