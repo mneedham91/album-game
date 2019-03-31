@@ -1,3 +1,5 @@
-<p>
-  view-rounds works!
-</p>
+<ul>
+	<li *ngFor="let round of rounds">
+		<a (click)="viewRound(round._id)">{{ round?.name }}</a>
+	</li>
+</ul>
