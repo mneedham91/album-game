@@ -1,5 +1,5 @@
 <ul>
 	<li *ngFor="let album of albums">
-		<p (click)="viewAlbum(album._id)">{{ album?.name }}</p>
+		<a (click)="viewAlbum(album._id)">{{ album?.name }}</a>
 	</li>
 </ul>
