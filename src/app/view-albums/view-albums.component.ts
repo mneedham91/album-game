@@ -14,7 +14,7 @@ export class ViewAlbumsComponent implements OnInit {
   constructor(private albumService: AlbumService, private router: Router) { }
 
   ngOnInit() {
-  	this.albumService.getAlbums().subscribe( data => {
+  	this.albumService.getAlbums().subscribe(data => {
   		this.albums = data;
   	});
   }
