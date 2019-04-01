@@ -12,7 +12,7 @@ export class UserService {
   baseUrl: string = environment.baseUrl;
 
   getUsers(query?: object) {
-  	return this.http.get<User[]>(this.baseUrl + 'user')
+  	return this.http.get<User[]>(this.baseUrl + 'user');
   }
 
   getUser(id: string) {

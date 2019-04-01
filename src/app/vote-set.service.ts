@@ -12,7 +12,7 @@ export class VoteSetService {
   baseUrl: string = environment.baseUrl;
 
   getVoteSets(query?: object) {
-  	return this.http.get<VoteSet[]>(this.baseUrl + 'voteset')
+  	return this.http.get<VoteSet[]>(this.baseUrl + 'voteset');
   }
 
   getVoteSet(id: string) {
