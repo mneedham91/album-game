@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Album } from './album';
 import { environment } from '../environments/environment';
 
@@ -11,8 +11,12 @@ export class AlbumService {
   constructor(private http: HttpClient) { }
   baseUrl: string = environment.baseUrl;
 
-  getAlbums(query?: object) {
-  	return this.http.get<Album[]>(this.baseUrl + 'album')
+  getAlbums(query = {}) {
+    let params = new HttpParams();
+    Object.keys(query).forEach(function (key) {
+      params = params.append(key, query[key]);
+    });
+    return this.http.get<Album[]>(this.baseUrl + 'album', { params });
   }
 
   getAlbum(id: string) {
