@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RoundService } from '../round.service';
 import { Round } from '../round';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-view-round',
@@ -15,7 +16,8 @@ export class ViewRoundComponent implements OnInit {
   constructor(
   	private router: Router,
   	private roundService: RoundService,
-  	private route: ActivatedRoute) { }
+  	private route: ActivatedRoute,
+    private userService: UserService) { }
 
   ngOnInit() {
   	this.route.params.subscribe(params => {
@@ -23,6 +25,9 @@ export class ViewRoundComponent implements OnInit {
   	});
   	this.roundService.getRound(this.id).subscribe(data => {
   		this.round = data;
+      this.userService.getUser(this.round.nominator).subscribe(data => {
+        this.round.nominator = data.name
+      });
   	});
   }
 
