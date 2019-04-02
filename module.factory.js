@@ -8,11 +8,13 @@ var Factory = function(Schema, mongoose) {
 			name: String,
 			nominator: Schema.ObjectId,
 			round: Schema.ObjectId,
+			spotify_id: String,
 			year: Number
 		}, {timestamps: {createdAt: 'created_at', updatedAt: 'updated_at'}});
 		this.Album = mongoose.model('Album', AlbumSchema);
 		ArtistSchema = new this.Schema({
-			name: String
+			name: String,
+			spotify_id: String,
 		}, {timestamps: {createdAt: 'created_at', updatedAt: 'updated_at'}});
 		this.Artist = mongoose.model('Artist', ArtistSchema);
 		RoundSchema = new this.Schema({
@@ -24,7 +26,8 @@ var Factory = function(Schema, mongoose) {
 		TrackSchema = new this.Schema({
 			album: Schema.ObjectId,
 			name: String,
-			number: Number
+			number: Number,
+			spotify_id: String,
 		}, {timestamps: {createdAt: 'created_at', updatedAt: 'updated_at'}});
 		this.Track = mongoose.model('Track', TrackSchema);
 		UserSchema = new this.Schema({
