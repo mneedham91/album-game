@@ -26,6 +26,7 @@ var Factory = function(Schema, mongoose) {
 		this.Round = mongoose.model('Round', RoundSchema);
 		TrackSchema = new this.Schema({
 			album: Schema.ObjectId,
+			composer: String,
 			name: String,
 			number: Number,
 			spotify_id: String,
