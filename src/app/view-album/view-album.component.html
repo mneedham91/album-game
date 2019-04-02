@@ -3,4 +3,4 @@
 <p><a (click)="viewArtist(album?.artist)">Artist: {{ album?.artist }}</a></p>
 <p>Nominator: {{ album?.nominator }}</p>
 <p>Round: {{ album?.round }}</p>
-<p>Date: {{ album?.date }}</p>
+<p>Date: {{ album?.date | date:'shortDate' }}</p>
