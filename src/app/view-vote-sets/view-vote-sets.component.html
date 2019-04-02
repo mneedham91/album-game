@@ -1,5 +1,5 @@
 <ul>
 	<li *ngFor="let voteSet of voteSets">
-		<a (click)="viewVoteSet(voteSet._id)">{{ voteSet?.name }}</a>
+		<a (click)="viewVoteSet(voteSet._id)">{{ voteSet?._id }}</a>
 	</li>
 </ul>
