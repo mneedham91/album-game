@@ -45,4 +45,8 @@ export class ViewRoundComponent implements OnInit {
     });
   }
 
+  viewAlbum(id: string): void {
+    this.router.navigate(['view-album', id]);
+  }
+
 }
