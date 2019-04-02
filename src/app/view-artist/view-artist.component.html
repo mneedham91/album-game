@@ -1,3 +1,9 @@
 <p>VIEW ARTIST</p>
 <p>Name: {{ artist?.name }}</p>
 <p>Id: {{ artist?._id }}</p>
+<p>
+<ul>
+	<li *ngFor="let album of albums">
+		<a (click)="viewAlbum(album._id)">{{ album?.name }}</a>
+	</li>
+</ul>

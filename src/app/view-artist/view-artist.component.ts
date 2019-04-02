@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ArtistService } from '../artist.service';
 import { Artist } from '../artist';
+import { AlbumService } from '../album.service';
+import { Album } from '../album';
 
 @Component({
   selector: 'app-view-artist',
@@ -11,10 +13,12 @@ import { Artist } from '../artist';
 export class ViewArtistComponent implements OnInit {
   id: string;
   artist: Artist;
+  albums: Album[];
 
   constructor(
-    private router: Router,
+    private albumService: AlbumService,
     private artistService: ArtistService,
+    private router: Router,
     private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -23,7 +27,14 @@ export class ViewArtistComponent implements OnInit {
   	});
   	this.artistService.getArtist(this.id).subscribe(data => {
   		this.artist = data;
+      this.albumService.getAlbums({artist: this.artist._id}).subscribe(data => {
+        this.albums = data;
+      })
   	});
+  }
+
+  viewAlbum(id: string): void {
+    this.router.navigate(['view-album', id]);
   }
 
 }

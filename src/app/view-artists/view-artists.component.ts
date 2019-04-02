@@ -20,7 +20,7 @@ export class ViewArtistsComponent implements OnInit {
   }
 
   viewArtist(id: string): void {
-    this.router.navigate(['view-artist', id])
+    this.router.navigate(['view-artist', id]);
   }
 
 }
