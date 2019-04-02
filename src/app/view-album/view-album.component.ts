@@ -47,4 +47,10 @@ export class ViewAlbumComponent implements OnInit {
     });
   }
 
+  viewUser(name: string): void {
+    this.userService.getUsers({'name': name}).subscribe(data => {
+      this.router.navigate(['view-user', data[0]._id]);
+    });
+  }
+
 }
