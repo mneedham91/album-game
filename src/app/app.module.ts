@@ -28,6 +28,8 @@ import { ViewRoundsComponent } from './view-rounds/view-rounds.component';
 import { ViewTracksComponent } from './view-tracks/view-tracks.component';
 import { ViewUsersComponent } from './view-users/view-users.component';
 import { ViewVoteSetsComponent } from './view-vote-sets/view-vote-sets.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,9 @@ import { ViewVoteSetsComponent } from './view-vote-sets/view-vote-sets.component
     ViewRoundsComponent,
     ViewTracksComponent,
     ViewUsersComponent,
-    ViewVoteSetsComponent
+    ViewVoteSetsComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
