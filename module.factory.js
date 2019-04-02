@@ -5,6 +5,7 @@ var Factory = function(Schema, mongoose) {
 	this.createSchemas = function() {
 		AlbumSchema = new this.Schema({
 			artist: Schema.ObjectId,
+			date: Date,
 			name: String,
 			nominator: Schema.ObjectId,
 			round: Schema.ObjectId,
@@ -18,6 +19,7 @@ var Factory = function(Schema, mongoose) {
 		}, {timestamps: {createdAt: 'created_at', updatedAt: 'updated_at'}});
 		this.Artist = mongoose.model('Artist', ArtistSchema);
 		RoundSchema = new this.Schema({
+			description: String,
 			name: String,
 			nominator: Schema.ObjectId,
 			number: Number
