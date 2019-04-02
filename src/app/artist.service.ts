@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Artist } from './artist';
 import { environment } from '../environments/environment';
 
@@ -11,8 +11,12 @@ export class ArtistService {
   constructor(private http: HttpClient) { }
   baseUrl: string = environment.baseUrl;
 
-  getArtists(query?: object) {
-  	return this.http.get<Artist[]>(this.baseUrl + 'artist')
+  getArtists(query = {}) {
+    let params = new HttpParams();
+    Object.keys(query).forEach(function (key) {
+      params = params.append(key, query[key]);
+    });
+  	return this.http.get<Artist[]>(this.baseUrl + 'artist', { params })
   }
 
   getArtist(id: string) {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { User } from './user';
 import { environment } from '../environments/environment';
 
@@ -11,8 +11,12 @@ export class UserService {
   constructor(private http: HttpClient) { }
   baseUrl: string = environment.baseUrl;
 
-  getUsers(query?: object) {
-  	return this.http.get<User[]>(this.baseUrl + 'user');
+  getUsers(query = {}) {
+    let params = new HttpParams();
+    Object.keys(query).forEach(function (key) {
+      params = params.append(key, query[key]);
+    });
+  	return this.http.get<User[]>(this.baseUrl + 'user', { params });
   }
 
   getUser(id: string) {

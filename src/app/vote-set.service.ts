@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { VoteSet } from './vote-set';
 import { environment } from '../environments/environment';
 
@@ -11,8 +11,12 @@ export class VoteSetService {
   constructor(private http: HttpClient) { }
   baseUrl: string = environment.baseUrl;
 
-  getVoteSets(query?: object) {
-  	return this.http.get<VoteSet[]>(this.baseUrl + 'voteset');
+  getVoteSets(query = {}) {
+    let params = new HttpParams();
+    Object.keys(query).forEach(function (key) {
+      params = params.append(key, query[key]);
+    });
+  	return this.http.get<VoteSet[]>(this.baseUrl + 'voteset', { params });
   }
 
   getVoteSet(id: string) {
