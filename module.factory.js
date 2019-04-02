@@ -9,8 +9,7 @@ var Factory = function(Schema, mongoose) {
 			name: String,
 			nominator: Schema.ObjectId,
 			round: Schema.ObjectId,
-			spotify_id: String,
-			year: Number
+			spotify_id: String
 		}, {timestamps: {createdAt: 'created_at', updatedAt: 'updated_at'}});
 		this.Album = mongoose.model('Album', AlbumSchema);
 		ArtistSchema = new this.Schema({
