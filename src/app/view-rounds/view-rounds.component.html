@@ -1,5 +1,5 @@
 <ul>
 	<li *ngFor="let round of rounds">
-		<a (click)="viewRound(round._id)">{{ round?.number }}</a>
+		<a (click)="viewRound(round._id)">{{ round?.number }} | {{ round?.name }}</a>
 	</li>
 </ul>
