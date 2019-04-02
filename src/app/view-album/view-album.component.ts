@@ -41,4 +41,10 @@ export class ViewAlbumComponent implements OnInit {
   	});
   }
 
+  viewArtist(name: string): void {
+    this.artistService.getArtists({'name': name}).subscribe(data => {
+      this.router.navigate(['view-artist', data[0]._id]);
+    });
+  }
+
 }
