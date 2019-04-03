@@ -36,8 +36,8 @@ export class ViewAlbumComponent implements OnInit {
         this.album.nominator = data.name;
       });
       this.roundService.getRound(this.album.round).subscribe(data => {
-        this.album.round = String(data.number + ' ' + data.name);
-      })
+        this.album.round = String(data.name + ' (' + data.number + ')');
+      });
   	});
   }
 
