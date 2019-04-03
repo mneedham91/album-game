@@ -1,12 +1,9 @@
 var express = require('express');
 var app = express();
 
-app.use(function(req, res, next) {
-   res.header("Access-Control-Allow-Origin", "*");
-   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
-  next();
-});
+const cors = require('cors');
+app.use(cors());
+app.options('*', cors())
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));

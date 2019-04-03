@@ -1,3 +1,9 @@
-<p>
-  edit-user works!
-</p>
+<form [formGroup]="editUserForm" (ngSubmit)="onSubmit()">
+	<label>
+		Name:
+		<input type="text" formControlName="name">
+	</label>
+
+	<button type="submit">Submit</button>
+
+</form>
