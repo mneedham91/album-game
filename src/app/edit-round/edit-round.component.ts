@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RoundService } from '../round.service';
 import { Round } from '../round';
+import { UserService } from '../user.service';
+import { User } from '../user'
 
 @Component({
   selector: 'app-edit-round',
@@ -13,12 +15,14 @@ export class EditRoundComponent implements OnInit {
   editRoundForm: FormGroup;
   id: string;
   round: Round;
+  users: User[];
 
   constructor(
   	private formBuilder: FormBuilder,
   	private roundService: RoundService,
   	private route: ActivatedRoute,
-  	private router: Router) { }
+  	private router: Router,
+    private userService: UserService) { }
 
   ngOnInit() {
   	this.editRoundForm = this.formBuilder.group({
@@ -34,7 +38,9 @@ export class EditRoundComponent implements OnInit {
   		this.round = data;
   		this.reset();
   	});
-  	
+  	this.userService.getUsers().subscribe(data => {
+      this.users = data;
+    });
   }
 
   onSubmit() {
