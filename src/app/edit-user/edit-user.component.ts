@@ -29,7 +29,9 @@ export class EditUserComponent implements OnInit {
   	});
   	this.userService.getUser(this.id).subscribe(data => {
   		this.user = data;
-  		this.editUserForm.setValue({'name': this.user.name});
+  		this.editUserForm.setValue({
+  			name: this.user.name
+  		});
   	});
   	
   }
