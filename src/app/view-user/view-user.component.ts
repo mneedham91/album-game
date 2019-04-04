@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AlbumService } from '../album.service';
+import { Album } from '../album';
+import { RoundService } from '../round.service';
+import { Round } from '../round';
 import { UserService } from '../user.service';
 import { User } from '../user';
 
@@ -12,10 +16,14 @@ import { User } from '../user';
 export class ViewUserComponent implements OnInit {
   id: string;
   user: User;
+  albums: Album[];
+  rounds: Round[];
 
   constructor(
+    private albumService: AlbumService,
   	private route: ActivatedRoute,
     private router: Router,
+    private roundService: RoundService,
     private titleService: Title,
     private userService: UserService, ) { }
 
@@ -26,6 +34,12 @@ export class ViewUserComponent implements OnInit {
   	});
   	this.userService.getUser(this.id).subscribe(data => {
   		this.user = data;
+      this.albumService.getAlbums({nominator: this.user._id}).subscribe(data => {
+        this.albums = data;
+      });
+      this.roundService.getRounds({nominator: this.user._id}).subscribe(data => {
+        this.rounds = data;
+      });
   	});
   }
 
