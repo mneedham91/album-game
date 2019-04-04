@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AlbumService } from '../album.service';
+import { Album } from '../album';
 import { TrackService } from '../track.service';
 import { Track } from '../track';
 
@@ -13,14 +16,18 @@ export class EditTrackComponent implements OnInit {
   editTrackForm: FormGroup;
   id: string;
   track: Track;
+  albums: Album[];
 
   constructor(
+    private albumService: AlbumService,
   	private formBuilder: FormBuilder,
   	private trackService: TrackService,
   	private route: ActivatedRoute,
-  	private router: Router) { }
+  	private router: Router,
+    private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Album Game | Edit Track');
   	this.editTrackForm = this.formBuilder.group({
   		album: '',
   		name: '',
@@ -33,7 +40,13 @@ export class EditTrackComponent implements OnInit {
   		this.track = data;
   		this.reset();
   	});
-  	
+  	this.albumService.getAlbums().subscribe(data => {
+      this.albums = data.sort((a, b) => {
+        if (a.name < b.name) return -1;
+        else if (a.name > b.name) return 1;
+        else return 0;
+      });
+    });
   }
 
   onSubmit() {

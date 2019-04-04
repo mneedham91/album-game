@@ -6,7 +6,9 @@
 
 	<label>
 		Album:
-		<input type="text" formControlName="album">
+		<select formControlName="album">
+			<option *ngFor="let album of albums" [value]="album._id">{{ album.name }}</option>
+		</select>
 	</label>
 
 	<label>
