@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RoundService } from '../round.service';
 import { Round } from '../round';
@@ -11,9 +12,13 @@ import { Round } from '../round';
 export class ViewRoundsComponent implements OnInit {
   rounds: Round[];
 
-  constructor(private roundService: RoundService, private router: Router) { }
+  constructor(
+    private roundService: RoundService,
+    private router: Router,
+    private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Album Game | View Rounds');
   	this.roundService.getRounds().subscribe(data => {
   		this.rounds = data;
   	});

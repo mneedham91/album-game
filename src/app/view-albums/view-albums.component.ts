@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AlbumService } from '../album.service';
 import { Album } from '../album';
@@ -11,9 +12,13 @@ import { Album } from '../album';
 export class ViewAlbumsComponent implements OnInit {
   albums: Album[];
 
-  constructor(private albumService: AlbumService, private router: Router) { }
+  constructor(
+    private albumService: AlbumService, 
+    private router: Router,
+    private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Album Game | View Albums');
   	this.albumService.getAlbums().subscribe(data => {
   		this.albums = data;
   	});

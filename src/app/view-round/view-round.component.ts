@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlbumService } from '../album.service';
 import { Album } from '../album';
@@ -23,9 +24,11 @@ export class ViewRoundComponent implements OnInit {
   	private router: Router,
   	private roundService: RoundService,
   	private route: ActivatedRoute,
+    private titleService: Title,
     private userService: UserService) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Album Game | View Round');
   	this.route.params.subscribe(params => {
   		this.id = params['id'];
   	});

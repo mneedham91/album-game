@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AlbumService } from '../album.service';
 import { VoteSetService } from '../vote-set.service';
@@ -16,10 +17,12 @@ export class ViewVoteSetsComponent implements OnInit {
   constructor(
     private albumService: AlbumService,
     private router: Router,
+    private titleService: Title,
     private voteSetService: VoteSetService, 
     private userService: UserService) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Album Game | View Vote Sets');
   	this.voteSetService.getVoteSets().subscribe(data => {
   		this.voteSets = data;
       for (let voteSet of this.voteSets) {

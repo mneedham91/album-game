@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RoundService } from '../round.service';
@@ -22,9 +23,11 @@ export class EditRoundComponent implements OnInit {
   	private roundService: RoundService,
   	private route: ActivatedRoute,
   	private router: Router,
+    private titleService: Title,
     private userService: UserService) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Album Game | Edit Round');
   	this.editRoundForm = this.formBuilder.group({
   		name: '',
   		description: '',

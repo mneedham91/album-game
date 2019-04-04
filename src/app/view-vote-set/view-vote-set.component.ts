@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlbumService } from '../album.service';
 import { ArtistService } from '../artist.service';
@@ -22,10 +23,12 @@ export class ViewVoteSetComponent implements OnInit {
     private router: Router, 
   	private voteSetService: VoteSetService, 
   	private route: ActivatedRoute,
+    private titleService: Title,
     private trackService: TrackService,
     private userService: UserService) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Album Game | View Vote Set');
   	this.route.params.subscribe(params => {
   		this.id = params['id'];
   	});

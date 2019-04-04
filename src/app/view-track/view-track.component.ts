@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlbumService } from '../album.service';
 import { ArtistService } from '../artist.service';
@@ -17,11 +18,13 @@ export class ViewTrackComponent implements OnInit {
   constructor(
   	private router: Router,
     private albumService: AlbumService,
-    private artistService: ArtistService, 
-  	private trackService: TrackService, 
-  	private route: ActivatedRoute) { }
+    private artistService: ArtistService,
+  	private route: ActivatedRoute,
+    private titleService: Title, 
+    private trackService: TrackService) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Album Game | View Track');
   	this.route.params.subscribe(params => {
   		this.id = params['id'];
   	});

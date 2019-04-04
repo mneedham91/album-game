@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-add-artist',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddArtistComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+  	private titleService: Title) { }
 
   ngOnInit() {
+  	this.titleService.setTitle('Album Game | Add Artist');
   }
 
 }

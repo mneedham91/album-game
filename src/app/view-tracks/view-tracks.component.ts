@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { TrackService } from '../track.service';
 import { Track } from '../track';
@@ -11,9 +12,13 @@ import { Track } from '../track';
 export class ViewTracksComponent implements OnInit {
   tracks: Track[];
 
-  constructor(private trackService: TrackService, private router: Router) { }
+  constructor(
+    private titleService: Title,
+    private trackService: TrackService, 
+    private router: Router) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Album Game | View Tracks');
   	this.trackService.getTracks().subscribe(data => {
   		this.tracks = data;
   	});

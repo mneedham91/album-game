@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../user.service';
 import { User } from '../user';
@@ -13,11 +14,13 @@ export class ViewUserComponent implements OnInit {
   user: User;
 
   constructor(
-  	private router: Router, 
-  	private userService: UserService, 
-  	private route: ActivatedRoute) { }
+  	private route: ActivatedRoute,
+    private router: Router,
+    private titleService: Title,
+    private userService: UserService, ) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Album Game | View User');
   	this.route.params.subscribe(params => {
   		this.id = params['id'];
   	});

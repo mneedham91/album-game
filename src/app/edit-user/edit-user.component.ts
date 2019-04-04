@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../user.service';
@@ -18,9 +19,11 @@ export class EditUserComponent implements OnInit {
   	private formBuilder: FormBuilder,
   	private userService: UserService,
   	private route: ActivatedRoute,
-  	private router: Router) { }
+  	private router: Router,
+    private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Album Game | Edit User');
   	this.editUserForm = this.formBuilder.group({
   		name: ''
   	});
