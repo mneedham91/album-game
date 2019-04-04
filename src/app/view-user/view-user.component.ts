@@ -25,7 +25,7 @@ export class ViewUserComponent implements OnInit {
     private router: Router,
     private roundService: RoundService,
     private titleService: Title,
-    private userService: UserService, ) { }
+    private userService: UserService) { }
 
   ngOnInit() {
     this.titleService.setTitle('Album Game | View User');
