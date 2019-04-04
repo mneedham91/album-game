@@ -1,32 +1,33 @@
+<p>Album: {{ vote_set?.album }}</p>
+<p>User: {{ vote_set?.user }}</p>
+
 <form [formGroup]="editVoteSetForm" (ngSubmit)="onSubmit()">
 	<label>
-		Album:
-		<input type="text" formControlName="album">
-	</label>
-
-	<label>
-		User:
-		<input type="text" formControlName="user">
-	</label>
-
-	<label>
 		Vote One:
-		<input type="text" formControlName="vote_one">
+		<select formControlName="vote_one">
+			<option *ngFor="let track of tracks" [value]="track._id">{{ track.name }}</option>
+		</select>
 	</label>
 
 	<label>
 		Vote Two:
-		<input type="text" formControlName="vote_two">
+		<select formControlName="vote_two">
+			<option *ngFor="let track of tracks" [value]="track._id">{{ track.name }}</option>
+		</select>
 	</label>
 
 	<label>
 		Vote Three:
-		<input type="text" formControlName="vote_three">
+		<select formControlName="vote_three">
+			<option *ngFor="let track of tracks" [value]="track._id">{{ track.name }}</option>
+		</select>
 	</label>
 
 	<label>
 		Unfave:
-		<input type="text" formControlName="unfave">
+		<select formControlName="unfave">
+			<option *ngFor="let track of tracks" [value]="track._id">{{ track.name }}</option>
+		</select>
 	</label>
 
 	<button type="submit">Submit</button>
