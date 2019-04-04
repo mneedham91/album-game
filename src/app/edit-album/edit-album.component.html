@@ -6,7 +6,9 @@
 
 	<label>
 		Artist:
-		<input type="text" formControlName="artist">
+		<select formControlName="artist">
+			<option *ngFor="let artist of artists" [value]="artist._id">{{ artist.name }}</option>
+		</select>
 	</label>
 
 	<label>
@@ -16,12 +18,16 @@
 
 	<label>
 		Nominator:
-		<input type="text" formControlName="nominator">
+		<select formControlName="nominator">
+			<option *ngFor="let user of users" [value]="user._id">{{ user.name }}</option>
+		</select>
 	</label>
 
 	<label>
 		Round:
-		<input type="text" formControlName="round">
+		<select formControlName="round">
+			<option *ngFor="let round of rounds" [value]="round._id">{{ round.number }}</option>
+		</select>
 	</label>
 
 	<button type="submit">Submit</button>
