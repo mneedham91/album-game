@@ -5,6 +5,8 @@ import { AlbumService } from '../album.service';
 import { Album } from '../album';
 import { ArtistService } from '../artist.service';
 import { RoundService } from '../round.service';
+import { TrackService } from '../track.service';
+import { Track } from '../track';
 import { UserService } from '../user.service';
 
 @Component({
@@ -15,6 +17,7 @@ import { UserService } from '../user.service';
 export class ViewAlbumComponent implements OnInit {
   id: string;
   album: Album;
+  tracks: Track[];
 
   constructor(
   	private router: Router, 
@@ -23,6 +26,7 @@ export class ViewAlbumComponent implements OnInit {
   	private route: ActivatedRoute,
     private roundService: RoundService,
     private titleService: Title,
+    private trackService: TrackService,
     private userService: UserService) { }
 
   ngOnInit() {
@@ -40,6 +44,13 @@ export class ViewAlbumComponent implements OnInit {
       });
       this.roundService.getRound(this.album.round).subscribe(data => {
         this.album.round = String(data.name + ' (' + data.number + ')');
+      });
+      this.trackService.getTracks({album: this.album._id}).subscribe(data => {
+        this.tracks = data.sort((a, b) => {
+          if (a.number < b.number) return 1;
+          else if (a.number > b.number) return -1;
+          else return 0;
+        });
       });
   	});
   }

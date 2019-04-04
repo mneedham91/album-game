@@ -4,3 +4,9 @@
 <p><a (click)="viewUser(album?.nominator)">Nominator: {{ album?.nominator }}</a></p>
 <p>Round: {{ album?.round }}</p>
 <p>Date: {{ album?.date | date:'shortDate' }}</p>
+<p></p>
+<ol>
+	<li *ngFor="let track of tracks">
+		<p>{{ track?.name }}</p>
+	</li>
+</ol>
