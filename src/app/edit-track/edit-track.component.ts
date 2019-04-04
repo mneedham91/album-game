@@ -31,11 +31,7 @@ export class EditTrackComponent implements OnInit {
   	});
   	this.trackService.getTrack(this.id).subscribe(data => {
   		this.track = data;
-  		this.editTrackForm.setValue({
-  			album: this.track.album,
-  			name: this.track.name,
-  			number: this.track.number,
-  		});
+  		this.reset();
   	});
   	
   }
@@ -44,6 +40,14 @@ export class EditTrackComponent implements OnInit {
   	this.trackService.editTrack(this.id, this.editTrackForm.value).subscribe( data => {
   	  this.router.navigate(['view-track', this.id]);
   	});
+  }
+
+  reset() {
+    this.editTrackForm.setValue({
+      album: this.track.album,
+      name: this.track.name,
+      number: this.track.number,
+    });
   }
 
 }

@@ -29,9 +29,7 @@ export class EditUserComponent implements OnInit {
   	});
   	this.userService.getUser(this.id).subscribe(data => {
   		this.user = data;
-  		this.editUserForm.setValue({
-  			name: this.user.name
-  		});
+      this.reset();
   	});
   	
   }
@@ -40,6 +38,12 @@ export class EditUserComponent implements OnInit {
   	this.userService.editUser(this.id, this.editUserForm.value).subscribe( data => {
   	  this.router.navigate(['view-user', this.id]);
   	});
+  }
+
+  reset() {
+    this.editUserForm.setValue({
+        name: this.user.name
+    });
   }
 
 }

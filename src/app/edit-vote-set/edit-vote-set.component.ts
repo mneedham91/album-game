@@ -33,14 +33,7 @@ export class EditVoteSetComponent implements OnInit {
   	});
   	this.voteSetService.getVoteSet(this.id).subscribe(data => {
   		this.vote_set = data;
-  		this.editVoteSetForm.setValue({
-  			album: this.vote_set.album,
-  			user: this.vote_set.user,
-  			vote_one: this.vote_set.vote_one,
-  			vote_two: this.vote_set.vote_two,
-  			vote_three: this.vote_set.vote_three,
-  			unfave: this.vote_set.unfave,
-  		});
+  		this.reset();
   	});
   	
   }
@@ -49,6 +42,18 @@ export class EditVoteSetComponent implements OnInit {
   	this.voteSetService.editVoteSet(this.id, this.editVoteSetForm.value).subscribe( data => {
   	  this.router.navigate(['view-vote-set', this.id]);
   	});
+  }
+
+  reset() {
+    this.editVoteSetForm.setValue({
+      album: this.vote_set.album,
+      user: this.vote_set.user,
+      vote_one: this.vote_set.vote_one,
+      vote_two: this.vote_set.vote_two,
+      vote_three: this.vote_set.vote_three,
+      unfave: this.vote_set.unfave,
+    });
+
   }
 
 }

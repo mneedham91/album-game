@@ -29,9 +29,7 @@ export class EditArtistComponent implements OnInit {
   	});
   	this.artistService.getArtist(this.id).subscribe(data => {
   		this.artist = data;
-  		this.editArtistForm.setValue({
-  			name: this.artist.name,
-  		});
+  		this.reset();
   	});
   	
   }
@@ -40,6 +38,12 @@ export class EditArtistComponent implements OnInit {
   	this.artistService.editArtist(this.id, this.editArtistForm.value).subscribe( data => {
   	  this.router.navigate(['view-artist', this.id]);
   	});
+  }
+
+  reset() {
+    this.editArtistForm.setValue({
+      name: this.artist.name,
+    });
   }
 
 }

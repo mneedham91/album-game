@@ -34,14 +34,7 @@ export class EditAlbumComponent implements OnInit {
   	});
   	this.albumService.getAlbum(this.id).subscribe(data => {
   		this.album = data;
-  		let date = new DatePipe(navigator.language).transform(this.album.date, 'y-MM-dd');
-  		this.editAlbumForm.setValue({
-  			artist: this.album.artist,
-  			date: date,
-  			name: this.album.name,
-  			nominator: this.album.nominator,
-  			round: this.album.round
-  		});
+  		this.reset();
   	});
   	
   }
@@ -52,6 +45,17 @@ export class EditAlbumComponent implements OnInit {
   	this.albumService.editAlbum(this.id, this.editAlbumForm.value).subscribe( data => {
   	  this.router.navigate(['view-album', this.id]);
   	});
+  }
+
+  reset() {
+    let date = new DatePipe(navigator.language).transform(this.album.date, 'y-MM-dd');
+    this.editAlbumForm.setValue({
+      artist: this.album.artist,
+      date: date,
+      name: this.album.name,
+      nominator: this.album.nominator,
+      round: this.album.round
+    });
   }
 
 }

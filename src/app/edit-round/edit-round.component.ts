@@ -32,12 +32,7 @@ export class EditRoundComponent implements OnInit {
   	});
   	this.roundService.getRound(this.id).subscribe(data => {
   		this.round = data;
-  		this.editRoundForm.setValue({
-  			name: this.round.name,
-  			description: this.round.description,
-  			nominator: this.round.nominator,
-  			number: this.round.number
-  		});
+  		this.reset();
   	});
   	
   }
@@ -46,6 +41,15 @@ export class EditRoundComponent implements OnInit {
   	this.roundService.editRound(this.id, this.editRoundForm.value).subscribe( data => {
   	  this.router.navigate(['view-round', this.id]);
   	});
+  }
+
+  reset() {
+    this.editRoundForm.setValue({
+      name: this.round.name,
+      description: this.round.description,
+      nominator: this.round.nominator,
+      number: this.round.number
+    });
   }
 
 }
