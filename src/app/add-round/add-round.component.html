@@ -1,3 +1,22 @@
-<p>
-  add-round works!
-</p>
+<form [formGroup]="addRoundForm" (ngSubmit)="onSubmit()">
+	<label>
+		Name:
+		<input type="text" formControlName="name">
+	</label>
+
+	<label>
+		Description:
+		<input type="text" formControlName="description">
+	</label>
+
+	<label>
+		Nominator:
+		<select formControlName="nominator">
+			<option *ngFor="let user of users" [value]="user._id">{{ user.name }}</option>
+		</select>
+	</label>
+
+	<button type="submit">Submit</button>
+	<button type="button" (click)="reset()">Reset</button>
+
+</form>
