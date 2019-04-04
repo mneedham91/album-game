@@ -1,3 +1,34 @@
-<p>
-  edit-vote-set works!
-</p>
+<form [formGroup]="editVoteSetForm" (ngSubmit)="onSubmit()">
+	<label>
+		Album:
+		<input type="text" formControlName="album">
+	</label>
+
+	<label>
+		User:
+		<input type="text" formControlName="user">
+	</label>
+
+	<label>
+		Vote One:
+		<input type="text" formControlName="vote_one">
+	</label>
+
+	<label>
+		Vote Two:
+		<input type="text" formControlName="vote_two">
+	</label>
+
+	<label>
+		Vote Three:
+		<input type="text" formControlName="vote_three">
+	</label>
+
+	<label>
+		Unfave:
+		<input type="text" formControlName="unfave">
+	</label>
+
+	<button type="submit">Submit</button>
+
+</form>
