@@ -1,3 +1,19 @@
-<p>
-  edit-track works!
-</p>
+<form [formGroup]="editTrackForm" (ngSubmit)="onSubmit()">
+	<label>
+		Name:
+		<input type="text" formControlName="name">
+	</label>
+
+	<label>
+		Album:
+		<input type="text" formControlName="album">
+	</label>
+
+	<label>
+		Number:
+		<input type="text" formControlName="number">
+	</label>
+
+	<button type="submit">Submit</button>
+
+</form>
