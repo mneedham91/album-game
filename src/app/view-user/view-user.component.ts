@@ -43,4 +43,12 @@ export class ViewUserComponent implements OnInit {
   	});
   }
 
+  viewAlbum(id: string): void {
+    this.router.navigate(['view-album', id])
+  }
+
+  viewRound(id: string): void {
+    this.router.navigate(['view-round', id])
+  }
+
 }
