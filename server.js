@@ -41,14 +41,7 @@ passport.use(new LocalStrategy({
 		passwordField: 'password'
 	},
 	function (name, password, cb) {
-		return user = factory.loginUser(name, password)
-			.then(user => {
-				if (!user) {
-					return cb(null, false, {message: 'Incorrect login info'});
-				}
-				return cb(null, { user }, {message: 'Logged in successfully'});
-			})
-			.catch(err => cb(err));
+		return factory.loginUser(name, password, cb);
 	}
 ));
 
@@ -215,11 +208,11 @@ app.post(base_url + 'login', function(req, res) {
 	})(req, res);
 });
 
-/*
-app.post(base_url + 'login', function(req, res) {
-	var resp = factory.loginUser(req.body.name, req.body.password, res);
+app.post(base_url + 'setPassword', function(req, res) {
+	var resp = factory.setPassword(req.body.name, req.body.password, res);
 });
-*/
+
+
 // Spotify Routes
 app.get(base_url + 'spotify/token', function(req, res) {
 	var client_id = 'd567aa85e73d41f082c2dd4618dcfd8e';
@@ -270,5 +263,5 @@ db.on('error', function callback() {
 });
 
 db.once('open', function callback() {
-	console.log('Mongo working!');
+	console.log('Database online!');
 });

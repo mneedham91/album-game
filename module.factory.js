@@ -35,9 +35,10 @@ var Factory = function(Schema, mongoose, crypto) {
 		this.Track = mongoose.model('Track', TrackSchema);
 		UserSchema = new this.Schema({
 			name: String,
-			password: String,
-			username: String
-		})
+			username: String,
+			hash: String,
+			salt: String
+		});
 		this.User = mongoose.model('User', UserSchema);
 		VoteSetSchema = new this.Schema({
 			album: Schema.ObjectId,
@@ -255,13 +256,36 @@ var Factory = function(Schema, mongoose, crypto) {
 	}
 
 	// User Functions
-	this.loginUser = function(name, password) {
-		return this.User.findOne({name: name, password: password});
+	this.loginUser = function (name, password, cb) {
+		this.User.findOne({name: name}, function(error, output) {
+			if (error) {
+				return error;
+			} else {
+				var hash = crypto.pbkdf2Sync(password, output.salt, 1000, 64, 'sha512').toString('hex');
+				if (output.hash === hash) {
+					return cb(null, { output }, {message: 'Logged in successfully'});
+				} else {
+					return cb(null, false, {message: 'Incorrect login info'});
+				}
+			}	
+		})
 	}
 
 	this.verifyUser = function(id) {
 		return this.User.findById(id);
 	}
+
+	this.setPassword = function(name, password, res) {
+		salt = crypto.randomBytes(16).toString('hex');
+		hash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
+		this.User.findOneAndUpdate({name: name}, {salt: salt, hash: hash}, function(error, output) {
+			if (error) {
+				res.json(error);
+			} else {
+				res.status(200).send();
+			}
+		});
+	};
 
 	this.getUser = function(id, res) {
 		this.User.findById(id, function(error, output) {
