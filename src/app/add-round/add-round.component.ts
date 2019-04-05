@@ -33,12 +33,7 @@ export class AddRoundComponent implements OnInit {
   		});
   		this.roundNumber = sorted[0].number + 1;
   	});
-  	this.addRoundForm = this.formBuilder.group({
-  		name: '',
-  		description: '',
-  		nominator: '',
-  		number: ''
-  	});
+  	this.reset();
   	this.userService.getUsers().subscribe(data => {
       this.users = data;
     });
@@ -49,6 +44,15 @@ export class AddRoundComponent implements OnInit {
   	this.roundService.createRound(this.addRoundForm.value).subscribe( data => {
   	  this.router.navigate(['view-rounds']);
   	});
+  }
+
+  reset() {
+    this.addRoundForm = this.formBuilder.group({
+      name: '',
+      description: '',
+      nominator: '',
+      number: ''
+    });
   }
 
 }
