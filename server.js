@@ -2,7 +2,12 @@ var express = require('express');
 var app = express();
 
 var passport = require('passport');
-var Strategy = require('passport-local').Strategy;
+var jwt = require('jsonwebtoken');
+var jwt_secret = 'A43101827';
+var passportJWT = require('passport-jwt');
+var LocalStrategy = require('passport-local').Strategy;
+var JWTStrategy = passportJWT.Strategy;
+var ExtractJWT = passportJWT.ExtractJwt;
 
 const cors = require('cors');
 app.use(cors());
@@ -29,10 +34,43 @@ var db = mongoose.connection;
 var factory = new Factory(Schema, mongoose);
 factory.createSchemas();
 
+// Set Passport-Local Strategy
+passport.use(new LocalStrategy({
+		usernameField: 'name',
+		passwordField: 'password'
+	},
+	function (name, password, cb) {
+		return user = factory.loginUser(name, password)
+			.then(user => {
+				if (!user) {
+					return cb(null, false, {message: 'Incorrect login info'});
+				}
+				return cb(null, { user }, {message: 'Logged in successfully'});
+			})
+			.catch(err => cb(err));
+	}
+));
+
+// Set Passport-JWT Strategy
+passport.use(new JWTStrategy({
+		jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+		secretOrKey: jwt_secret
+	},
+	function (jwtPayload, cb) {
+		factory.verifyUser(jwtPayload.user._id)
+			.then(user => {
+				return cb(null, user);
+			})
+			.catch(err => {
+				return cb(err);
+			});
+	}
+));
+
 var base_url = '/api/v1/'
 
 // Album Routes
-app.get(base_url + 'album', function(req, res) {
+app.get(base_url + 'album', passport.authenticate('jwt', {session: false}), function(req, res) {
 	var resp = factory.getAlbums(req.query, res);
 });
 
@@ -157,6 +195,30 @@ app.delete(base_url + 'voteset/:id', function(req, res) {
 	var resp = factory.deleteVoteSet(req.params.id, res);
 });
 
+// Auth Routes
+app.post(base_url + 'login', function(req, res) {
+	passport.authenticate('local', {session: false}, (err, user, info) => {
+		if (err || !user) {
+			return res.status(400).json({
+				message: 'Login error: ' + err,
+				user: user
+			});
+		}
+		req.login(user, {session: false}, (err) => {
+			if (err) {
+				res.send(err);
+			}
+			const token = jwt.sign(user, jwt_secret); 
+			return res.json({user, token});
+		});
+	})(req, res);
+});
+
+/*
+app.post(base_url + 'login', function(req, res) {
+	var resp = factory.loginUser(req.body.name, req.body.password, res);
+});
+*/
 // Spotify Routes
 app.get(base_url + 'spotify/token', function(req, res) {
 	var client_id = 'd567aa85e73d41f082c2dd4618dcfd8e';

@@ -254,6 +254,14 @@ var Factory = function(Schema, mongoose) {
 	}
 
 	// User Functions
+	this.loginUser = function(name, password) {
+		return this.User.findOne({name: name, password: password});
+	}
+
+	this.verifyUser = function(id) {
+		return this.User.findById(id);
+	}
+
 	this.getUser = function(id, res) {
 		this.User.findById(id, function(error, output) {
 			if (error) {
