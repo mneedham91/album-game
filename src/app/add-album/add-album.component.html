@@ -1,3 +1,13 @@
-<p>
-  add-album works!
+<form [formGroup]="spotifySearchAlbumForm" (ngSubmit)="onSubmit()">
+	<label>
+		What album would you like to add?
+		<input type="text" formControlName="name">
+	</label>
+
+	<button type="button" (click)="search()">Search</button>
+	<button type="button" (click)="reset()">Reset</button>
+
+</form>
+<p *ngFor="let album of albums | slice:0:5">
+	<img width="320" height="320" src="{{ album.images[0].url }}">
 </p>

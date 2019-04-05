@@ -5,6 +5,8 @@ const cors = require('cors');
 app.use(cors());
 app.options('*', cors())
 
+const request = require('request');
+
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -150,6 +152,44 @@ app.patch(base_url + 'voteset/:id', function(req, res) {
 
 app.delete(base_url + 'voteset/:id', function(req, res) {
 	var resp = factory.deleteVoteSet(req.params.id, res);
+});
+
+// Spotify Routes
+app.get(base_url + 'spotify/token', function(req, res) {
+	var client_id = 'd567aa85e73d41f082c2dd4618dcfd8e';
+	var client_secret = 'd5e30c806ecb4b0b8d99f508f4de03d5';
+	var url = 'https://' + client_id + ':' + client_secret + '@accounts.spotify.com/api/token';
+	var options = {
+		method: 'post',
+		form: { grant_type: 'client_credentials' },
+		json: true,
+		url: url
+	};
+	request(options, function (err, resp, body) {
+		if (err) {
+			res.json(err);
+		} else {
+			res.json(body);
+		}
+	});
+});
+
+app.post(base_url + 'spotify/lookForAlbum', function(req, res) {
+	var url = 'https://api.spotify.com/v1/search'
+	var options = {
+		auth: { 'bearer': req.body.token},
+		method: 'get',
+		qs: {q: req.body.name, type: 'album'},
+		json: true,
+		url: url
+	}
+	request(options, function (err, resp, body) {
+		if (err) {
+			res.json(err);
+		} else {
+			res.json(body);
+		}
+	});
 });
 
 // Angular app
