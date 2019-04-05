@@ -4,6 +4,7 @@ export class Track {
 	artist: string;
 	name: string;
 	number: number;
+	votes: object;
 	created_at: Date;
 	updated_at: Date;
 }

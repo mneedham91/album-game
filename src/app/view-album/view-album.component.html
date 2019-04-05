@@ -4,9 +4,22 @@
 <p><a (click)="viewUser(album?.nominator)">Nominator: {{ album?.nominator }}</a></p>
 <p>Round: {{ album?.round }}</p>
 <p>Date: {{ album?.date | date:'shortDate' }}</p>
-<p></p>
-<ol>
-	<li *ngFor="let track of tracks">
-		<p>{{ track?.name }}</p>
-	</li>
-</ol>
+<table>
+	<tr>
+		<th>#</th>
+		<th>Name</th>
+		<th *ngFor="let user of users">{{ user.name }}</th>
+	</tr>
+	<!-- Iterate tracks -->
+	<tr *ngFor="let track of tracks">
+		<td>{{ track?.number }}</td>
+		<td>{{ track?.name }}</td>
+		<!-- Iterate users -->
+		<td *ngFor="let user of users">
+			<!-- For each track, iterate votes -->
+			<div *ngFor="let item of track.votes | keyvalue">
+				<div *ngIf="item.key == user._id"> {{ item.value }} </div>
+			</div>
+		</td>
+	</tr>
+</table>

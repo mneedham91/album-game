@@ -8,6 +8,9 @@ import { RoundService } from '../round.service';
 import { TrackService } from '../track.service';
 import { Track } from '../track';
 import { UserService } from '../user.service';
+import { User } from '../user';
+import { VoteSetService } from '../vote-set.service';
+import { VoteSet } from '../vote-set';
 
 @Component({
   selector: 'app-view-album',
@@ -18,6 +21,9 @@ export class ViewAlbumComponent implements OnInit {
   id: string;
   album: Album;
   tracks: Track[];
+  users: User[];
+  votes: VoteSet[];
+  Object = Object;
 
   constructor(
   	private router: Router, 
@@ -27,13 +33,15 @@ export class ViewAlbumComponent implements OnInit {
     private roundService: RoundService,
     private titleService: Title,
     private trackService: TrackService,
-    private userService: UserService) { }
+    private userService: UserService,
+    private voteSetService: VoteSetService) { }
 
   ngOnInit() {
     this.titleService.setTitle('Album Game | View Album');
   	this.route.params.subscribe(params => {
   		this.id = params['id'];
   	});
+
   	this.albumService.getAlbum(this.id).subscribe(data => {
   		this.album = data;
       this.artistService.getArtist(this.album.artist).subscribe(data => {
@@ -42,14 +50,34 @@ export class ViewAlbumComponent implements OnInit {
       this.userService.getUser(this.album.nominator).subscribe(data => {
         this.album.nominator = data.name;
       });
+      this.userService.getUsers().subscribe(data => {
+        this.users = data;
+      })
       this.roundService.getRound(this.album.round).subscribe(data => {
         this.album.round = String(data.name + ' (' + data.number + ')');
       });
       this.trackService.getTracks({album: this.album._id}).subscribe(data => {
         this.tracks = data.sort((a, b) => {
-          if (a.number < b.number) return 1;
-          else if (a.number > b.number) return -1;
+          if (a.number < b.number) return -1;
+          else if (a.number > b.number) return 1;
           else return 0;
+        });
+        this.voteSetService.getVoteSets({album: this.id}).subscribe(data => {
+          this.votes = data;
+          this.tracks.forEach( (track) => {
+            track.votes = new Object();
+            this.votes.forEach( (vote) => {
+              if (vote.vote_one == track._id) {
+                track.votes[vote.user] = 1;
+              } else if (vote.vote_two == track._id) {
+                track.votes[vote.user] = 2;
+              } else if (vote.vote_three == track._id) {
+                track.votes[vote.user] = 3;
+              } else if (vote.unfave == track._id) {
+                track.votes[vote.user] = -1;
+              }
+            });
+          });
         });
       });
   	});
