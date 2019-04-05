@@ -1,6 +1,9 @@
 var express = require('express');
 var app = express();
 
+var passport = require('passport');
+var Strategy = require('passport-local').Strategy;
+
 const cors = require('cors');
 app.use(cors());
 app.options('*', cors())
