@@ -24,6 +24,7 @@ import { AddVoteSetComponent } from './add-vote-set/add-vote-set.component';
 import { EditVoteSetComponent } from './edit-vote-set/edit-vote-set.component';
 import { ViewVoteSetComponent } from './view-vote-set/view-vote-set.component';
 import { ViewVoteSetsComponent } from './view-vote-sets/view-vote-sets.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
 	{ path: 'add-album', component: AddAlbumComponent },
@@ -50,6 +51,7 @@ const routes: Routes = [
 	{ path: 'edit-vote-set/:id', component: EditVoteSetComponent },
 	{ path: 'view-vote-sets', component: ViewVoteSetsComponent },
 	{ path: 'view-vote-set/:id', component: ViewVoteSetComponent },
+	{ path: 'login', component: LoginComponent }
 ];
 
 @NgModule({
