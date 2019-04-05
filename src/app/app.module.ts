@@ -31,6 +31,7 @@ import { ViewUsersComponent } from './view-users/view-users.component';
 import { ViewVoteSetsComponent } from './view-vote-sets/view-vote-sets.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { FooterComponent } from './footer/footer.component';
     ViewUsersComponent,
     ViewVoteSetsComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

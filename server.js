@@ -209,7 +209,7 @@ app.post(base_url + 'login', function(req, res) {
 				res.send(err);
 			}
 			const token = jwt.sign(user, jwt_secret); 
-			return res.json({user, token});
+			return res.json({token});
 		});
 	})(req, res);
 });
