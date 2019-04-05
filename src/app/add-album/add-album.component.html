@@ -9,5 +9,5 @@
 
 </form>
 <p *ngFor="let album of albums | slice:0:5">
-	<img width="320" height="320" src="{{ album.images[0].url }}">
+	<img width="320" height="320" src="{{ album.images[0].url }}" (click)="select(album)">
 </p>

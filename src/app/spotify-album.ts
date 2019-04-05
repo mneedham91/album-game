@@ -1,6 +1,15 @@
 export class SpotifyAlbum {
 	album_type: string;
-	artists: any;
+	artists: [
+		{
+			external_urls: any;
+			href: string;
+			id: string;
+			name: string;
+			type: string;
+			uri: string;
+		}
+	]
 	available_markets: any;
 	external_urls: any;
 	href: string;
