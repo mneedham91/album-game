@@ -22,6 +22,7 @@ app.use(bodyParser.json());
 var distDir = __dirname + "/dist/";
 app.use(express.static(distDir));
 
+var crypto = require('crypto');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
@@ -31,7 +32,7 @@ mongoose_options = {'useFindAndModify': false, 'useNewUrlParser': true};
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/albumdb', options=mongoose_options);
 var db = mongoose.connection;
 
-var factory = new Factory(Schema, mongoose);
+var factory = new Factory(Schema, mongoose, crypto);
 factory.createSchemas();
 
 // Set Passport-Local Strategy

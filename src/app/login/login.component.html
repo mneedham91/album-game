@@ -1,3 +1,17 @@
-<p>
-  login works!
-</p>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+	<label>
+		Name:
+		<input type="text" formControlName="name">
+	</label>
+
+	<label>
+		Password:
+		<input type="password" formControlName="password">
+	</label>
+
+	<div *ngIf="errorMsg">{{ errorMsg }}</div>
+
+	<button type="submit">Submit</button>
+	<button type="button" (click)="reset()">Reset</button>
+
+</form>

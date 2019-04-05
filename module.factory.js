@@ -1,6 +1,7 @@
-var Factory = function(Schema, mongoose) {
+var Factory = function(Schema, mongoose, crypto) {
 	this.Schema = Schema;
 	this.mongoose = mongoose;
+	this.crypto = crypto;
 	
 	this.createSchemas = function() {
 		AlbumSchema = new this.Schema({
