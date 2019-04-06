@@ -25,7 +25,7 @@ export class ViewRoundsComponent implements OnInit {
   }
 
   viewRound(id: string): void {
-    this.router.navigate(['view-round', id])
+    this.router.navigate(['view-round', id]);
   }
 
 }

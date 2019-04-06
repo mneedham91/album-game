@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { GlobalService } from '../global.service';
+import { Router } from '@angular/router';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +18,10 @@ export class LoginComponent implements OnInit {
   constructor(
   	private authService: AuthService,
   	private formBuilder: FormBuilder,
-  	private titleService: Title) { }
+    private globalService: GlobalService,
+    private router: Router,
+  	private titleService: Title,
+    private userService: UserService) { }
 
   ngOnInit() {
   	this.titleService.setTitle('Album Game | Login');
@@ -25,7 +31,13 @@ export class LoginComponent implements OnInit {
   onSubmit() {
   	this.authService.login(this.loginForm.value['name'], this.loginForm.value['password']).subscribe(
   	  data => {
-  	  	console.log(data);
+        localStorage.setItem('token', data.token);
+        this.userService.getUser(data.id).subscribe(data => {
+          /*localStorage.setItem('userName', data.name);
+          localStorage.setItem('userID', data._id);*/
+          this.globalService.setItem('userID', data._id);
+        });
+        this.router.navigate(['view-rounds']);
   	  }, 
   	  err => {
   	  	this.errorMsg = 'Login error. Please try again';

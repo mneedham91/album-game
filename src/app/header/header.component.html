@@ -1,1 +1,7 @@
-Welcome to the Album Game app!
+<div *ngIf="userID">
+	{{ userName }}, welcome to the Album Game app! | <a (click)="logout()">Logout</a>
+</div>
+
+<div *ngIf="!userID">
+	Welcome to the Album Game app! | <a (click)="login()">Login</a>
+</div>

@@ -64,7 +64,7 @@ passport.use(new JWTStrategy({
 var base_url = '/api/v1/'
 
 // Album Routes
-app.get(base_url + 'album', passport.authenticate('jwt', {session: false}), function(req, res) {
+app.get(base_url + 'album', function(req, res) {
 	var resp = factory.getAlbums(req.query, res);
 });
 
@@ -72,7 +72,7 @@ app.get(base_url + 'album/:id', function(req, res) {
 	var resp = factory.getAlbum(req.params.id, res);
 });
 
-app.post(base_url + 'album', function(req, res) {
+app.post(base_url + 'album', passport.authenticate('jwt', {session: false}), function(req, res) {
 	var resp = factory.createAlbum(req.body, res);
 });
 
@@ -202,8 +202,8 @@ app.post(base_url + 'login', function(req, res) {
 			if (err) {
 				res.send(err);
 			}
-			const token = jwt.sign(user, jwt_secret); 
-			return res.json({token});
+			const token = jwt.sign(user, jwt_secret);
+			return res.json( { id: user.output._id, token: token } );
 		});
 	})(req, res);
 });
