@@ -4,11 +4,14 @@
 	<div class="pure-u-1-2"><a (click)="viewArtist(album?.artist)">{{ album?.artist }}</a></div>
 
 	<div class="pure-u-1"></div>
+	<div class="pure-u-1"><img class="pure-img" [src]="(img)"></div>
+
+	<div class="pure-u-1"></div>
 	<div class="pure-u-1">Released {{ album?.date | date:'shortDate' }}</div>
 
 	<div class="pure-u-1"></div>
 	<div class="pure-u-1-2">Round: {{ album?.round }}</div>
-	<div class="pure-u-1-2"><a (click)="viewUser(album?.nominator)">Nominated by {{ album?.nominator }}</a></div>
+	<div class="pure-u-1-2">Nominated by {{ album?.nominator }}</div>
 
 	<div class="pure-u-1"></div>
 	<div *ngIf="canEdit"><a [routerLink]="['/edit-album', album._id]"> Edit </a><div class="pure-u-1"></div></div>

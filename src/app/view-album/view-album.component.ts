@@ -12,6 +12,7 @@ import { UserService } from '../user.service';
 import { User } from '../user';
 import { VoteSetService } from '../vote-set.service';
 import { VoteSet } from '../vote-set';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-view-album',
@@ -26,6 +27,7 @@ export class ViewAlbumComponent implements OnInit {
   users: User[];
   userID: string;
   votes: VoteSet[];
+  img: string;
 
   constructor(
   	private albumService: AlbumService,
@@ -43,6 +45,7 @@ export class ViewAlbumComponent implements OnInit {
     this.titleService.setTitle('Album Game | View Album');
   	this.route.params.subscribe(params => {
   		this.id = params['id'];
+      this.img = '/assets/' + environment.images + this.id + '.jpg';
   	});
     this.userID = this.globalService.getItem('userID');
   	this.albumService.getAlbum(this.id).subscribe(data => {

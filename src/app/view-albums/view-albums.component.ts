@@ -5,6 +5,7 @@ import { AlbumService } from '../album.service';
 import { Album } from '../album';
 import { RoundService } from '../round.service';
 import { Round } from '../round';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-view-albums',
@@ -15,6 +16,7 @@ export class ViewAlbumsComponent implements OnInit {
   albums: Album[];
   rounds: Round[];
   rows: Object[];
+  folder: string;
 
   constructor(
     private albumService: AlbumService,
@@ -23,6 +25,7 @@ export class ViewAlbumsComponent implements OnInit {
     private titleService: Title) { }
 
   ngOnInit() {
+    this.folder = '/assets/' + environment.images;
     this.rows = [];
     this.titleService.setTitle('Album Game | View Albums');
     this.roundService.getRounds().subscribe(data => {
@@ -31,6 +34,9 @@ export class ViewAlbumsComponent implements OnInit {
         this.albumService.getAlbums({round: round._id}).subscribe(query => {
           let row = new Object();
           row['albums'] = query;
+          row['albums'].forEach(album => {
+            album['img'] = this.folder + album['_id'] + '.jpg';
+          });
           row['round'] = round;
           this.rows.push(row);
         });
