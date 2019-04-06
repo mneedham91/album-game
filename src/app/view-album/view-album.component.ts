@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AlbumService } from '../album.service';
 import { Album } from '../album';
 import { ArtistService } from '../artist.service';
+import { GlobalService } from '../global.service';
 import { RoundService } from '../round.service';
 import { TrackService } from '../track.service';
 import { Track } from '../track';
@@ -18,18 +19,20 @@ import { VoteSet } from '../vote-set';
   styleUrls: ['./view-album.component.css']
 })
 export class ViewAlbumComponent implements OnInit {
-  id: string;
   album: Album;
+  canEdit: boolean;
+  id: string;
   tracks: Track[];
   users: User[];
+  userID: string;
   votes: VoteSet[];
-  Object = Object;
 
   constructor(
-  	private router: Router, 
   	private albumService: AlbumService,
-    private artistService: ArtistService, 
+    private artistService: ArtistService,
+    private globalService: GlobalService, 
   	private route: ActivatedRoute,
+    private router: Router, 
     private roundService: RoundService,
     private titleService: Title,
     private trackService: TrackService,
@@ -41,9 +44,14 @@ export class ViewAlbumComponent implements OnInit {
   	this.route.params.subscribe(params => {
   		this.id = params['id'];
   	});
-
+    this.userID = this.globalService.getItem('userID');
   	this.albumService.getAlbum(this.id).subscribe(data => {
   		this.album = data;
+      if (this.album.nominator == this.userID) {
+        this.canEdit = true;
+      } else {
+        this.canEdit = false;
+      }
       this.artistService.getArtist(this.album.artist).subscribe(data => {
         this.album.artist = data.name;
       });

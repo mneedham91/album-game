@@ -1,4 +1,5 @@
 <p>Name: {{ album?.name }}</p>
+<div *ngIf="canEdit"><a [routerLink]="['/edit-album', album._id]"> Edit </a></div>
 <p><a (click)="viewArtist(album?.artist)">Artist: {{ album?.artist }}</a></p>
 <p><a (click)="viewUser(album?.nominator)">Nominator: {{ album?.nominator }}</a></p>
 <p>Round: {{ album?.round }}</p>
