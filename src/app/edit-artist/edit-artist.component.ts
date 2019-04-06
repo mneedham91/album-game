@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { GlobalService } from '../global.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ArtistService } from '../artist.service';
 import { Artist } from '../artist';
@@ -11,12 +12,14 @@ import { Artist } from '../artist';
   styleUrls: ['./edit-artist.component.css']
 })
 export class EditArtistComponent implements OnInit {
+  artist: Artist;
   editArtistForm: FormGroup;
   id: string;
-  artist: Artist;
+  token: string;
 
   constructor(
   	private formBuilder: FormBuilder,
+    private globalService: GlobalService,
   	private artistService: ArtistService,
   	private route: ActivatedRoute,
   	private router: Router,
@@ -34,11 +37,14 @@ export class EditArtistComponent implements OnInit {
   		this.artist = data;
   		this.reset();
   	});
-  	
+    this.globalService.watchStorage().subscribe(data => {
+      this.token = this.globalService.getItem('token');
+    });
+    this.token = this.globalService.getItem('token');
   }
 
   onSubmit() {
-  	this.artistService.editArtist(this.id, this.editArtistForm.value).subscribe( data => {
+  	this.artistService.editArtist(this.id, this.editArtistForm.value, this.token).subscribe( data => {
   	  this.router.navigate(['view-artist', this.id]);
   	});
   }

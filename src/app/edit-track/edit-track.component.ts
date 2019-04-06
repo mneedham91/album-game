@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlbumService } from '../album.service';
 import { Album } from '../album';
+import { GlobalService } from '../global.service';
 import { TrackService } from '../track.service';
 import { Track } from '../track';
 
@@ -15,12 +16,14 @@ import { Track } from '../track';
 export class EditTrackComponent implements OnInit {
   editTrackForm: FormGroup;
   id: string;
+  token: string;
   track: Track;
   albums: Album[];
 
   constructor(
     private albumService: AlbumService,
   	private formBuilder: FormBuilder,
+    private globalService: GlobalService,
   	private trackService: TrackService,
   	private route: ActivatedRoute,
   	private router: Router,
@@ -47,10 +50,14 @@ export class EditTrackComponent implements OnInit {
         else return 0;
       });
     });
+    this.globalService.watchStorage().subscribe(data => {
+      this.token = this.globalService.getItem('token');
+    });
+    this.token = this.globalService.getItem('token');
   }
 
   onSubmit() {
-  	this.trackService.editTrack(this.id, this.editTrackForm.value).subscribe( data => {
+  	this.trackService.editTrack(this.id, this.editTrackForm.value, this.token).subscribe( data => {
   	  this.router.navigate(['view-track', this.id]);
   	});
   }

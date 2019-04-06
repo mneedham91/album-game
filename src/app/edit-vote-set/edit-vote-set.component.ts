@@ -3,6 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlbumService } from '../album.service';
+import { GlobalService } from '../global.service';
 import { TrackService } from '../track.service';
 import { Track } from '../track';
 import { UserService } from '../user.service';
@@ -17,12 +18,14 @@ import { VoteSet } from '../vote-set';
 export class EditVoteSetComponent implements OnInit {
   editVoteSetForm: FormGroup;
   id: string;
-  vote_set: VoteSet;
+  token: string;
   tracks: Track[];
+  vote_set: VoteSet;
 
   constructor(
     private albumService: AlbumService,
     private formBuilder: FormBuilder,
+    private globalService: GlobalService,
   	private route: ActivatedRoute,
   	private router: Router, 
     private titleService: Title,
@@ -58,11 +61,14 @@ export class EditVoteSetComponent implements OnInit {
       });
   		this.reset();
   	});
-    
+    this.globalService.watchStorage().subscribe(data => {
+      this.token = this.globalService.getItem('token');
+    });
+    this.token = this.globalService.getItem('token');    
   }
 
   onSubmit() {
-  	this.voteSetService.editVoteSet(this.id, this.editVoteSetForm.value).subscribe( data => {
+  	this.voteSetService.editVoteSet(this.id, this.editVoteSetForm.value, this.token).subscribe( data => {
   	  this.router.navigate(['view-vote-set', this.id]);
   	});
   }
