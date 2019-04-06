@@ -6,12 +6,12 @@ import { AlbumService } from '../album.service';
 import { Album } from '../album';
 import { ArtistService } from '../artist.service';
 import { GlobalService } from '../global.service';
-import { DatePipe } from '@angular/common'
 import { RoundService } from '../round.service';
 import { TrackService } from '../track.service';
 import { Track } from '../track';
 import { UserService } from '../user.service';
 import { VoteSetService } from '../vote-set.service';
+import { VoteSet } from '../vote-set';
 
 @Component({
   selector: 'app-add-vote-set',
@@ -71,16 +71,20 @@ export class AddVoteSetComponent implements OnInit {
   		this.reset();
   	});
     this.globalService.watchStorage().subscribe(data => {
+      this.userID = this.globalService.getItem('userID');
       this.token = this.globalService.getItem('token');
     });
     this.token = this.globalService.getItem('token');
-
+    this.userID = this.globalService.getItem('userID');
   }
 
   submit() {
-  	this.voteSetService.createVoteSet(this.voteForm.value, this.token).subscribe(data => {
-  	  console.log(this.voteForm.value);
-  	  //this.router.navigate(['view-album', this.id]);
+    let vote_set: VoteSet = new VoteSet();
+    vote_set = this.voteForm.value;
+    vote_set.user = this.userID;
+    vote_set.album = this.id;
+  	this.voteSetService.createVoteSet(vote_set, this.token).subscribe(data => {
+  	  this.router.navigate(['view-album', this.id]);
   	});
   }
 

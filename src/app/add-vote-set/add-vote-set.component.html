@@ -2,7 +2,6 @@
 <p><a (click)="viewArtist(album?.artist)">Artist: {{ album?.artist }}</a></p>
 <p><a (click)="viewUser(album?.nominator)">Nominator: {{ album?.nominator }}</a></p>
 <p>Round: {{ album?.round }}</p>
-<p>Date: {{ album?.date | date:'shortDate' }}</p>
 
 <form [formGroup]="voteForm" (ngSubmit)="submit()">
 	<div><label>
