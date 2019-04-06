@@ -2,3 +2,11 @@
 .centerTable {
 	margin: 0px auto;
 }
+
+.center {
+	text-align: center;
+}
+
+.sidebar {
+	background-color: #b4b4b4;
+}

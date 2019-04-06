@@ -1,5 +1,5 @@
-<ul>
-	<li *ngFor="let artist of artists">
-		<a (click)="viewArtist(artist._id)">{{ artist?.name }}</a>
-	</li>
-</ul>
+<div class="pure-u-1">
+	<div *ngFor="let artist of artists">
+		<a [routerLink]="['view-artist', artist._id]">{{ artist?.name }}</a>
+	</div>
+</div>

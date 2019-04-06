@@ -8,6 +8,18 @@ a {
 	background-color: black;
 }
 
+.grey {
+	background-color: #5f5f5f;
+}
+
+.white {
+	background-color: white;
+}
+
+.welcome {
+	font-weight: bold;
+}
+
 .loginout {
 	color: green;
 }

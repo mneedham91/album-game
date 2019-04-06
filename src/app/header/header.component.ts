@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit {
 
   logout() {
   	this.globalService.removeAll();
-  	this.router.navigate(['view-rounds']);
+  	this.router.navigate(['']);
   }
 
 }

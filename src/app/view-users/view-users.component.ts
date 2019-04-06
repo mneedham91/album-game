@@ -10,6 +10,7 @@ import { User } from '../user';
   styleUrls: ['./view-users.component.css']
 })
 export class ViewUsersComponent implements OnInit {
+  extension: number[];
   users: User[];
 
   constructor(
@@ -18,6 +19,7 @@ export class ViewUsersComponent implements OnInit {
     private userService: UserService) { }
 
   ngOnInit() {
+    this.extension = new Array(20);
     this.titleService.setTitle('Album Game | View Users');
   	this.userService.getUsers().subscribe(data => {
   		this.users = data;

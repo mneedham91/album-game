@@ -1,5 +1,13 @@
-<ul>
-	<li *ngFor="let user of users">
-		<a (click)="viewUser(user._id)">{{ user?.name }}</a>
-	</li>
-</ul>
+<div class="pure-u-1">
+
+	<div class="pure-u-1"></div>
+
+	<div class="pure-u-1">
+		<div *ngFor="let user of users" class="pure-u-1-4 center">
+			<a [routerLink]="['/view-user', user._id]">{{ user?.name }}</a>
+		</div>
+
+		<div *ngFor="let a of extension" class="pure-u-1"></div>
+	</div>
+
+</div>

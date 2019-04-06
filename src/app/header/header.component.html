@@ -1,16 +1,16 @@
-<div class="pure-u-1" style="text-align: center">
+<div class="pure-u-1 grey center">
 
 	<!-- Buffer -->
 	<div class="pure-u-1"></div>
 
 	<!-- If logged in user -->
-	<div *ngIf="userID" class="pure-u-1">
-		{{ userName }}, welcome to the Album Game website! | <a class="loginout" (click)="logout()">Logout</a>
+	<div *ngIf="userID" class="pure-u-1 welcome">
+		{{ userName }}, welcome to the Album Game website! | <a (click)="logout()">Logout</a>
 	</div>
 
 	<!-- If not logged in-->
-	<div *ngIf="!userID" class="pure-u-1">
-		Welcome to the Album Game website! | <a class="loginout" [routerLink]="['/login']">Login</a>
+	<div *ngIf="!userID" class="pure-u-1 welcome">
+		Welcome to the Album Game website! | <a [routerLink]="['/login']">Login</a>
 	</div>
 
 	<!-- Navigation -->
@@ -31,7 +31,7 @@
 		</div>
 		<div class="pure-u-1-4 black">
 			<div class="pure-u-1"></div>
-			<div class="pure-u-1"><a routerLink=''>Analysis</a></div>
+			<div class="pure-u-1"><a routerLink='analysis'>Analysis</a></div>
 			<div class="pure-u-1"></div>
 		</div>
 		<div class="pure-u-1-4 black">
@@ -39,9 +39,10 @@
 			<div class="pure-u-1"><a routerLink='view-users'>Users</a></div>
 			<div class="pure-u-1"></div>
 		</div>
+		</div>
 	</div>
 
-	<!-- Buffer -->
-	<div class="pure-u-1"></div>
-
 </div>
+
+<!-- Buffer -->
+<div class="pure-u-1"></div>
