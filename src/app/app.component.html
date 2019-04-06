@@ -1,5 +1,22 @@
-<app-header></app-header>
-<hr>
-<router-outlet></router-outlet>
-<hr>
-<app-footer></app-footer>
+<div class="pure-g">
+	<div class="pure-u-1-8"></div>
+	<div class="pure-u-3-4">
+		<!-- Header -->
+		<div class="pure-u-1">
+			<app-header></app-header>
+		</div>
+
+		<!-- Body with side bars -->
+		<div class="pure-u-1-4"></div>
+		<div class="pure-u-1-2">
+			<router-outlet></router-outlet>
+		</div>
+		<div class="pure-u-1-4"></div>
+
+		<!-- Footer -->
+		<div class="pure-u-1">
+			<app-footer></app-footer>
+		</div>
+	</div>
+	<div class="pure-u-1-8"></div>
+</div>

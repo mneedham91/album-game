@@ -1,25 +1,41 @@
-<p>Name: {{ album?.name }}</p>
-<div *ngIf="canEdit"><a [routerLink]="['/edit-album', album._id]"> Edit </a></div>
-<p><a (click)="viewArtist(album?.artist)">Artist: {{ album?.artist }}</a></p>
-<p><a (click)="viewUser(album?.nominator)">Nominator: {{ album?.nominator }}</a></p>
-<p>Round: {{ album?.round }}</p>
-<p>Date: {{ album?.date | date:'shortDate' }}</p>
-<table>
-	<tr>
-		<th>#</th>
-		<th>Name</th>
-		<th *ngFor="let user of users">{{ user.name }}</th>
-	</tr>
-	<!-- Iterate tracks -->
-	<tr *ngFor="let track of tracks">
-		<td>{{ track?.number }}</td>
-		<td>{{ track?.name }}</td>
-		<!-- Iterate users -->
-		<td *ngFor="let user of users">
-			<!-- For each track, iterate votes -->
-			<div *ngFor="let item of track.votes | keyvalue">
-				<div *ngIf="item.key == user._id"> {{ item.value }} </div>
-			</div>
-		</td>
-	</tr>
-</table>
+<div class="pure-u-1" style="text-align: center">
+
+	<div class="pure-u-1-2">{{ album?.name }}</div>
+	<div class="pure-u-1-2"><a (click)="viewArtist(album?.artist)">{{ album?.artist }}</a></div>
+
+	<div class="pure-u-1"></div>
+	<div class="pure-u-1">Released {{ album?.date | date:'shortDate' }}</div>
+
+	<div class="pure-u-1"></div>
+	<div class="pure-u-1-2">Round: {{ album?.round }}</div>
+	<div class="pure-u-1-2"><a (click)="viewUser(album?.nominator)">Nominated by {{ album?.nominator }}</a></div>
+
+	<div class="pure-u-1"></div>
+	<div *ngIf="canEdit"><a [routerLink]="['/edit-album', album._id]"> Edit </a><div class="pure-u-1"></div></div>
+	<div class="pure-u-1"></div>
+
+	<div class="pure-u-1">
+		<table class="pure-table pure-table-horizontal">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Name</th>
+					<th *ngFor="let user of users">{{ user.name }}</th>
+				</tr>
+			</thead>
+			<!-- Iterate tracks -->
+			<tr *ngFor="let track of tracks">
+				<td>{{ track?.number }}</td>
+				<td>{{ track?.name }}</td>
+				<!-- Iterate users -->
+				<td *ngFor="let user of users">
+					<!-- For each track, iterate votes -->
+					<div *ngFor="let item of track.votes | keyvalue">
+						<div *ngIf="item.key == user._id"> {{ item.value }} </div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+</div>

@@ -1,14 +1,32 @@
-<p>VIEW USER</p>
-<p>Name: {{ user?.name }}</p>
-<p>ROUNDS</p>
-<ul>
-	<li *ngFor="let round of rounds">
-		<a (click)="viewRound(round._id)">{{ round?.name }} ({{ round?.number }})</a>
-	</li>
-</ul>
-<p>ALBUMS</p>
-<ul>
-	<li *ngFor="let album of albums">
-		<a (click)="viewAlbum(album._id)">{{ album?.name }}</a>
-	</li>
-</ul>
+<div class="pure-u-1">
+	<div class="pure-u-1">
+		<h2>{{ user?.name }}</h2>
+	</div>
+
+	<div class="pure-u-1-2">
+		<div class="pure-u-1">
+			<h3>ROUNDS</h3>
+		</div>
+		<div class="pure-u-1">
+			<ul>
+				<li *ngFor="let round of rounds">
+					<a (click)="viewRound(round._id)">{{ round?.name }} ({{ round?.number }})</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="pure-u-1-2">
+		<div class="pure-u-1">
+			<h3>ALBUMS</h3>
+		</div>
+		<div class="pure-u-1">
+			<ul>
+				<li *ngFor="let album of albums">
+					<a (click)="viewAlbum(album._id)">{{ album?.name }}</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+</div>

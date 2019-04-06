@@ -1,17 +1,23 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-	<label>
-		Name:
-		<input type="text" formControlName="name">
-	</label>
+<div class="pure-u-1">
 
-	<label>
-		Password:
-		<input type="password" formControlName="password">
-	</label>
+	<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="pure-form pure-form-aligned">
+		<fieldset>
+			<div class="pure-control-group">
+				<label>Name </label>
+				<input type="text" formControlName="name">
+			</div>
 
-	<div *ngIf="errorMsg">{{ errorMsg }}</div>
+			<div class="pure-control-group">
+				<label>Password </label>
+				<input type="password" formControlName="password">
+			</div>
 
-	<button type="submit">Submit</button>
-	<button type="button" (click)="reset()">Reset</button>
+			<div *ngIf="errorMsg" class="pure-control-group">{{ errorMsg }}</div>
 
-</form>
+			<div class="pure-controls">
+				<button type="submit" class="pure-button pure-button-primary">Log In</button>
+			</div>
+		</fieldset>
+	</form>
+
+</div>

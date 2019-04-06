@@ -25,7 +25,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
   	this.titleService.setTitle('Album Game | Login');
-  	this.reset();
+  	this.loginForm = this.formBuilder.group({
+      name: '',
+      password: ''
+    });
   }
 
   onSubmit() {
@@ -41,13 +44,6 @@ export class LoginComponent implements OnInit {
   	  	this.errorMsg = 'Login error. Please try again';
   	  }
   	);
-  }
-
-  reset() {
-  	this.loginForm = this.formBuilder.group({
-      name: '',
-      password: ''
-    });
   }
 
 }

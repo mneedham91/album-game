@@ -1,5 +1,13 @@
-<ul>
-	<li *ngFor="let album of albums">
-		<a (click)="viewAlbum(album._id)">{{ album?.name }}</a>
-	</li>
-</ul>
+<div class="pure-u-1" style="text-align: center">
+
+	<div *ngFor="let row of rows" class="pure-u-1">
+		<div class="pure-u-1-5">
+			<a [routerLink]="['/view-round', row.round._id]">{{ row.round?.name }}</a>
+		</div>
+		<div *ngFor="let album of row.albums" class="pure-u-1-5">
+			<a [routerLink]="['view-album', album._id]">{{ album.name }}</a>
+		</div>
+		<div class="pure-u-1"></div>
+	</div>
+
+</div>
