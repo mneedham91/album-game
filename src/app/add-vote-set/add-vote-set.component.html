@@ -1,3 +1,53 @@
-<p>
-  add-vote-set works!
-</p>
+<p>Name: {{ album?.name }}</p>
+<p><a (click)="viewArtist(album?.artist)">Artist: {{ album?.artist }}</a></p>
+<p><a (click)="viewUser(album?.nominator)">Nominator: {{ album?.nominator }}</a></p>
+<p>Round: {{ album?.round }}</p>
+<p>Date: {{ album?.date | date:'shortDate' }}</p>
+
+<form [formGroup]="voteForm" (ngSubmit)="submit()">
+	<div><label>
+		Fav #1: 
+		<select formControlName="vote_one">
+			<option *ngFor="let track of tracks" [value]="track._id">{{ track.name }}</option>
+		</select>
+	</label></div>
+
+	<div><label>
+		Fav #2: 
+		<select formControlName="vote_two">
+			<option *ngFor="let track of tracks" [value]="track._id">{{ track.name }}</option>
+		</select>
+	</label></div>
+
+	<div><label>
+		Fav #3: 
+		<select formControlName="vote_three">
+			<option *ngFor="let track of tracks" [value]="track._id">{{ track.name }}</option>
+		</select>
+	</label></div>
+
+	<div><label>
+		Unfave: 
+		<select formControlName="unfave">
+			<option *ngFor="let track of tracks" [value]="track._id">{{ track.name }}</option>
+		</select>
+	</label></div>
+
+	<div>
+		<button type="submit">Submit</button>
+		<button type="button" (click)="reset()">Reset</button>
+	</div>
+
+</form>
+
+<table>
+	<tr>
+		<th>#</th>
+		<th>Name</th>
+	</tr>
+	<!-- Iterate tracks -->
+	<tr *ngFor="let track of tracks">
+		<td>{{ track?.number }}</td>
+		<td>{{ track?.name }}</td>
+	</tr>
+</table>

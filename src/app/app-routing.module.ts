@@ -47,6 +47,7 @@ const routes: Routes = [
 	{ path: 'edit-user/:id', component: EditUserComponent },
 	{ path: 'view-users', component: ViewUsersComponent },
 	{ path: 'view-user/:id', component: ViewUserComponent },
+	{ path: 'vote/:id', component: AddVoteSetComponent },
 	{ path: 'add-vote-set', component: AddVoteSetComponent },
 	{ path: 'edit-vote-set/:id', component: EditVoteSetComponent },
 	{ path: 'view-vote-sets', component: ViewVoteSetsComponent },
