@@ -92,4 +92,12 @@ export class EditAlbumComponent implements OnInit {
     });
   }
 
+  delete() {
+    if(confirm('Are you sure you want to delete this album?')) {
+      this.albumService.deleteAlbum(this.id, this.token).subscribe(data => {
+        this.router.navigate(['view-rounds']);
+      });
+    }
+  }
+
 }
