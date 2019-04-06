@@ -1,4 +1,4 @@
-<p>VIEW ROUND</p>
+<div *ngIf="currentRound"><a [routerLink]="['/add-album']">Add Album</a></div>
 <p>Name: {{ round?.name }}</p>
 <p>Description: {{ round?.description }}</p>
 <p>Nominator: {{ round?.nominator }}</p>
