@@ -23,15 +23,24 @@ export class UserService {
   	return this.http.get<User>(this.baseUrl + 'user/' + id);
   }
 
-  createUser(user: User) {
-  	return this.http.post(this.baseUrl + 'user', user);
+  createUser(user: User, token: string) {
+    let httpOptions = {
+      headers: new HttpHeaders( { 'Authorization': 'Bearer ' + token } )
+    };
+  	return this.http.post(this.baseUrl + 'user', user, httpOptions);
   }
 
-  editUser(id: string, data: object) {
-  	return this.http.patch(this.baseUrl + 'user/' + id, data);
+  editUser(id: string, data: object, token: string) {
+    let httpOptions = {
+      headers: new HttpHeaders( { 'Authorization': 'Bearer ' + token } )
+    };
+  	return this.http.patch(this.baseUrl + 'user/' + id, data, httpOptions);
   }
 
-  deleteUser(id: string) {
-  	return this.http.delete(this.baseUrl + 'user/' + id);
+  deleteUser(id: string, token: string) {
+    let httpOptions = {
+      headers: new HttpHeaders( { 'Authorization': 'Bearer ' + token } )
+    };
+  	return this.http.delete(this.baseUrl + 'user/' + id, httpOptions);
   }
 }

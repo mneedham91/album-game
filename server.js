@@ -51,7 +51,7 @@ passport.use(new JWTStrategy({
 		secretOrKey: jwt_secret
 	},
 	function (jwtPayload, cb) {
-		factory.verifyUser(jwtPayload.user._id)
+		factory.verifyUser(jwtPayload.output._id)
 			.then(user => {
 				return cb(null, user);
 			})
@@ -76,11 +76,11 @@ app.post(base_url + 'album', passport.authenticate('jwt', {session: false}), fun
 	var resp = factory.createAlbum(req.body, res);
 });
 
-app.patch(base_url + 'album/:id', function(req, res) {
+app.patch(base_url + 'album/:id', passport.authenticate('jwt', {session: false}), function(req, res) {
 	var resp = factory.updateAlbum(req.params.id, req.body, res);
 });
 
-app.delete(base_url + 'album/:id', function(req, res) {
+app.delete(base_url + 'album/:id', passport.authenticate('jwt', {session: false}), function(req, res) {
 	var resp = factory.deleteAlbum(req.params.id, res);
 });
 
@@ -93,15 +93,15 @@ app.get(base_url + 'artist/:id', function(req, res) {
 	var resp = factory.getArtist(req.params.id, res);
 });
 
-app.post(base_url + 'artist', function(req, res) {
+app.post(base_url + 'artist', passport.authenticate('jwt', {session: false}), function(req, res) {
 	var resp = factory.createArtist(req.body, res);
 });
 
-app.patch(base_url + 'artist/:id', function(req, res) {
+app.patch(base_url + 'artist/:id', passport.authenticate('jwt', {session: false}), function(req, res) {
 	var resp = factory.updateArtist(req.params.id, req.body, res);
 });
 
-app.delete(base_url + 'artist/:id', function(req, res) {
+app.delete(base_url + 'artist/:id', passport.authenticate('jwt', {session: false}), function(req, res) {
 	var resp = factory.deleteArtist(req.params.id, res);
 });
 
@@ -114,15 +114,15 @@ app.get(base_url + 'round/:id', function(req, res) {
 	var resp = factory.getRound(req.params.id, res);
 });
 
-app.post(base_url + 'round', function(req, res) {
+app.post(base_url + 'round', passport.authenticate('jwt', {session: false}), function(req, res) {
 	var resp = factory.createRound(req.body, res);
 });
 
-app.patch(base_url + 'round/:id', function(req, res) {
+app.patch(base_url + 'round/:id', passport.authenticate('jwt', {session: false}), function(req, res) {
 	var resp = factory.updateRound(req.params.id, req.body, res);
 });
 
-app.delete(base_url + 'round/:id', function(req, res) {
+app.delete(base_url + 'round/:id', passport.authenticate('jwt', {session: false}), function(req, res) {
 	var resp = factory.deleteRound(req.params.id, res);
 });
 
@@ -135,15 +135,15 @@ app.get(base_url + 'track/:id', function(req, res) {
 	var resp = factory.getTrack(req.params.id, res);
 });
 
-app.post(base_url + 'track', function(req, res) {
+app.post(base_url + 'track', passport.authenticate('jwt', {session: false}), function(req, res) {
 	var resp = factory.createTrack(req.body, res);
 });
 
-app.patch(base_url + 'track/:id', function(req, res) {
+app.patch(base_url + 'track/:id', passport.authenticate('jwt', {session: false}), function(req, res) {
 	var resp = factory.updateTrack(req.params.id, req.body, res);
 });
 
-app.delete(base_url + 'track/:id', function(req, res) {
+app.delete(base_url + 'track/:id', passport.authenticate('jwt', {session: false}), function(req, res) {
 	var resp = factory.deleteTrack(req.params.id, res);
 });
 
@@ -156,15 +156,15 @@ app.get(base_url + 'user/:id', function(req, res) {
 	var resp = factory.getUser(req.params.id, res);
 });
 
-app.post(base_url + 'user', function(req, res) {
+app.post(base_url + 'user', passport.authenticate('jwt', {session: false}), function(req, res) {
 	var resp = factory.createUser(req.body, res);
 });
 
-app.patch(base_url + 'user/:id', function(req, res) {
+app.patch(base_url + 'user/:id', passport.authenticate('jwt', {session: false}), function(req, res) {
 	var resp = factory.updateUser(req.params.id, req.body, res);
 });
 
-app.delete(base_url + 'user/:id', function(req, res) {
+app.delete(base_url + 'user/:id', passport.authenticate('jwt', {session: false}), function(req, res) {
 	var resp = factory.deleteUser(req.params.id, res);
 });
 
@@ -177,15 +177,15 @@ app.get(base_url + 'voteset/:id', function(req, res) {
 	var resp = factory.getVoteSet(req.params.id, res);
 });
 
-app.post(base_url + 'voteset', function(req, res) {
+app.post(base_url + 'voteset', passport.authenticate('jwt', {session: false}), function(req, res) {
 	var resp = factory.createVoteSet(req.body, res);
 });
 
-app.patch(base_url + 'voteset/:id', function(req, res) {
+app.patch(base_url + 'voteset/:id', passport.authenticate('jwt', {session: false}), function(req, res) {
 	var resp = factory.updateVoteSet(req.params.id, req.body, res);
 });
 
-app.delete(base_url + 'voteset/:id', function(req, res) {
+app.delete(base_url + 'voteset/:id', passport.authenticate('jwt', {session: false}), function(req, res) {
 	var resp = factory.deleteVoteSet(req.params.id, res);
 });
 

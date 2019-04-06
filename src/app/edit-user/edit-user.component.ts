@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { GlobalService } from '../global.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../user.service';
 import { User } from '../user';
@@ -13,10 +14,12 @@ import { User } from '../user';
 export class EditUserComponent implements OnInit {
   editUserForm: FormGroup;
   id: string;
+  token: string;
   user: User;
 
   constructor(
   	private formBuilder: FormBuilder,
+    private globalService: GlobalService,
   	private userService: UserService,
   	private route: ActivatedRoute,
   	private router: Router,
@@ -34,11 +37,14 @@ export class EditUserComponent implements OnInit {
   		this.user = data;
       this.reset();
   	});
-  	
+    this.globalService.watchStorage().subscribe(data => {
+      this.token = this.globalService.getItem('token');
+    });
+    this.token = this.globalService.getItem('token');
   }
 
   onSubmit() {
-  	this.userService.editUser(this.id, this.editUserForm.value).subscribe( data => {
+  	this.userService.editUser(this.id, this.editUserForm.value, this.token).subscribe( data => {
   	  this.router.navigate(['view-user', this.id]);
   	});
   }

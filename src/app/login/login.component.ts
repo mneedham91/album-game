@@ -31,10 +31,8 @@ export class LoginComponent implements OnInit {
   onSubmit() {
   	this.authService.login(this.loginForm.value['name'], this.loginForm.value['password']).subscribe(
   	  data => {
-        localStorage.setItem('token', data.token);
+        this.globalService.setItem('token', data.token);
         this.userService.getUser(data.id).subscribe(data => {
-          /*localStorage.setItem('userName', data.name);
-          localStorage.setItem('userID', data._id);*/
           this.globalService.setItem('userID', data._id);
         });
         this.router.navigate(['view-rounds']);

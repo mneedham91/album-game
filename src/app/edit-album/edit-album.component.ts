@@ -6,6 +6,7 @@ import { AlbumService } from '../album.service';
 import { Album } from '../album';
 import { ArtistService } from '../artist.service';
 import { Artist } from '../artist';
+import { GlobalService } from '../global.service';
 import { RoundService } from '../round.service';
 import { Round } from '../round';
 import { UserService } from '../user.service';
@@ -23,12 +24,14 @@ export class EditAlbumComponent implements OnInit {
   album: Album;
   artists: Artist[];
   rounds: Round[];
+  token: string;
   users: User[];
 
   constructor(
   	private formBuilder: FormBuilder,
   	private albumService: AlbumService,
     private artistService: ArtistService,
+    private globalService: GlobalService,
   	private route: ActivatedRoute,
   	private router: Router,
     private titleService: Title,
@@ -64,12 +67,16 @@ export class EditAlbumComponent implements OnInit {
     this.userService.getUsers().subscribe(data => {
       this.users = data;
     });
+    this.globalService.watchStorage().subscribe(data => {
+      this.token = this.globalService.getItem('token');
+    });
+    this.token = this.globalService.getItem('token');
   }
 
   onSubmit() {
   	let date = new DatePipe(navigator.language).transform(this.editAlbumForm.value['date'], 'MM-dd-y');
   	this.editAlbumForm.controls['date'].setValue(date);
-  	this.albumService.editAlbum(this.id, this.editAlbumForm.value).subscribe( data => {
+  	this.albumService.editAlbum(this.id, this.editAlbumForm.value, this.token).subscribe( data => {
   	  this.router.navigate(['view-album', this.id]);
   	});
   }

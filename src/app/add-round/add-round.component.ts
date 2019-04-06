@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { GlobalService } from '../global.service';
 import { Router } from '@angular/router';
 import { RoundService } from '../round.service';
+import { Round } from '../round';
 import { UserService } from '../user.service';
 import { User } from '../user'
 
@@ -13,11 +15,14 @@ import { User } from '../user'
 })
 export class AddRoundComponent implements OnInit {
   addRoundForm: FormGroup;
-  users: User[];
   roundNumber: number;
-
+  token: string;
+  userID: string;
+  users: User[];
+  
   constructor(
   	private formBuilder: FormBuilder,
+    private globalService: GlobalService,
   	private roundService: RoundService,
   	private router: Router,
   	private titleService: Title,
@@ -37,11 +42,19 @@ export class AddRoundComponent implements OnInit {
   	this.userService.getUsers().subscribe(data => {
       this.users = data;
     });
+    this.globalService.watchStorage().subscribe(data => {
+      this.userID = this.globalService.getItem('userID');
+      this.token = this.globalService.getItem('token');
+    });
+    this.token = this.globalService.getItem('token');
   }
 
   onSubmit() {
   	this.addRoundForm.value['number'] = this.roundNumber;
-  	this.roundService.createRound(this.addRoundForm.value).subscribe( data => {
+    let newRound: Round = new Round();
+    newRound = this.addRoundForm.value;
+    newRound.nominator = this.userID;
+  	this.roundService.createRound(newRound, this.token).subscribe( data => {
   	  this.router.navigate(['view-rounds']);
   	});
   }

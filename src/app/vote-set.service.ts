@@ -23,15 +23,24 @@ export class VoteSetService {
   	return this.http.get<VoteSet>(this.baseUrl + 'voteset/' + id);
   }
 
-  createVoteSet(vote_set: VoteSet) {
-  	return this.http.post(this.baseUrl + 'voteset', vote_set);
+  createVoteSet(vote_set: VoteSet, token: string) {
+    let httpOptions = {
+      headers: new HttpHeaders( { 'Authorization': 'Bearer ' + token } )
+    };
+  	return this.http.post(this.baseUrl + 'voteset', vote_set, httpOptions);
   }
 
-  editVoteSet(id: string, data: object) {
-  	return this.http.patch(this.baseUrl + 'voteset/' + id, data);
+  editVoteSet(id: string, data: object, token: string) {
+    let httpOptions = {
+      headers: new HttpHeaders( { 'Authorization': 'Bearer ' + token } )
+    };
+  	return this.http.patch(this.baseUrl + 'voteset/' + id, data, httpOptions);
   }
 
-  deleteVoteSet(id: string) {
-  	return this.http.delete(this.baseUrl + 'voteset/' + id);
+  deleteVoteSet(id: string, token: string) {
+    let httpOptions = {
+      headers: new HttpHeaders( { 'Authorization': 'Bearer ' + token } )
+    };
+  	return this.http.delete(this.baseUrl + 'voteset/' + id, httpOptions);
   }
 }

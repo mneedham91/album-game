@@ -23,15 +23,24 @@ export class TrackService {
   	return this.http.get<Track>(this.baseUrl + 'track/' + id);
   }
 
-  createTrack(track: Track) {
-  	return this.http.post(this.baseUrl + 'track', track);
+  createTrack(track: Track, token: string) {
+    let httpOptions = {
+      headers: new HttpHeaders( { 'Authorization': 'Bearer ' + token } )
+    };
+  	return this.http.post(this.baseUrl + 'track', track, httpOptions);
   }
 
-  editTrack(id: string, data: object) {
-  	return this.http.patch(this.baseUrl + 'track/' + id, data);
+  editTrack(id: string, data: object, token: string) {
+    let httpOptions = {
+      headers: new HttpHeaders( { 'Authorization': 'Bearer ' + token } )
+    };
+  	return this.http.patch(this.baseUrl + 'track/' + id, data, httpOptions);
   }
 
-  deleteTrack(id: string) {
-  	return this.http.delete(this.baseUrl + 'track/' + id);
+  deleteTrack(id: string, token: string) {
+    let httpOptions = {
+      headers: new HttpHeaders( { 'Authorization': 'Bearer ' + token } )
+    };
+  	return this.http.delete(this.baseUrl + 'track/' + id, httpOptions);
   }
 }

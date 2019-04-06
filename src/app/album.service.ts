@@ -23,15 +23,24 @@ export class AlbumService {
   	return this.http.get<Album>(this.baseUrl + 'album/' + id);
   }
 
-  createAlbum(album: Album) {
-  	return this.http.post(this.baseUrl + 'album', album);
+  createAlbum(album: Album, token: string) {
+    let httpOptions = {
+      headers: new HttpHeaders( { 'Authorization': 'Bearer ' + token } )
+    };
+  	return this.http.post(this.baseUrl + 'album', album, httpOptions);
   }
 
-  editAlbum(id: string, data: object) {
-  	return this.http.patch(this.baseUrl + 'album/' + id, data);
+  editAlbum(id: string, data: object, token: string) {
+    let httpOptions = {
+      headers: new HttpHeaders( { 'Authorization': 'Bearer ' + token } )
+    };
+  	return this.http.patch(this.baseUrl + 'album/' + id, data, httpOptions);
   }
 
-  deleteAlbum(id: string) {
-  	return this.http.delete(this.baseUrl + 'album/' + id);
+  deleteAlbum(id: string, token: string) {
+    let httpOptions = {
+      headers: new HttpHeaders( { 'Authorization': 'Bearer ' + token } )
+    };
+  	return this.http.delete(this.baseUrl + 'album/' + id, httpOptions);
   }
 }

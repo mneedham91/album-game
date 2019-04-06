@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { GlobalService } from '../global.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RoundService } from '../round.service';
 import { Round } from '../round';
@@ -16,10 +17,12 @@ export class EditRoundComponent implements OnInit {
   editRoundForm: FormGroup;
   id: string;
   round: Round;
+  token: string;
   users: User[];
 
   constructor(
   	private formBuilder: FormBuilder,
+    private globalService: GlobalService,
   	private roundService: RoundService,
   	private route: ActivatedRoute,
   	private router: Router,
@@ -44,10 +47,14 @@ export class EditRoundComponent implements OnInit {
   	this.userService.getUsers().subscribe(data => {
       this.users = data;
     });
+    this.globalService.watchStorage().subscribe(data => {
+      this.token = this.globalService.getItem('token');
+    });
+    this.token = this.globalService.getItem('token');
   }
 
   onSubmit() {
-  	this.roundService.editRound(this.id, this.editRoundForm.value).subscribe( data => {
+  	this.roundService.editRound(this.id, this.editRoundForm.value, this.token).subscribe( data => {
   	  this.router.navigate(['view-round', this.id]);
   	});
   }

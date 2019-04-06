@@ -5,6 +5,7 @@ import { AlbumService } from '../album.service';
 import { Album } from '../album';
 import { ArtistService } from '../artist.service';
 import { Artist } from '../artist';
+import { GlobalService } from '../global.service';
 import { RoundService } from '../round.service';
 import { Router } from '@angular/router';
 import { SpotifyAlbum } from '../spotify-album';
@@ -17,16 +18,19 @@ import { SpotifySearchResult } from '../spotify-search-result';
   styleUrls: ['./add-album.component.css']
 })
 export class AddAlbumComponent implements OnInit {
-  token: string;
+  spotify_token: string;
   spotifySearchAlbumForm: FormGroup;
   spotifyResults: SpotifySearchResult;
   albums: SpotifyAlbum[];
   currentRound: string;
+  userID: any;
+  token: string;
 
   constructor(
   	private albumService: AlbumService,
   	private artistService: ArtistService,
   	private formBuilder: FormBuilder,
+    private globalService: GlobalService,
   	private roundService: RoundService,
   	private router: Router,
   	private spotifyService: SpotifyService,
@@ -46,12 +50,18 @@ export class AddAlbumComponent implements OnInit {
   		name: '',
   	});
   	this.spotifyService.getToken().subscribe(data => {
-  		this.token = data['access_token'];
+  		this.spotify_token = data['access_token'];
   	});
+    this.userID = this.globalService.getItem('userID');
+    this.globalService.watchStorage().subscribe(data => {
+      this.userID = this.globalService.getItem('userID');
+      this.token = this.globalService.getItem('token');
+    });
+    this.token = this.globalService.getItem('token');
   }
 
   search() {
-  	this.spotifyService.lookForAlbum(this.token, this.spotifySearchAlbumForm.value['name']).subscribe( data => {
+  	this.spotifyService.lookForAlbum(this.spotify_token, this.spotifySearchAlbumForm.value['name']).subscribe( data => {
   	  this.spotifyResults = data;
   	  this.albums = this.spotifyResults.albums.items;
   	});
@@ -71,7 +81,7 @@ export class AddAlbumComponent implements OnInit {
   			let newArtist: Artist = new Artist();
   			newArtist.spotify_id = album.artists[0].id;
   			newArtist.name = album.artists[0].name;
-  			this.artistService.createArtist(newArtist).subscribe(artist_data => {
+  			this.artistService.createArtist(newArtist, this.token).subscribe(artist_data => {
   				newAlbum.artist = artist_data['_id'];
   			});
   		} else {
@@ -79,7 +89,8 @@ export class AddAlbumComponent implements OnInit {
   		}
   		newAlbum.name = album.name;
   		newAlbum.round = this.currentRound;
-  		this.albumService.createAlbum(newAlbum).subscribe(create_data => {
+      newAlbum.nominator = this.userID;
+  		this.albumService.createAlbum(newAlbum, this.token).subscribe(create_data => {
   			this.router.navigate(['view-album', create_data['_id'] ]);
   		});
   	});

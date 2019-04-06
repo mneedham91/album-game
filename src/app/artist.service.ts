@@ -23,15 +23,24 @@ export class ArtistService {
   	return this.http.get<Artist>(this.baseUrl + 'artist/' + id);
   }
 
-  createArtist(artist: Artist) {
-  	return this.http.post(this.baseUrl + 'artist', artist);
+  createArtist(artist: Artist, token: string) {
+    let httpOptions = {
+      headers: new HttpHeaders( { 'Authorization': 'Bearer ' + token } )
+    };
+  	return this.http.post(this.baseUrl + 'artist', artist, httpOptions);
   }
 
-  editArtist(id: string, data: object) {
-  	return this.http.patch(this.baseUrl + 'artist/' + id, data);
+  editArtist(id: string, data: object, token: string) {
+    let httpOptions = {
+      headers: new HttpHeaders( { 'Authorization': 'Bearer ' + token } )
+    };
+  	return this.http.patch(this.baseUrl + 'artist/' + id, data, httpOptions);
   }
 
-  deleteArtist(id: string) {
-  	return this.http.delete(this.baseUrl + 'artist/' + id);
+  deleteArtist(id: string, token: string) {
+    let httpOptions = {
+      headers: new HttpHeaders( { 'Authorization': 'Bearer ' + token } )
+    };
+  	return this.http.delete(this.baseUrl + 'artist/' + id, httpOptions);
   }
 }

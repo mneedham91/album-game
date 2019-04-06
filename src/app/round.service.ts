@@ -23,15 +23,24 @@ export class RoundService {
   	return this.http.get<Round>(this.baseUrl + 'round/' + id);
   }
 
-  createRound(round: Round) {
-  	return this.http.post(this.baseUrl + 'round', round);
+  createRound(round: Round, token: string) {
+    let httpOptions = {
+      headers: new HttpHeaders( { 'Authorization': 'Bearer ' + token } )
+    };
+  	return this.http.post(this.baseUrl + 'round', round, httpOptions);
   }
 
-  editRound(id: string, data: object) {
-  	return this.http.patch(this.baseUrl + 'round/' + id, data);
+  editRound(id: string, data: object, token: string) {
+    let httpOptions = {
+      headers: new HttpHeaders( { 'Authorization': 'Bearer ' + token } )
+    };
+  	return this.http.patch(this.baseUrl + 'round/' + id, data, httpOptions);
   }
 
-  deleteRound(id: string) {
-  	return this.http.delete(this.baseUrl + 'round/' + id);
+  deleteRound(id: string, token: string) {
+    let httpOptions = {
+      headers: new HttpHeaders( { 'Authorization': 'Bearer ' + token } )
+    };
+  	return this.http.delete(this.baseUrl + 'round/' + id, httpOptions);
   }
 }

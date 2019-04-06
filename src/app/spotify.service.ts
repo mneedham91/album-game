@@ -16,8 +16,6 @@ export class SpotifyService {
   }
 
   lookForAlbum(token: string, name: string) {
-  	console.log(token);
-  	console.log(name);
   	return this.http.post<SpotifySearchResult>(this.baseUrl + 'spotify/lookForAlbum', { token: token, name: name } );
   }
 
