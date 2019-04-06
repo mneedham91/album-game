@@ -224,9 +224,9 @@ app.get(base_url + 'spotify/token', function(req, res) {
 		json: true,
 		url: url
 	};
-	request(options, function (err, resp, body) {
-		if (err) {
-			res.json(err);
+	request(options, function (error, resp, body) {
+		if (error) {
+			res.json(error);
 		} else {
 			res.json(body);
 		}
@@ -242,9 +242,26 @@ app.post(base_url + 'spotify/lookForAlbum', function(req, res) {
 		json: true,
 		url: url
 	}
-	request(options, function (err, resp, body) {
-		if (err) {
-			res.json(err);
+	request(options, function (error, resp, body) {
+		if (error) {
+			res.json(error);
+		} else {
+			res.json(body);
+		}
+	});
+});
+
+app.post(base_url + 'spotify/getAlbumTracks', function(req, res) {
+	var url = 'https://api.spotify.com/v1/albums/' + req.body.id + '/tracks';
+	var options = {
+		auth: { 'bearer': req.body.token},
+		method: 'get',
+		json: true,
+		url: url
+	}
+	request(options, function (error, resp, body) {
+		if (error) {
+			res.json(error);
 		} else {
 			res.json(body);
 		}

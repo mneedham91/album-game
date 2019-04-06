@@ -11,6 +11,9 @@ import { Router } from '@angular/router';
 import { SpotifyAlbum } from '../spotify-album';
 import { SpotifyService } from '../spotify.service';
 import { SpotifySearchResult } from '../spotify-search-result';
+import { SpotifyTracksSearchResult } from '../spotify-tracks-search-result';
+import { TrackService } from '../track.service';
+import { Track } from '../track';
 
 @Component({
   selector: 'app-add-album',
@@ -25,6 +28,7 @@ export class AddAlbumComponent implements OnInit {
   currentRound: string;
   userID: any;
   token: string;
+  spotifyTracksResult: SpotifyTracksSearchResult;
 
   constructor(
   	private albumService: AlbumService,
@@ -34,7 +38,8 @@ export class AddAlbumComponent implements OnInit {
   	private roundService: RoundService,
   	private router: Router,
   	private spotifyService: SpotifyService,
-  	private titleService: Title) { }
+  	private titleService: Title,
+    private trackService: TrackService) { }
 
   ngOnInit() {
   	this.titleService.setTitle('Album Game | Add Album');
@@ -78,22 +83,49 @@ export class AddAlbumComponent implements OnInit {
   	this.artistService.getArtists( { spotify_id: album.artists[0].id } ).subscribe(data => {
   		let result: Artist[] = data;
   		if (!Array.isArray(result) || !result.length) {
+        // Branch One: Need to create new Artist
   			let newArtist: Artist = new Artist();
   			newArtist.spotify_id = album.artists[0].id;
   			newArtist.name = album.artists[0].name;
   			this.artistService.createArtist(newArtist, this.token).subscribe(artist_data => {
   				newAlbum.artist = artist_data['_id'];
+          newAlbum.name = album.name;
+          newAlbum.round = this.currentRound;
+          newAlbum.nominator = this.userID;
+          this.albumService.createAlbum(newAlbum, this.token).subscribe(create_data => {
+            this.spotifyService.getAlbumTracks(this.spotify_token, album.id).subscribe(track_data => {
+              track_data.items.forEach(item => {
+                let newTrack: Track = new Track();
+                newTrack.name = item.name;
+                newTrack.number = item.track_number;
+                newTrack.album = create_data['_id'];
+                newTrack.spotify_id = item.id
+                this.trackService.createTrack(newTrack, this.token).subscribe();
+               });
+              });
+            this.router.navigate(['view-album', create_data['_id'] ]);
+          });
   			});
   		} else {
+        // Branch Two: Artist already exists
   			newAlbum.artist = data[0]._id;
+        newAlbum.name = album.name;
+        newAlbum.round = this.currentRound;
+        newAlbum.nominator = this.userID;
+        this.albumService.createAlbum(newAlbum, this.token).subscribe(create_data => {
+          this.spotifyService.getAlbumTracks(this.spotify_token, album.id).subscribe(track_data => {
+            track_data.items.forEach(item => {
+              let newTrack: Track = new Track();
+              newTrack.name = item.name;
+              newTrack.number = item.track_number;
+              newTrack.album = create_data['_id'];
+              newTrack.spotify_id = item.id
+              this.trackService.createTrack(newTrack, this.token).subscribe();
+            });
+          });
+          this.router.navigate(['view-album', create_data['_id'] ]);
+        });
   		}
-  		newAlbum.name = album.name;
-  		newAlbum.round = this.currentRound;
-      newAlbum.nominator = this.userID;
-  		this.albumService.createAlbum(newAlbum, this.token).subscribe(create_data => {
-  			this.router.navigate(['view-album', create_data['_id'] ]);
-  		});
   	});
   }
-
 }

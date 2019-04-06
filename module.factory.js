@@ -93,6 +93,11 @@ var Factory = function(Schema, mongoose, crypto) {
 	}
 
 	this.deleteAlbum = function(id, res) {
+		this.Track.deleteMany({album: id}, function(error, output) {
+			if (error) {
+				res.json(error);
+			}
+		});
 		this.Album.findByIdAndDelete(id, function(error, output) {
 			if (error) {
 				res.json(error);
