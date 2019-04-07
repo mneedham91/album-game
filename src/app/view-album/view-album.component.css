@@ -4,3 +4,16 @@ img {
 	display: block;
 	margin: auto;
 }
+
+table {
+	margin: 0 auto;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+th {
+	text-align: center;
+}

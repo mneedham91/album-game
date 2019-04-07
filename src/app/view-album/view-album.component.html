@@ -1,7 +1,9 @@
 <div class="pure-u-1" style="text-align: center">
 
-	<div class="pure-u-1-2">{{ album?.name }}</div>
-	<div class="pure-u-1-2"><a (click)="viewArtist(album?.artist)">{{ album?.artist }}</a></div>
+	<div class="pure-u-1-2"><h3>{{ album?.name }}</h3></div>
+	<div class="pure-u-1-2">
+		<a *ngIf="artist" [routerLink]="['/view-artist', artist._id]"><h3>{{ artist.name }}</h3></a>
+	</div>
 
 	<div class="pure-u-1"></div>
 	<div class="pure-u-1 center"><img class="pure-img" [src]="(img)"></div>
@@ -10,11 +12,15 @@
 	<div class="pure-u-1">Released {{ album?.date | date:'shortDate' }}</div>
 
 	<div class="pure-u-1"></div>
-	<div class="pure-u-1-2">Round: {{ album?.round }}</div>
-	<div class="pure-u-1-2">Nominated by {{ album?.nominator }}</div>
+	<div class="pure-u-1-2">
+		Round:<a *ngIf="round" [routerLink]="['/view-round', round._id]"> {{ round?.name }}</a>
+	</div>
+	<div class="pure-u-1-2">
+		Nominated by<a *ngIf="nominator" [routerLink]="['/view-user', nominator._id]"> {{ nominator.name }}</a>
+	</div>
 
 	<div class="pure-u-1"></div>
-	<div *ngIf="canEdit"><a [routerLink]="['/edit-album', album._id]"> Edit </a><div class="pure-u-1"></div></div>
+	<div *ngIf="canEdit"><a [routerLink]="['/edit-album', album?._id]"> Edit </a><div class="pure-u-1"></div></div>
 	<div class="pure-u-1"></div>
 
 	<div class="pure-u-1">

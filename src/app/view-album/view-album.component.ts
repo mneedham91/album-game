@@ -3,9 +3,11 @@ import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlbumService } from '../album.service';
 import { Album } from '../album';
+import { Artist } from '../artist';
 import { ArtistService } from '../artist.service';
 import { GlobalService } from '../global.service';
 import { RoundService } from '../round.service';
+import { Round } from '../round';
 import { TrackService } from '../track.service';
 import { Track } from '../track';
 import { UserService } from '../user.service';
@@ -21,8 +23,11 @@ import { environment } from '../../environments/environment';
 })
 export class ViewAlbumComponent implements OnInit {
   album: Album;
+  artist: Artist;
   canEdit: boolean;
   id: string;
+  nominator: User;
+  round: Round;
   tracks: Track[];
   users: User[];
   userID: string;
@@ -56,16 +61,16 @@ export class ViewAlbumComponent implements OnInit {
         this.canEdit = false;
       }
       this.artistService.getArtist(this.album.artist).subscribe(data => {
-        this.album.artist = data.name;
+        this.artist = data;
       });
       this.userService.getUser(this.album.nominator).subscribe(data => {
-        this.album.nominator = data.name;
+        this.nominator = data;
       });
       this.userService.getUsers().subscribe(data => {
         this.users = data;
       })
       this.roundService.getRound(this.album.round).subscribe(data => {
-        this.album.round = String(data.name + ' (' + data.number + ')');
+        this.round = data;
       });
       this.trackService.getTracks({album: this.album._id}).subscribe(data => {
         this.tracks = data.sort((a, b) => {
