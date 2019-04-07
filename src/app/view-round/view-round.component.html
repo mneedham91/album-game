@@ -11,7 +11,7 @@
 	<div class="pure-u-1">
 		<table class="pure-table">
 			<tr *ngFor="let album of albums">
-				<td><a [routerLink]="['view-album', album._id]">{{ album.name}}</a></td>
+				<td><a [routerLink]="['/view-album', album._id]">{{ album.name}}</a></td>
 				<td>{{ album.artist}}</td>
 			</tr>
 		</table>
