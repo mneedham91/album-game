@@ -1,22 +1,29 @@
-<form [formGroup]="addRoundForm" (ngSubmit)="onSubmit()">
-	<label>
-		Name:
-		<input type="text" formControlName="name">
-	</label>
+<div class="pure-u-1">
 
-	<label>
-		Description:
-		<input type="text" formControlName="description">
-	</label>
+	<form [formGroup]="addRoundForm" (ngSubmit)="onSubmit()" class="pure-form pure-form-aligned">
+		<fieldset>
+			<div class="pure-control-group">
+				<label>Round Name </label>
+				<input type="text" formControlName="name">
+			</div>
 
-	<label>
-		Nominator:
-		<select formControlName="nominator">
-			<option *ngFor="let user of users" [value]="user._id">{{ user.name }}</option>
-		</select>
-	</label>
+			<div class="pure-control-group">
+				<label>Nominator </label>
+				<select formControlName="nominator">
+					<option *ngFor="let user of users" [value]="user._id">{{ user?.name }}</option>
+				</select>
+			</div>
 
-	<button type="submit">Submit</button>
-	<button type="button" (click)="reset()">Reset</button>
+			<div class="pure-control-group">
+				<label>Description </label>
+				<textarea formControlName="description"></textarea>
+			</div>
 
-</form>
+			<div class="pure-controls">
+				<button type="submit">Submit</button>
+				<button type="button" (click)="reset()">Reset</button>
+			</div>
+		</fieldset>
+	</form>
+
+</div>

@@ -51,11 +51,8 @@ export class AddRoundComponent implements OnInit {
 
   onSubmit() {
   	this.addRoundForm.value['number'] = this.roundNumber;
-    let newRound: Round = new Round();
-    newRound = this.addRoundForm.value;
-    newRound.nominator = this.userID;
-  	this.roundService.createRound(newRound, this.token).subscribe( data => {
-  	  this.router.navigate(['view-rounds']);
+  	this.roundService.createRound(this.addRoundForm.value, this.token).subscribe( data => {
+  	  this.router.navigate(['view-albums']);
   	});
   }
 
