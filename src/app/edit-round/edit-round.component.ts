@@ -34,7 +34,7 @@ export class EditRoundComponent implements OnInit {
   	this.editRoundForm = this.formBuilder.group({
   		name: '',
   		description: '',
-  		nominator: '',
+  		nominator: [''],
   		number: ''
   	});
   	this.route.params.subscribe(params => {
