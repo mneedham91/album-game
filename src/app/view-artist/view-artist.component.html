@@ -11,7 +11,7 @@
 	<div class="pure-u-1">
 		<ul>
 			<li *ngFor="let album of albums">
-				<a [routerLink]="['view-album', album._id]">{{ album?.name }}</a>
+				<a [routerLink]="['/view-album', album._id]">{{ album?.name }}</a>
 			</li>
 		</ul>
 	</div>
