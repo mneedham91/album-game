@@ -10,7 +10,7 @@
 		<div class="pure-u-1">
 			<ul>
 				<li *ngFor="let round of rounds">
-					<a (click)="viewRound(round._id)">{{ round?.name }} ({{ round?.number }})</a>
+					<a [routerLink]="['/view-round', round._id]">{{ round?.name }} ({{ round?.number }})</a>
 				</li>
 			</ul>
 		</div>
@@ -23,7 +23,7 @@
 		<div class="pure-u-1">
 			<ul>
 				<li *ngFor="let album of albums">
-					<a (click)="viewAlbum(album._id)">{{ album?.name }}</a>
+					<a [routerLink]="['view-album', album._id]">{{ album?.name }}</a>
 				</li>
 			</ul>
 		</div>
