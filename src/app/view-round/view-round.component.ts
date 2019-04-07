@@ -7,6 +7,7 @@ import { ArtistService } from '../artist.service';
 import { RoundService } from '../round.service';
 import { Round } from '../round';
 import { UserService } from '../user.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-view-round',
@@ -16,6 +17,7 @@ import { UserService } from '../user.service';
 export class ViewRoundComponent implements OnInit {
   currentRound: boolean;
   id: string;
+  img: string;
   round: Round;
   albums: Album[];
 
@@ -32,6 +34,7 @@ export class ViewRoundComponent implements OnInit {
     this.titleService.setTitle('Album Game | View Round');
   	this.route.params.subscribe(params => {
   		this.id = params['id'];
+      this.img = '/assets/' + environment.images + this.id + '.png';
   	});
   	this.roundService.getRound(this.id).subscribe(data => {
   		this.round = data;

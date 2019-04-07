@@ -2,6 +2,13 @@ table {
 	margin: 0 auto;
 }
 
+img {
+	width: 600;
+	height: 600;
+	display: block;
+	margin: auto;
+}
+
 a {
 	text-decoration: none;
 	color: black;

@@ -26,13 +26,13 @@ export class ViewAlbumComponent implements OnInit {
   artist: Artist;
   canEdit: boolean;
   id: string;
+  img: string;
   nominator: User;
   round: Round;
   tracks: Track[];
   users: User[];
   userID: string;
   votes: VoteSet[];
-  img: string;
 
   constructor(
   	private albumService: AlbumService,

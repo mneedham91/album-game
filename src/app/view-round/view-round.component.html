@@ -2,9 +2,15 @@
 
 	<div class="pure-u-1">Round {{ round?.number }} - {{ round?.name }}</div>
 	<div class="pure-u-1"></div>
+	
 	<div *ngIf="currentRound"><a [routerLink]="['/add-album']">Add Album</a><div class="pure-u-1"></div></div>
+
+	<div class="pure-u-1"></div>
+	<div class="pure-u-1 center"><img class="pure-img" [src]="(img)"></div>
+
 	<div class="pure-u-1">{{ round?.description }}</div>
 	<div class="pure-u-1"></div>
+	
 	<div class="pure-u-1">Nominated by {{ round?.nominator }}</div>
 	<div class="pure-u-1"></div>
 
