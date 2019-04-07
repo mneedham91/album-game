@@ -1,6 +1,6 @@
 <p>Name: {{ album?.name }}</p>
-<p><a (click)="viewArtist(album?.artist)">Artist: {{ album?.artist }}</a></p>
-<p><a (click)="viewUser(album?.nominator)">Nominator: {{ album?.nominator }}</a></p>
+<p><a [routerLink]="['view-artist', album?.artist]">Artist: {{ album?.artist }}</a></p>
+<p><a [routerLink]="['view-user', album?.nominator]">Nominator: {{ album?.nominator }}</a></p>
 <p>Round: {{ album?.round }}</p>
 
 <form [formGroup]="voteForm" (ngSubmit)="submit()">
