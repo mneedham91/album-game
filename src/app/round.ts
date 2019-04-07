@@ -1,5 +1,6 @@
 export class Round {
 	_id: string;
+	img: string;
 	description: string;
 	name: string;
 	nominator: string;

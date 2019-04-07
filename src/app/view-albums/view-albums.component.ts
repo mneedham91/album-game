@@ -38,6 +38,7 @@ export class ViewAlbumsComponent implements OnInit {
             album['img'] = this.folder + album['_id'] + '.jpg';
           });
           row['round'] = round;
+          row['round'].img = this.folder + row['round']._id + '.png';
           this.rows.push(row);
         });
       });

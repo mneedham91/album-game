@@ -2,7 +2,9 @@
 
 	<div *ngFor="let row of rows" class="pure-u-1">
 		<div class="pure-u-1-5">
-			<a [routerLink]="['/view-round', row.round._id]">{{ row.round?.name }}</a>
+			<a [routerLink]="['/view-round', row.round._id]">
+				<img class="pure-img" [src]="(row.round.img)">
+			</a>
 		</div>
 		<div *ngFor="let album of row.albums" class="pure-u-1-5">
 			<a [routerLink]="['/view-album', album._id]">
