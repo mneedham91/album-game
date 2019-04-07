@@ -3,12 +3,12 @@
 	<div *ngFor="let row of rows" class="pure-u-1">
 		<div class="pure-u-1-5">
 			<a [routerLink]="['/view-round', row.round._id]">
-				<img class="pure-img" [src]="(row.round.img)">
+				<img class="pure-img" [src]="(row.round.img)" alt="{{ row.round.name }}">
 			</a>
 		</div>
 		<div *ngFor="let album of row.albums" class="pure-u-1-5">
 			<a [routerLink]="['/view-album', album._id]">
-				<img class="pure-img" [src]="(album.img)">
+				<img class="pure-img" [src]="(album.img)" alt="{{ album.name }}">
 			</a>
 		</div>
 		<div class="pure-u-1"></div>
