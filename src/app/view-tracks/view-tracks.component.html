@@ -1,5 +1,5 @@
 <ul>
 	<li *ngFor="let track of tracks">
-		<a (click)="viewTrack(track._id)">{{ track?.name }}</a>
+		<a [routerLink]="['view-track', track._id]">{{ track?.name }}</a>
 	</li>
 </ul>

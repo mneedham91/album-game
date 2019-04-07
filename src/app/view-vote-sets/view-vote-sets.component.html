@@ -1,5 +1,5 @@
 <ul>
 	<li *ngFor="let voteSet of voteSets">
-		<a (click)="viewVoteSet(voteSet._id)">{{ voteSet?.album }} | {{ voteSet?.user }}</a>
+		<a [routerLink]="['view-vote-set', voteSet._id]">{{ voteSet?.album }} | {{ voteSet?.user }}</a>
 	</li>
 </ul>
