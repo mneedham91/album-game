@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
         this.userService.getUser(data.id).subscribe(data => {
           this.globalService.setItem('userID', data._id);
         });
-        this.router.navigate(['view-rounds']);
+        this.router.navigate(['view-albums']);
   	  }, 
   	  err => {
   	  	this.errorMsg = 'Login error. Please try again';
