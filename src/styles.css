@@ -9,4 +9,9 @@
 
 .sidebar {
 	background-color: #b4b4b4;
+	min-height: 100vh;
+}
+
+html {
+	min-height: 100vh;
 }
