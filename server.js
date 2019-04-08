@@ -3,7 +3,7 @@ var app = express();
 
 var passport = require('passport');
 var jwt = require('jsonwebtoken');
-var jwt_secret = 'A43101827';
+var jwt_secret = process.env.JWT_SECRET || 'A43101827';
 var passportJWT = require('passport-jwt');
 var LocalStrategy = require('passport-local').Strategy;
 var JWTStrategy = passportJWT.Strategy;
@@ -24,8 +24,8 @@ app.use(express.static(distDir));
 
 var path = require('path');
 var hbs = require('nodemailer-express-handlebars')
-var email = process.env.MAILER_EMAIL_ID || 'albumgame@betterdataservices.com'
-var email_pass = process.env.MAILER_EMAIL_ID || 'test123'
+var email = process.env.MAILER_EMAIL_ID
+var email_pass = process.env.MAILER_EMAIL_PASSWORD
 var nodemailer = require('nodemailer');
 
 var smtpTransport = nodemailer.createTransport({
@@ -35,7 +35,6 @@ var smtpTransport = nodemailer.createTransport({
 		pass: email_pass
 	},
 	secure: true,
-	logger: true,
 });
 
 var handlebarsOptions = {
