@@ -1,7 +1,8 @@
-var Factory = function(Schema, mongoose, crypto) {
+var Factory = function(Schema, mongoose, crypto, smtp) {
 	this.Schema = Schema;
 	this.mongoose = mongoose;
 	this.crypto = crypto;
+	this.smtpTransport = smtp
 	
 	this.createSchemas = function() {
 		AlbumSchema = new this.Schema({
@@ -35,9 +36,11 @@ var Factory = function(Schema, mongoose, crypto) {
 		this.Track = mongoose.model('Track', TrackSchema);
 		UserSchema = new this.Schema({
 			name: String,
-			username: String,
+			email: String,
 			hash: String,
-			salt: String
+			salt: String,
+			reset_password_token: String,
+			reset_password_expires: Date,
 		});
 		this.User = mongoose.model('User', UserSchema);
 		VoteSetSchema = new this.Schema({
@@ -260,7 +263,88 @@ var Factory = function(Schema, mongoose, crypto) {
 		});
 	}
 
-	// User Functions
+	// Auth Functions
+	this.forgotPassword = function(req, res) {
+		var token = this.crypto.randomBytes(20).toString('hex');
+		this.User.findOneAndUpdate( { name: req.body.name }, { reset_password_token: token }, function(error, user) {
+			if (!user) {
+				res.status(404).json({message: 'No user found'});
+			}
+		}).then((user) => {
+			this.smtpTransport.sendMail({
+				//to: user.email,
+				to: 'mattman91@gmail.com',
+				from: 'albumgame@betterdataservices.com',
+				template: 'forgot-password-email',
+				subject: 'Album Game: Reset your password',
+				context: {
+					url: 'http://localhost:8080/api/v1/resetPassword?token=' + token,
+					name: user.name
+				},
+				dsn: {
+					id: 'user._id',
+					return: 'headers',
+					notify: ['success', 'failure', 'delay'],
+					recipient: user.email
+				}
+			});
+		}).then(() => {
+			res.json({message: 'Success'});
+		}).catch((error) => {
+			console.log(error);
+			res.status(500).json(error);
+		});
+	};
+
+	this.resetPassword = function(req, res, next) {
+		this.User.findOne({
+			reset_password_token: req.body.token,
+			reset_password_expires: {
+				$gt: Date.now()
+			}
+		}).exec(function(error, user) {
+			if (!error && user) {
+				if (req.body.newPassword === req.body.verifyPassword) {
+					user.salt = crypto.randomBytes(16).toString('hex');
+					hash = crypto.pbkdf2Sync(req.body.newPassword, usersalt, 1000, 64, 'sha512').toString('hex');
+					user.reset_password_token = undefined;
+					user.reset_password_expires = undefined;
+					user.save(function(error) {
+						if (error) {
+							return res.status(422).send({ message: error });
+						} else {
+							var data = {
+								to: user.email,
+								from: email,
+								template: 'reset-password-email',
+								subject: 'Album Game: Password reset confirmation',
+								context: {
+									name: user.name
+								}
+							};
+
+							smtpTransport.sendMail(data, function(error) {
+								if (error) {
+									return done(error);
+								} else {
+									return res.json({ message: 'Password reset'});
+								}
+							});
+						}
+					});
+				} else {
+					return res.status(422).send({
+						message: 'Passwords do not match'
+					});
+				}
+			} else {
+				return res.status(400).send({
+					message: 'Password reset token is invalid or expired'
+				});
+			}
+		});
+	};
+
 	this.loginUser = function (name, password, cb) {
 		this.User.findOne({name: name}, function(error, output) {
 			if (error) {
@@ -292,6 +376,7 @@ var Factory = function(Schema, mongoose, crypto) {
 		});
 	};
 
+	// User Functions
 	this.getUser = function(id, res) {
 		this.User.findById(id, function(error, output) {
 			if (error) {

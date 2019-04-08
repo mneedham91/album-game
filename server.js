@@ -22,6 +22,33 @@ app.use(bodyParser.json());
 var distDir = __dirname + "/dist/";
 app.use(express.static(distDir));
 
+var path = require('path');
+var hbs = require('nodemailer-express-handlebars')
+var email = process.env.MAILER_EMAIL_ID || 'albumgame@betterdataservices.com'
+var email_pass = process.env.MAILER_EMAIL_ID || 'test123'
+var nodemailer = require('nodemailer');
+
+var smtpTransport = nodemailer.createTransport({
+	host: 'mail.betterdataservices.com',
+	auth: {
+		user: email,
+		pass: email_pass
+	},
+	secure: true,
+	logger: true,
+});
+
+var handlebarsOptions = {
+	viewEngine: {
+		partialsDir: './email-templates/partials',
+		layoutsDir: './email-templates'
+	},
+	viewPath: path.resolve('./email-templates/'),
+	extName: '.html'
+};
+
+smtpTransport.use('compile', hbs(handlebarsOptions));
+
 var crypto = require('crypto');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
@@ -32,7 +59,9 @@ mongoose_options = {'useFindAndModify': false, 'useNewUrlParser': true};
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/albumdb', options=mongoose_options);
 var db = mongoose.connection;
 
-var factory = new Factory(Schema, mongoose, crypto);
+var async = require('async');
+
+var factory = new Factory(Schema, mongoose, crypto, smtpTransport);
 factory.createSchemas();
 
 // Set Passport-Local Strategy
@@ -212,12 +241,12 @@ app.post(base_url + 'setPassword', function(req, res) {
 	var resp = factory.setPassword(req.body.name, req.body.password, res);
 });
 
-app.get(base_url + 'forgotPassword', function(req, res) {
-	// Render forgot password template
+app.post(base_url + 'forgotPassword', function(req, res) {
+	var resp = factory.forgotPassword(req, res);
 });
 
-app.post(base_url + 'forgotPassword', function(req, res) {
-	// Forgot Password
+app.post(base_url + 'resetPassword', function(req, res) {
+	var resp = factory.resetPassword(req, res, next);
 });
 
 
