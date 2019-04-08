@@ -212,6 +212,14 @@ app.post(base_url + 'setPassword', function(req, res) {
 	var resp = factory.setPassword(req.body.name, req.body.password, res);
 });
 
+app.get(base_url + 'forgotPassword', function(req, res) {
+	// Render forgot password template
+});
+
+app.post(base_url + 'forgotPassword', function(req, res) {
+	// Forgot Password
+});
+
 
 // Spotify Routes
 app.get(base_url + 'spotify/token', function(req, res) {
