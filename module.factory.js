@@ -296,54 +296,21 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 		});
 	};
 
-	this.resetPassword = function(req, res, next) {
-		this.User.findOne({
-			reset_password_token: req.body.token,
-			reset_password_expires: {
-				$gt: Date.now()
-			}
-		}).exec(function(error, user) {
-			if (!error && user) {
-				if (req.body.newPassword === req.body.verifyPassword) {
-					user.salt = crypto.randomBytes(16).toString('hex');
-					hash = crypto.pbkdf2Sync(req.body.newPassword, usersalt, 1000, 64, 'sha512').toString('hex');
-					user.reset_password_token = undefined;
-					user.reset_password_expires = undefined;
-					user.save(function(error) {
-						if (error) {
-							return res.status(422).send({ message: error });
-						} else {
-							var data = {
-								to: user.email,
-								from: email,
-								template: 'reset-password-email',
-								subject: 'Album Game: Password reset confirmation',
-								context: {
-									name: user.name
-								}
-							};
-
-							smtpTransport.sendMail(data, function(error) {
-								if (error) {
-									return done(error);
-								} else {
-									return res.json({ message: 'Password reset'});
-								}
-							});
-						}
-					});
+	this.resetPassword = function(req, res) {
+		if (req.body.password == req.body.verifypassword) {
+			var salt = crypto.randomBytes(16).toString('hex');
+			var hash = crypto.pbkdf2Sync(req.body.password, salt, 1000, 64, 'sha512').toString('hex');
+			this.User.findOneAndUpdate( { token: req.params.token }, { salt: salt, hash: hash, reset_password_token: undefined, reset_password_expires: undefined }, function(error, user) {
+				if (error) {
+					res.status(500).json(error);
 				} else {
-					return res.status(422).send({
-						message: 'Passwords do not match'
-					});
+					res.json('Success');
 				}
-			} else {
-				return res.status(400).send({
-					message: 'Password reset token is invalid or expired'
-				});
-			}
-		});
-	};
+			});
+		} else {
+			res.status(401).json('Password mismatch');
+		}
+	}
 
 	this.loginUser = function (name, password, cb) {
 		this.User.findOne({name: name}, function(error, output) {
