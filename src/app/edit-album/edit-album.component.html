@@ -1,37 +1,44 @@
-<form [formGroup]="editAlbumForm" (ngSubmit)="onSubmit()">
-	<label>
-		Name:
-		<input type="text" formControlName="name">
-	</label>
+<div class="pure-u-1">
 
-	<label>
-		Artist:
-		<select formControlName="artist">
-			<option *ngFor="let artist of artists" [value]="artist._id">{{ artist.name }}</option>
-		</select>
-	</label>
+	<form [formGroup]="editAlbumForm" (ngSubmit)="submit()" class="pure-form pure-form-aligned">
+		<fieldset>
+			<div class="pure-control-group">
+				<label>Name </label>
+				<input type="text" formControlName="name">
+			</div>
 
-	<label>
-		Date:
-		<input type="date" formControlName="date">
-	</label>
+			<div class="pure-control-group">
+				<label>Artist </label>
+				<select formControlName="artist">
+					<option *ngFor="let artist of artists" [value]="artist._id">{{ artist.name }}</option>
+				</select>
+			</div>
 
-	<label>
-		Nominator:
-		<select formControlName="nominator">
-			<option *ngFor="let user of users" [value]="user._id">{{ user.name }}</option>
-		</select>
-	</label>
+			<div class="pure-control-group">
+				<label>Date </label>
+				<input type="date" formControlName="date">
+			</div>
 
-	<label>
-		Round:
-		<select formControlName="round">
-			<option *ngFor="let round of rounds" [value]="round._id">{{ round.number }}</option>
-		</select>
-	</label>
+			<div class="pure-control-group">
+				<label>Nominator </label>
+				<select formControlName="nominator">
+					<option *ngFor="let user of users" [value]="user._id">{{ user.name }}</option>
+				</select>
+			</div>
 
-	<button type="submit">Submit</button>
-	<button type="button" (click)="reset()">Reset</button>
-	<button type="button" (click)="delete()">Delete</button>
+			<div class="pure-control-group">
+				<label>Round </label>
+				<select formControlName="round">
+					<option *ngFor="let round of rounds" [value]="round._id">{{ round.number }}</option>
+				</select>
+			</div>
 
-</form>
+			<div class="pure-controls">
+				<button type="submit" class="pure-button pure-button-primary">Submit</button>
+				<button type="button" (click)="reset()" class="pure-button">Reset</button>
+				<button type="button" (click)="delete()" class="pure-button pure-button-error">Delete</button>
+			</div>
+		</fieldset>
+	</form>
+
+</div>

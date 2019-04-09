@@ -23,3 +23,8 @@ html {
 .pointer {
 	cursor: pointer;
 }
+
+.pure-button-error {
+	background-color: red;
+	color: white;
+}

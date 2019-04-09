@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  submit() {
   	this.authService.login(this.loginForm.value['name'], this.loginForm.value['password']).subscribe(
   	  data => {
         this.globalService.setItem('token', data.token);
