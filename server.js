@@ -246,7 +246,6 @@ app.post(base_url + 'setPassword', function(req, res) {
 });
 
 app.post(base_url + 'forgotPassword', function(req, res) {
-	console.log(email, email_pass);
 	var resp = factory.forgotPassword(req, res);
 });
 
