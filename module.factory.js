@@ -17,6 +17,7 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 		ArtistSchema = new this.Schema({
 			name: String,
 			spotify_id: String,
+			sort_name: String
 		}, {timestamps: {createdAt: 'created_at', updatedAt: 'updated_at'}});
 		this.Artist = mongoose.model('Artist', ArtistSchema);
 		RoundSchema = new this.Schema({
