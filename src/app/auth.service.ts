@@ -13,4 +13,12 @@ export class AuthService {
   login(name: string, password: string) {
   	return this.http.post<any>(this.baseUrl + 'login', { name, password } );
   }
+
+  forgotPassword(name: string) {
+  	return this.http.post<any>(this.baseUrl + 'forgotPassword', { name });
+  }
+
+  resetPassword(token: string, password: string, verifypassword: string) {
+  	return this.http.post<any>(this.baseUrl + 'resetPassword?token=' + token, { password, verifypassword });
+  }
 }
