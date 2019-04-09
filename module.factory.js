@@ -295,11 +295,11 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 		});
 	}
 
-	/*this.resetPassword = function(req, res) {
-		if (req.body.password == req.body.verifypassword) {
+	this.resetPassword = function(req, res) {
+		if (req.body.password && req.body.password == req.body.verifypassword) {
 			var salt = crypto.randomBytes(16).toString('hex');
 			var hash = crypto.pbkdf2Sync(req.body.password, salt, 1000, 64, 'sha512').toString('hex');
-			this.User.findOneAndUpdate( { token: req.params.token }, { salt: salt, hash: hash, reset_password_token: null, reset_password_expires: null }, function(error, user) {
+			this.User.findOneAndUpdate( { reset_password_token: req.query.token }, { salt: salt, hash: hash, reset_password_token: null, reset_password_expires: null }, function(error, user) {
 				if (error) {
 					res.status(500).json(error);
 				} else {
@@ -309,23 +309,8 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 		} else {
 			res.status(401).json('Password mismatch');
 		}
-	}*/
-/*
-	this.loginUser = function (name, password, cb) {
-		this.User.findOne({name: name}, function(error, output) {
-			if (error) {
-				return error;
-			} else {
-				var hash = crypto.pbkdf2Sync(password, output.salt, 1000, 64, 'sha512').toString('hex');
-				if (output.hash === hash) {
-					return cb(null, { output }, {message: 'Logged in successfully'});
-				} else {
-					return cb(null, false, {message: 'Incorrect login info'});
-				}
-			}	
-		})
 	}
-*/
+
 	this.loginUser = function (name, password, done) {
 		this.User.findOne({name: name}, function(error, user) {
 			if (error) {
