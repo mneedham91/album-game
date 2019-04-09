@@ -272,20 +272,13 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 			}
 		}).then((user) => {
 			this.smtpTransport.sendMail({
-				//to: user.email,
-				to: 'mattman91@gmail.com',
+				to: user.email,
 				from: 'albumgame@betterdataservices.com',
 				template: 'forgot-password-email',
 				subject: 'Album Game: Reset your password',
 				context: {
-					url: 'http://localhost:8080/api/v1/resetPassword?token=' + token,
+					url: 'http://album-game.herokuapp.com/api/v1/reset-password?token=' + token,
 					name: user.name
-				},
-				dsn: {
-					id: 'user._id',
-					return: 'headers',
-					notify: ['success', 'failure', 'delay'],
-					recipient: user.email
 				}
 			});
 		}).then(() => {
