@@ -26,6 +26,8 @@ import { ViewVoteSetComponent } from './view-vote-set/view-vote-set.component';
 import { ViewVoteSetsComponent } from './view-vote-sets/view-vote-sets.component';
 import { LoginComponent } from './login/login.component';
 import { AnalysisComponent } from './analysis/analysis.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 const routes: Routes = [
 	{ path: 'add-album', component: AddAlbumComponent },
@@ -54,7 +56,9 @@ const routes: Routes = [
 	{ path: 'view-vote-sets', component: ViewVoteSetsComponent },
 	{ path: 'view-vote-set/:id', component: ViewVoteSetComponent },
 	{ path: 'login', component: LoginComponent },
-	{ path: 'analysis', component: AnalysisComponent }
+	{ path: 'analysis', component: AnalysisComponent },
+	{ path: 'forgot-password', component: ForgotPasswordComponent },
+	{ path: 'reset-password', component: ResetPasswordComponent }
 ];
 
 @NgModule({
