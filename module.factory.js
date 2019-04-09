@@ -277,7 +277,7 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 				template: 'forgot-password-email',
 				subject: 'Album Game: Reset your password',
 				context: {
-					url: 'http://album-game.herokuapp.com/api/v1/reset-password?token=' + token,
+					url: 'http://album-game.herokuapp.com/reset-password?token=' + token,
 					name: user.name
 				}
 			});
