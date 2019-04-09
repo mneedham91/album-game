@@ -173,7 +173,7 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 	}
 
 	this.getRounds = function(query, res) {
-		this.Round.find(query, function(error, output) {
+		this.Round.find(query, null, { sort: { number: -1} }, function(error, output) {
 			if (error) {
 				res.json(error);
 			} else {
