@@ -68,8 +68,8 @@ passport.use(new LocalStrategy({
 		usernameField: 'name',
 		passwordField: 'password'
 	},
-	function (name, password, cb) {
-		return factory.loginUser(name, password, cb);
+	function (name, password, done) {
+		return factory.loginUser(name, password, done);
 	}
 ));
 
@@ -79,7 +79,7 @@ passport.use(new JWTStrategy({
 		secretOrKey: jwt_secret
 	},
 	function (jwtPayload, cb) {
-		factory.verifyUser(jwtPayload.output._id)
+		factory.verifyUser(jwtPayload._id)
 			.then(user => {
 				return cb(null, user);
 			})
@@ -219,21 +219,26 @@ app.delete(base_url + 'voteset/:id', passport.authenticate('jwt', {session: fals
 
 // Auth Routes
 app.post(base_url + 'login', function(req, res) {
-	passport.authenticate('local', {session: false}, (err, user, info) => {
-		if (err || !user) {
-			return res.status(400).json({
-				message: 'Login error: ' + err,
-				user: user
+	passport.authenticate('local', {session: false}, (error, user, info) => {
+		if (error || !user) {
+			res.status(400).json({
+				message: 'Login error: ' + error
+			});
+		} else {
+			req.login(user, {session: false}, (err) => {
+				if (err) {
+					res.json({message: 'error'});
+				} else {
+					const token = jwt.sign(user, jwt_secret);
+					res.json( { id: user._id, token: token } );
+				}
 			});
 		}
-		req.login(user, {session: false}, (err) => {
-			if (err) {
-				res.send(err);
-			}
-			const token = jwt.sign(user, jwt_secret);
-			return res.json( { id: user.output._id, token: token } );
-		});
 	})(req, res);
+});
+
+app.get(base_url + 'login', function(req, res) {
+	var resp = res.status(400).json( { message: 'Use POST' } );
 });
 
 app.post(base_url + 'setPassword', function(req, res) {
@@ -245,9 +250,8 @@ app.post(base_url + 'forgotPassword', function(req, res) {
 });
 
 app.post(base_url + 'resetPassword', function(req, res) {
-	var resp = factory.resetPassword(req, res, next);
+	var resp = factory.resetPassword(req, res);
 });
-
 
 // Spotify Routes
 app.get(base_url + 'spotify/token', function(req, res) {
