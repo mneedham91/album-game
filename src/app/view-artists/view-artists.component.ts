@@ -21,15 +21,6 @@ export class ViewArtistsComponent implements OnInit {
     this.titleService.setTitle('Album Game | View Artists');
   	this.artistService.getArtists().subscribe(data => {
   	  this.artists = data;
-      this.artists.sort((a, b) => {
-        if (a.name < b.name) {
-          return -1;
-        } else if (a.name > b.name) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
   	});
   }
 

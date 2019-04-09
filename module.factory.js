@@ -123,7 +123,7 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 	}
 
 	this.getArtists = function(query, res) {
-		this.Artist.find(query, function(error, output) {
+		this.Artist.find(query, null, { sort: { sort_name: 1} }, function(error, output) {
 			if (error) {
 				res.json(error);
 			} else {
