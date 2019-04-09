@@ -21,8 +21,7 @@ export class ForgotPasswordComponent implements OnInit {
   ngOnInit() {
   	this.titleService.setTitle('Album Game | Forgot Password');
   	this.forgotPasswordForm = this.formBuilder.group({
-      name: '',
-      password: ''
+      name: ''
     });
   }
 
