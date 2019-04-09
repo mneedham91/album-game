@@ -73,7 +73,7 @@ export class EditAlbumComponent implements OnInit {
     this.token = this.globalService.getItem('token');
   }
 
-  onSubmit() {
+  submit() {
   	let date = new DatePipe(navigator.language).transform(this.editAlbumForm.value['date'], 'MM-dd-y');
   	this.editAlbumForm.controls['date'].setValue(date);
   	this.albumService.editAlbum(this.id, this.editAlbumForm.value, this.token).subscribe( data => {

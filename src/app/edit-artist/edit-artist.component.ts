@@ -43,7 +43,7 @@ export class EditArtistComponent implements OnInit {
     this.token = this.globalService.getItem('token');
   }
 
-  onSubmit() {
+  submit() {
   	this.artistService.editArtist(this.id, this.editArtistForm.value, this.token).subscribe( data => {
   	  this.router.navigate(['view-artist', this.id]);
   	});
