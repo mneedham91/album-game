@@ -82,15 +82,26 @@ export class ViewAlbumComponent implements OnInit {
           this.votes = data;
           this.tracks.forEach( (track) => {
             track.votes = new Object();
+            track.faves = 0;
+            track.points = 0;
+            track.unfave = 0;
             this.votes.forEach( (vote) => {
               if (vote.vote_one == track._id) {
                 track.votes[vote.user] = 3;
+                track.faves += 1;
+                track.points += 3;
               } else if (vote.vote_two == track._id) {
                 track.votes[vote.user] = 2;
+                track.faves += 1;
+                track.points += 2;
               } else if (vote.vote_three == track._id) {
                 track.votes[vote.user] = 1;
+                track.faves += 1;
+                track.points += 1;
               } else if (vote.unfave == track._id) {
                 track.votes[vote.user] = -2;
+                track.unfave += 1;
+                track.points -= 2;
               }
             });
           });

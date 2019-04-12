@@ -30,6 +30,9 @@
 					<th>#</th>
 					<th>Name</th>
 					<th *ngFor="let user of users">{{ user.name }}</th>
+					<th>Points</th>
+					<th>Faves</th>
+					<th>Unfaves</th>
 				</tr>
 			</thead>
 			<!-- Iterate tracks -->
@@ -43,6 +46,9 @@
 						<div *ngIf="item.key == user._id"> {{ item.value }} </div>
 					</div>
 				</td>
+				<td><div>{{ track?.points }}</div></td>
+				<td><div>{{ track?.faves }}</div></td>
+				<td><div>{{ track?.unfave }}</div></td>
 			</tr>
 		</table>
 	</div>
