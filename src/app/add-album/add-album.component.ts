@@ -104,7 +104,7 @@ export class AddAlbumComponent implements OnInit {
                });
               });
 	          album.images.forEach(image => {
-	          	if (image.height == 300) {
+	          	if (image.height >= 300) {
 	          		this.spotifyService.downloadImage(image.url, create_data['_id']).subscribe();
 	          	} 
 	          });
@@ -129,7 +129,7 @@ export class AddAlbumComponent implements OnInit {
 	            });
 	          });
 	          album.images.forEach(image => {
-	          	if (image.height == 300) {
+	          	if (image.height >= 300) {
 	          		this.spotifyService.downloadImage(image.url, create_data['_id']).subscribe();
 	      		}
 	          });

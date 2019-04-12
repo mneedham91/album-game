@@ -313,6 +313,7 @@ app.post(base_url + 'spotify/downloadImg', function(req, res) {
 	if (req.body.url && req.body._id) {
 		var img_dir = process.env.IMAGES || 'dev/'
 		var filename = './src/assets/' + img_dir  + req.body._id + '.jpg';
+		console.log(filename);
 		request(req.body.url).pipe(fs.createWriteStream(filename)).on('close', function() {
 			res.json({message: 'Success'});
 		});
