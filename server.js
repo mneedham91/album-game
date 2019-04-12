@@ -311,9 +311,14 @@ app.post(base_url + 'spotify/getAlbumTracks', function(req, res) {
 
 app.post(base_url + 'spotify/downloadImg', function(req, res) {
 	if (req.body.url && req.body._id) {
-		var img_dir = process.env.IMAGES || 'dev/'
-		var filename = './src/assets/' + img_dir  + req.body._id + '.jpg';
-		console.log(filename);
+		var basename = './src/assets/dev/' + req.body._id + '.jpg';
+		if (process.env.IMAGES) {
+			// Production
+			var filename = path.join(__dirname, basename); 
+		} else {
+			// Development
+			var filename = basename;
+		}
 		request(req.body.url).pipe(fs.createWriteStream(filename)).on('close', function() {
 			res.json({message: 'Success'});
 		});

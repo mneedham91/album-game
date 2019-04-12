@@ -103,11 +103,14 @@ export class AddAlbumComponent implements OnInit {
                 this.trackService.createTrack(newTrack, this.token).subscribe();
                });
               });
-	          album.images.forEach(image => {
-	          	if (image.height >= 300) {
-	          		this.spotifyService.downloadImage(image.url, create_data['_id']).subscribe();
-	          	} 
-	          });
+              album.images.sort((a,b) => {
+              	if (a.height < b.height) {
+              		return 1;
+              	} else {
+              		return -1;
+              	}
+              });
+              this.spotifyService.downloadImage(album.images[0].url, create_data['_id']).subscribe();
             this.router.navigate(['view-album', create_data['_id'] ]);
           });
   			});
@@ -128,11 +131,14 @@ export class AddAlbumComponent implements OnInit {
 	              this.trackService.createTrack(newTrack, this.token).subscribe();
 	            });
 	          });
-	          album.images.forEach(image => {
-	          	if (image.height >= 300) {
-	          		this.spotifyService.downloadImage(image.url, create_data['_id']).subscribe();
-	      		}
-	          });
+              album.images.sort((a,b) => {
+              	if (a.height < b.height) {
+              		return 1;
+              	} else {
+              		return -1;
+              	}
+              });
+              this.spotifyService.downloadImage(album.images[0].url, create_data['_id']).subscribe();
 	          this.router.navigate(['view-album', create_data['_id'] ]);
 	        });
   		}
