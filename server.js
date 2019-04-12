@@ -313,7 +313,7 @@ app.post(base_url + 'spotify/downloadImg', function(req, res) {
 	if (req.body.url && req.body._id) {
 		if (process.env.IMAGES) {
 			// Production
-			var basename = './src/assets/prod/' + req.body._id + '.jpg';
+			var basename = './dist/assets/prod/' + req.body._id + '.jpg';
 			var filename = path.join(__dirname, basename); 
 		} else {
 			// Development
