@@ -319,6 +319,7 @@ app.post(base_url + 'spotify/downloadImg', function(req, res) {
 			// Development
 			var filename = basename;
 		}
+		console.log(filename);
 		request(req.body.url).pipe(fs.createWriteStream(filename)).on('close', function() {
 			res.json({message: 'Success'});
 		});
