@@ -100,13 +100,15 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 		this.Track.deleteMany({album: id}, function(error, output) {
 			if (error) {
 				res.json(error);
-			}
-		});
-		this.Album.findByIdAndDelete(id, function(error, output) {
-			if (error) {
-				res.json(error);
 			} else {
-				res.json(output);
+				this.Album.findByIdAndDelete(id, function(error, output) {
+					if (error) {
+						res.json(error);
+					} else {
+						// TODO Delete Album art
+						res.json(output);
+					}
+				});
 			}
 		});
 	}
