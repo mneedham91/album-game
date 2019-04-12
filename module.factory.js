@@ -1,3 +1,5 @@
+var fs = require('fs');
+
 var Factory = function(Schema, mongoose, crypto, smtp) {
 	this.Schema = Schema;
 	this.mongoose = mongoose;
@@ -100,13 +102,25 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 		this.Track.deleteMany({album: id}, function(error, output) {
 			if (error) {
 				res.json(error);
+			}
+		});
+		this.Album.findByIdAndDelete(id, function(error, output) {
+			if (error) {
+				res.json(error);
 			} else {
-				this.Album.findByIdAndDelete(id, function(error, output) {
+				if (process.env.IMAGES) {
+					// Production
+					var basename = './dist/assets/prod/' + id + '.jpg';
+					var filename = path.join(__dirname, basename); 
+				} else {
+					// Development
+					var filename = './src/assets/dev/' + id + '.jpg';
+				}
+				fs.unlink(filename, error => {
 					if (error) {
-						res.json(error);
+						res.status(500).json(error);
 					} else {
-						// TODO Delete Album art
-						res.json(output);
+						res.json( { message: 'Success' } );
 					}
 				});
 			}
