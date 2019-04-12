@@ -24,4 +24,8 @@ export class SpotifyService {
   	return this.http.post<SpotifyTracksSearchResult>(this.baseUrl + 'getAlbumTracks', { token : token, id: id } );
   }
 
+  downloadImage(url: string, _id: string) {
+    return this.http.post<any>(this.baseUrl + 'downloadImg', { url: url, _id: _id} );
+  }
+
 }

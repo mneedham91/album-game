@@ -14,6 +14,7 @@ app.use(cors());
 app.options('*', cors())
 
 const request = require('request');
+var fs = require('fs');
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
@@ -306,6 +307,18 @@ app.post(base_url + 'spotify/getAlbumTracks', function(req, res) {
 			res.json(body);
 		}
 	});
+});
+
+app.post(base_url + 'spotify/downloadImg', function(req, res) {
+	if (req.body.url && req.body._id) {
+		var img_dir = process.env.IMAGES || 'dev/'
+		var filename = './src/assets/' + img_dir  + req.body._id + '.jpg';
+		request(req.body.url).pipe(fs.createWriteStream(filename)).on('close', function() {
+			res.json({message: 'Success'});
+		});
+	} else {
+		res.status(400).json({message: 'Missing parameters'});
+	}
 });
 
 // Angular app

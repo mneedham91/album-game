@@ -103,28 +103,38 @@ export class AddAlbumComponent implements OnInit {
                 this.trackService.createTrack(newTrack, this.token).subscribe();
                });
               });
+	          album.images.forEach(image => {
+	          	if (image.height == 300) {
+	          		this.spotifyService.downloadImage(image.url, create_data['_id']).subscribe();
+	          	} 
+	          });
             this.router.navigate(['view-album', create_data['_id'] ]);
           });
   			});
   		} else {
         // Branch Two: Artist already exists
   			newAlbum.artist = data[0]._id;
-        newAlbum.name = album.name;
-        newAlbum.round = this.currentRound;
-        newAlbum.nominator = this.userID;
-        this.albumService.createAlbum(newAlbum, this.token).subscribe(create_data => {
-          this.spotifyService.getAlbumTracks(this.spotify_token, album.id).subscribe(track_data => {
-            track_data.items.forEach(item => {
-              let newTrack: Track = new Track();
-              newTrack.name = item.name;
-              newTrack.number = item.track_number;
-              newTrack.album = create_data['_id'];
-              newTrack.spotify_id = item.id
-              this.trackService.createTrack(newTrack, this.token).subscribe();
-            });
-          });
-          this.router.navigate(['view-album', create_data['_id'] ]);
-        });
+	        newAlbum.name = album.name;
+	        newAlbum.round = this.currentRound;
+	        newAlbum.nominator = this.userID;
+	        this.albumService.createAlbum(newAlbum, this.token).subscribe(create_data => {
+	          this.spotifyService.getAlbumTracks(this.spotify_token, album.id).subscribe(track_data => {
+	            track_data.items.forEach(item => {
+	              let newTrack: Track = new Track();
+	              newTrack.name = item.name;
+	              newTrack.number = item.track_number;
+	              newTrack.album = create_data['_id'];
+	              newTrack.spotify_id = item.id
+	              this.trackService.createTrack(newTrack, this.token).subscribe();
+	            });
+	          });
+	          album.images.forEach(image => {
+	          	if (image.height == 300) {
+	          		this.spotifyService.downloadImage(image.url, create_data['_id']).subscribe();
+	      		}
+	          });
+	          this.router.navigate(['view-album', create_data['_id'] ]);
+	        });
   		}
   	});
   }
