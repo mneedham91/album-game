@@ -118,7 +118,7 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 				}
 				fs.unlink(filename, error => {
 					if (error) {
-						res.status(500).json(error);
+						res.json( { message: 'No album art found' } );
 					} else {
 						res.json( { message: 'Success' } );
 					}
