@@ -316,7 +316,11 @@ app.post(base_url + 'spotify/getAlbumTracks', function(req, res) {
 app.post(base_url + 'spotify/downloadImg', function(req, res) {
 	if (req.body.url && req.body._id) {
 		var s3 = new aws.S3();
-		request(req.body.url, function(error, response, body) {
+		var req_options = {
+			uri: req.body.url,
+			encoding: null
+		};
+		request(req_options, function(error, response, body) {
 			if (error || response.statusCode !== 200) {
 				console.log(error);
 				res.status(500).json(JSON.stringify(error));
