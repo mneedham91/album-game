@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AlbumService } from '../album.service';
 import { Album } from '../album';
 import { ArtistService } from '../artist.service';
+import { GlobalService } from '../global.service';
 import { RoundService } from '../round.service';
 import { Round } from '../round';
 import { UserService } from '../user.service';
@@ -15,15 +16,18 @@ import { environment } from '../../environments/environment';
   styleUrls: ['./view-round.component.css']
 })
 export class ViewRoundComponent implements OnInit {
+  canEdit: boolean;
   currentRound: boolean;
   id: string;
   img: string;
   round: Round;
+  userID: string;
   albums: Album[];
 
   constructor(
     private albumService: AlbumService,
     private artistService: ArtistService,
+    private globalService: GlobalService,
   	private router: Router,
   	private roundService: RoundService,
   	private route: ActivatedRoute,
@@ -36,8 +40,14 @@ export class ViewRoundComponent implements OnInit {
   		this.id = params['id'];
       this.img = environment.images + this.id + '.png';
   	});
+    this.userID = this.globalService.getItem('userID');
   	this.roundService.getRound(this.id).subscribe(data => {
   		this.round = data;
+      if (this.round.nominator == this.userID) {
+        this.canEdit = true;
+      } else {
+        this.canEdit = false;
+      }
       this.userService.getUser(this.round.nominator).subscribe(data => {
         this.round.nominator = data.name
       });
