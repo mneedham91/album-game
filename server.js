@@ -156,6 +156,7 @@ app.patch(base_url + 'round/:id', passport.authenticate('jwt', {session: false})
 });
 
 app.post(base_url + 'round/:id/image', passport.authenticate('jwt', {session: false}), function(req, res) {
+	console.log(req.body.image);
 	var s3 = new aws.S3();
 	s3.putObject({
 		Body: req.body.image,
