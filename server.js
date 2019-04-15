@@ -9,6 +9,10 @@ var LocalStrategy = require('passport-local').Strategy;
 var JWTStrategy = passportJWT.Strategy;
 var ExtractJWT = passportJWT.ExtractJwt;
 
+var aws = require('aws-sdk');
+aws.config.region = process.env.AWS_REGION;
+var AWS_BUCKET = process.env.AWS_BUCKET;
+
 const cors = require('cors');
 app.use(cors());
 app.options('*', cors())
@@ -310,6 +314,54 @@ app.post(base_url + 'spotify/getAlbumTracks', function(req, res) {
 });
 
 app.post(base_url + 'spotify/downloadImg', function(req, res) {
+	if (req.body.url && req.body._id) {
+		var s3 = new aws.S3();
+		request(req.body.url, function(error, response, body) {
+			if (error || response.statusCode !== 200) {
+				console.log(error);
+				res.status(500).json(JSON.stringify(error));
+			} else {
+				s3.putObject({
+					Body: body,
+					Key: path,
+					Bucket: AWS_BUCKET
+				}, function(error, data) {
+					if (error) {
+						console.log(error);
+						res.status(500).json(JSON.stringify(error));
+					} else {
+						res.json({message: 'Success'});
+					}
+				});
+			}
+		});
+		/*var s3 = new aws.S3();
+		var fileName = req.body._id + '.jpg';
+		var s3params = {
+			Bucket: AWS_BUCKET,
+			Key: fileName,
+			Expires: 60,
+			ContentType: 'image/jpeg',
+			ACL: 'public-read'
+		};
+		s3.getSignedUrl('putObject', s3params, function(error, data) {
+			if (error) {
+				console.log(error);
+				res.status(500).json({message: error});
+			} else {
+				var returnData = {
+					signedRequest: data,
+					url: 'https://${AWS_BUCKET}.s3.amazonaws.com/${fileName}'
+				};
+				res.json(JSON.stringify(returnData));
+			}
+		});*/
+	} else {
+		res.status(400).json({message: 'Missing parameters'});
+	}
+});
+
+app.post(base_url + 'spotify/downloadImgDev', function(req, res) {
 	if (req.body.url && req.body._id) {
 		if (process.env.IMAGES) {
 			// Production
