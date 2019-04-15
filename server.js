@@ -165,9 +165,9 @@ app.post(base_url + 'round/:id/image', passport.authenticate('jwt', {session: fa
 		ACL: 'public-read'
 	}, function(error, data) {
 		if (error) {
-			res.status(500).json(JSON.stringify(error));
+			var resp = res.status(500).json(JSON.stringify(error));
 		} else {
-			res.json({message: 'Success'});
+			var resp = res.json({message: 'Success'});
 		}
 	});
 });
