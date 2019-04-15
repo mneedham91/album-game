@@ -155,6 +155,22 @@ app.patch(base_url + 'round/:id', passport.authenticate('jwt', {session: false})
 	var resp = factory.updateRound(req.params.id, req.body, res);
 });
 
+app.post(base_url + 'round/:id/image', passport.authenticate('jwt', {session: false}), function(req, res) {
+	var s3 = new aws.S3();
+	s3.putObject({
+		Body: req.body.image,
+		Key: req.params.id + '.png',
+		Bucket: AWS_BUCKET,
+		ACL: 'public-read'
+	}, function(error, data) {
+		if (error) {
+			res.status(500).json(JSON.stringify(error));
+		} else {
+			res.json({message: 'Success'});
+		}
+	});
+});
+
 app.delete(base_url + 'round/:id', passport.authenticate('jwt', {session: false}), function(req, res) {
 	var resp = factory.deleteRound(req.params.id, res);
 });

@@ -34,6 +34,7 @@ export class EditRoundComponent implements OnInit {
   	this.editRoundForm = this.formBuilder.group({
   		name: '',
   		description: '',
+      image: '',
   		nominator: [''],
   		number: ''
   	});
@@ -54,15 +55,24 @@ export class EditRoundComponent implements OnInit {
   }
 
   onSubmit() {
-  	this.roundService.editRound(this.id, this.editRoundForm.value, this.token).subscribe( data => {
-  	  this.router.navigate(['view-round', this.id]);
-  	});
+    if (this.editRoundForm.value['image'] != null) {
+      this.roundService.editRoundImage(this.id, this.editRoundForm.value['image'], this.token).subscribe(output => {
+        this.roundService.editRound(this.id, this.editRoundForm.value, this.token).subscribe(data => {
+          this.router.navigate(['view-round', this.id]);
+        });
+      });
+    } else {
+    	this.roundService.editRound(this.id, this.editRoundForm.value, this.token).subscribe(data => {
+        this.router.navigate(['view-round', this.id]);
+      });
+    }
   }
 
   reset() {
     this.editRoundForm.setValue({
       name: this.round.name,
       description: this.round.description,
+      image: null,
       nominator: this.round.nominator,
       number: this.round.number
     });
