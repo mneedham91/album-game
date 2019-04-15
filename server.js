@@ -322,7 +322,6 @@ app.post(base_url + 'spotify/downloadImg', function(req, res) {
 		};
 		request(req_options, function(error, response, body) {
 			if (error || response.statusCode !== 200) {
-				console.log(error);
 				res.status(500).json(JSON.stringify(error));
 			} else {
 				s3.putObject({
@@ -332,7 +331,6 @@ app.post(base_url + 'spotify/downloadImg', function(req, res) {
 					ACL: 'public-read'
 				}, function(error, data) {
 					if (error) {
-						console.log(error);
 						res.status(500).json(JSON.stringify(error));
 					} else {
 						res.json({message: 'Success'});
@@ -340,27 +338,6 @@ app.post(base_url + 'spotify/downloadImg', function(req, res) {
 				});
 			}
 		});
-		/*var s3 = new aws.S3();
-		var fileName = req.body._id + '.jpg';
-		var s3params = {
-			Bucket: AWS_BUCKET,
-			Key: fileName,
-			Expires: 60,
-			ContentType: 'image/jpeg',
-			ACL: 'public-read'
-		};
-		s3.getSignedUrl('putObject', s3params, function(error, data) {
-			if (error) {
-				console.log(error);
-				res.status(500).json({message: error});
-			} else {
-				var returnData = {
-					signedRequest: data,
-					url: 'https://${AWS_BUCKET}.s3.amazonaws.com/${fileName}'
-				};
-				res.json(JSON.stringify(returnData));
-			}
-		});*/
 	} else {
 		res.status(400).json({message: 'Missing parameters'});
 	}
