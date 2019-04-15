@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   baseUrl: '/api/v1/',
-  images: 'prod/'
+  images: 'http://s3.amazonaws.com/album-game/';
 };

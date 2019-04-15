@@ -34,7 +34,7 @@ export class ViewRoundComponent implements OnInit {
     this.titleService.setTitle('Album Game | View Round');
   	this.route.params.subscribe(params => {
   		this.id = params['id'];
-      this.img = '/assets/' + environment.images + this.id + '.png';
+      this.img = environment.images + this.id + '.png';
   	});
   	this.roundService.getRound(this.id).subscribe(data => {
   		this.round = data;

@@ -25,7 +25,7 @@ export class ViewAlbumsComponent implements OnInit {
     private titleService: Title) { }
 
   ngOnInit() {
-    this.folder = '/assets/' + environment.images;
+    this.folder = environment.images;
     this.rows = [];
     this.titleService.setTitle('Album Game | View Albums');
     this.roundService.getRounds().subscribe(data => {

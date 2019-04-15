@@ -50,7 +50,7 @@ export class ViewAlbumComponent implements OnInit {
     this.titleService.setTitle('Album Game | View Album');
   	this.route.params.subscribe(params => {
   		this.id = params['id'];
-      this.img = '/assets/' + environment.images + this.id + '.jpg';
+      this.img = environment.images + this.id + '.jpg';
   	});
     this.userID = this.globalService.getItem('userID');
   	this.albumService.getAlbum(this.id).subscribe(data => {
