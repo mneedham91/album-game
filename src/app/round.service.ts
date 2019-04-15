@@ -41,7 +41,7 @@ export class RoundService {
     let httpOptions = {
       headers: new HttpHeaders( { 'Authorization': 'Bearer ' + token } )
     };
-    return this.http.patch(this.baseUrl + 'round/' + id + '/image', image, httpOptions);
+    return this.http.post(this.baseUrl + 'round/' + id + '/image', image, httpOptions);
   }
 
   deleteRound(id: string, token: string) {
