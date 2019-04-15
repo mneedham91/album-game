@@ -323,7 +323,7 @@ app.post(base_url + 'spotify/downloadImg', function(req, res) {
 			} else {
 				s3.putObject({
 					Body: body,
-					Key: path,
+					Key: req.body._id + '.jpg',
 					Bucket: AWS_BUCKET
 				}, function(error, data) {
 					if (error) {
