@@ -1,13 +1,31 @@
-<form [formGroup]="spotifySearchAlbumForm" (ngSubmit)="search()">
-	<label>
-		What album would you like to add?
-		<input type="text" formControlName="name">
-	</label>
+<div class="pure-u-1">
 
-	<button type="button" (click)="search()">Search</button>
-	<button type="button" (click)="reset()">Reset</button>
+	<div class="pure-u-1">
+		<form [formGroup]="spotifySearchAlbumForm" (ngSubmit)="search()" class="pure-form">
+			<fieldset>
+				<legend>What album would you like to add?</legend>
+				
+				<input type="text" formControlName="name">
 
-</form>
-<p *ngFor="let album of albums | slice:0:5">
-	<img width="320" height="320" src="{{ album.images[0].url }}" (click)="select(album)">
-</p>
+				<button type="button" (click)="search()" class="pure-button pure-button-primary">Search</button>
+				<button type="button" (click)="reset()" class="pure-button">Reset</button>
+
+				<div *ngIf="errorMsg" class="pure-u-1 error">
+					<div class="pure-u-1"></div>
+					<div class="pure-u-1">{{ errorMsg}}</div>
+				</div>
+
+			</fieldset>
+		</form>
+	</div>
+
+	<div class="pure-u-1"></div>
+
+	<div *ngFor="let album of albums | slice:0:5" class="pure-u-1">
+		<div class="pure-u-1">
+			<img width="320" height="320" src="{{ album.images[0].url }}" (click)="select(album)" class="pure-img pointer">
+		</div>
+		<div class="pure-u-1"></div>
+	</div>
+
+</div>
