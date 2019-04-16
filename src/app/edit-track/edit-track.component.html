@@ -1,22 +1,29 @@
-<form [formGroup]="editTrackForm" (ngSubmit)="onSubmit()">
-	<label>
-		Name:
-		<input type="text" formControlName="name">
-	</label>
+<div class="pure-u-1">
 
-	<label>
-		Album:
-		<select formControlName="album">
-			<option *ngFor="let album of albums" [value]="album._id">{{ album.name }}</option>
-		</select>
-	</label>
+	<form [formGroup]="editTrackForm" (ngSubmit)="onSubmit()" class="pure-form pure-form-aligned">
+		<fieldset>
+			<div class="pure-control-group">
+				<label>Name </label>
+				<input type="text" formControlName="name">
+			</div>
+			
+			<div class="pure-control-group">
+				<label>Album </label>
+				<select formControlName="album">
+					<option *ngFor="let album of albums" [value]="album._id">{{ album.name }}</option>
+				</select>
+			</div>
 
-	<label>
-		Number:
-		<input type="text" formControlName="number">
-	</label>
+			<div class="pure-control-group">
+				<label>Number </label>
+				<input type="text" formControlName="number">
+			</div>
 
-	<button type="submit">Submit</button>
-	<button type="button" (click)="reset()">Reset</button>
+			<div class="pure-controls">
+				<button type="submit" class="pure-button pure-button-primary">Submit</button>
+				<button type="button" (click)="reset()" class="pure-button">Reset</button>
+			</div>
+		</fieldset>
+	</form>
 
-</form>
+</div>
