@@ -37,11 +37,13 @@ export class RoundService {
   	return this.http.patch(this.baseUrl + 'round/' + id, data, httpOptions);
   }
 
-  editRoundImage(id: string, image: any, token: string) {
+  editRoundImage(id: string, image: File, token: string) {
     let httpOptions = {
       headers: new HttpHeaders( { 'Authorization': 'Bearer ' + token } )
     };
-    return this.http.post(this.baseUrl + 'round/' + id + '/image', image, httpOptions);
+    let data = new FormData();
+    data.append('image', image);
+    return this.http.post(this.baseUrl + 'round/' + id + '/image', data, httpOptions);
   }
 
   deleteRound(id: string, token: string) {

@@ -1,6 +1,6 @@
 <div class="pure-u-1">
 
-	<form [formGroup]="editRoundForm" (ngSubmit)="onSubmit()" class="pure-form pure-form-aligned">
+	<form [formGroup]="editRoundForm" (ngSubmit)="submit()" class="pure-form pure-form-aligned">
 		<fieldset>
 			<div class="pure-control-group">
 				<label>Round Name </label> 
@@ -24,16 +24,32 @@
 				<input type="text" formControlName="number">
 			</div>
 
-			<div class="pure-control-group">
-				<label>Image </label>
-				<input type="file" formControlName="image">
-			</div>
-
 			<div class="pure-controls">
 				<button type="submit">Submit</button>
 				<button type="button" (click)="reset()">Reset</button>
 			</div>
 		</fieldset>
+	</form>
+
+	<hr>
+
+	<form [formGroup]="editRoundImageForm" (ngSubmit)="imageSubmit()" class="pure-form pure-form-aligned">
+
+		<fieldset>
+
+			<div class="pure-control-group">
+				<label>Image </label>
+				<input type="file" (change)="fileChange($event)" formControlName="image">
+			</div>
+
+			<div *ngIf="errorMsg" class="pure-control-group error">{{ errorMsg }}</div>
+
+			<div class="pure-controls">
+				<button type="submit">Submit</button>
+			</div>
+
+		</fieldset>
+
 	</form>
 
 </div>

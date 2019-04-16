@@ -15,7 +15,10 @@ import { User } from '../user'
 })
 export class EditRoundComponent implements OnInit {
   editRoundForm: FormGroup;
+  editRoundImageForm: FormGroup;
+  errorMsg: string;
   id: string;
+  image_file: File;
   round: Round;
   token: string;
   users: User[];
@@ -34,10 +37,12 @@ export class EditRoundComponent implements OnInit {
   	this.editRoundForm = this.formBuilder.group({
   		name: '',
   		description: '',
-      image: '',
-  		nominator: [''],
+  		nominator: '',
   		number: ''
   	});
+    this.editRoundImageForm = this.formBuilder.group({
+      image: null
+    });
   	this.route.params.subscribe(params => {
   		this.id = params['id'];
   	});
@@ -54,17 +59,26 @@ export class EditRoundComponent implements OnInit {
     this.token = this.globalService.getItem('token');
   }
 
-  onSubmit() {
-    if (this.editRoundForm.value['image'] != null) {
-      this.roundService.editRoundImage(this.id, this.editRoundForm.value['image'], this.token).subscribe(output => {
-        this.roundService.editRound(this.id, this.editRoundForm.value, this.token).subscribe(data => {
-          this.router.navigate(['view-round', this.id]);
-        });
-      });
-    } else {
-    	this.roundService.editRound(this.id, this.editRoundForm.value, this.token).subscribe(data => {
+  fileChange(event) {
+    let fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      this.image_file = fileList[0];
+    }
+  }
+
+  submit() {
+    this.roundService.editRound(this.id, this.editRoundForm.value, this.token).subscribe(data => {
+      this.router.navigate(['view-round', this.id]);
+    });
+  }
+
+  imageSubmit() {
+    if (this.image_file) {
+      this.roundService.editRoundImage(this.id, this.image_file, this.token).subscribe(output => {
         this.router.navigate(['view-round', this.id]);
       });
+    } else {
+      this.errorMsg = 'No image file';
     }
   }
 
@@ -72,7 +86,6 @@ export class EditRoundComponent implements OnInit {
     this.editRoundForm.setValue({
       name: this.round.name,
       description: this.round.description,
-      image: null,
       nominator: this.round.nominator,
       number: this.round.number
     });
