@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlbumService } from '../album.service';
 import { Album } from '../album';
@@ -19,12 +19,13 @@ import { VoteSet } from '../vote-set';
   styleUrls: ['./add-vote-set.component.css']
 })
 export class AddVoteSetComponent implements OnInit {
-  voteForm: FormGroup;
-  id: string;
   album: Album;
+  errorMsg: string;
+  id: string;
   token: string;
   tracks: Track[];
   userID: any;
+  voteForm: FormGroup;
 
   constructor(
   	private formBuilder: FormBuilder,
@@ -42,10 +43,10 @@ export class AddVoteSetComponent implements OnInit {
   ngOnInit() {
   	this.titleService.setTitle('Album Game | Vote');
   	this.voteForm = this.formBuilder.group({
-  		vote_one: '',
-  		vote_two: '',
-  		vote_three: '',
-  		unfave: ''
+  		vote_one: ['', Validators.required],
+  		vote_two: ['', Validators.required],
+  		vote_three: ['', Validators.required],
+  		unfave: ['', Validators.required]
   	});
   	this.route.params.subscribe(params => {
   		this.id = params['id'];
@@ -79,13 +80,26 @@ export class AddVoteSetComponent implements OnInit {
   }
 
   submit() {
-    let vote_set: VoteSet = new VoteSet();
-    vote_set = this.voteForm.value;
-    vote_set.user = this.userID;
-    vote_set.album = this.id;
-  	this.voteSetService.createVoteSet(vote_set, this.token).subscribe(data => {
-  	  this.router.navigate(['view-album', this.id]);
-  	});
+    this.errorMsg = null;
+    Object.keys(this.voteForm.controls).forEach(key => {
+      let controlErrors: ValidationErrors = this.voteForm.get(key).errors;
+      if (controlErrors != null) {
+        this.errorMsg = 'Incomplete entry';
+      }
+    });
+    if (this.errorMsg == null) {
+      let vote_set: VoteSet = new VoteSet();
+      vote_set = this.voteForm.value;
+      if ( (vote_set.vote_one == vote_set.vote_two) || (vote_set.vote_one == vote_set.vote_three) || (vote_set.vote_one == vote_set.unfave) || (vote_set.vote_two == vote_set.vote_three) || (vote_set.vote_two == vote_set.unfave) || (vote_set.vote_three == vote_set.unfave) ) {
+        this.errorMsg = 'Duplicate votes';
+      } else {
+        vote_set.user = this.userID;
+        vote_set.album = this.id;
+    	  this.voteSetService.createVoteSet(vote_set, this.token).subscribe(data => {
+    	    this.router.navigate(['view-album', this.id]);
+    	  });
+      }
+    }
   }
 
   reset() {

@@ -1,52 +1,65 @@
-<p>Name: {{ album?.name }}</p>
-<p><a [routerLink]="['view-artist', album?.artist]">Artist: {{ album?.artist }}</a></p>
-<p><a [routerLink]="['view-user', album?.nominator]">Nominator: {{ album?.nominator }}</a></p>
-<p>Round: {{ album?.round }}</p>
+<div class="pure-u-1">
 
-<form [formGroup]="voteForm" (ngSubmit)="submit()">
-	<div><label>
-		Fav #1: 
-		<select formControlName="vote_one">
-			<option *ngFor="let track of tracks" [value]="track._id">{{ track.name }}</option>
-		</select>
-	</label></div>
-
-	<div><label>
-		Fav #2: 
-		<select formControlName="vote_two">
-			<option *ngFor="let track of tracks" [value]="track._id">{{ track.name }}</option>
-		</select>
-	</label></div>
-
-	<div><label>
-		Fav #3: 
-		<select formControlName="vote_three">
-			<option *ngFor="let track of tracks" [value]="track._id">{{ track.name }}</option>
-		</select>
-	</label></div>
-
-	<div><label>
-		Unfave: 
-		<select formControlName="unfave">
-			<option *ngFor="let track of tracks" [value]="track._id">{{ track.name }}</option>
-		</select>
-	</label></div>
-
-	<div>
-		<button type="submit">Submit</button>
-		<button type="button" (click)="reset()">Reset</button>
+	<div *ngIf="album" class="pure-u-1">
+		<div>Name: {{ album?.name }}</div>
+		<div ><a [routerLink]="['view-artist', album.artist]">Artist: {{ album?.artist }}</a></div>
+		<div><a [routerLink]="['view-user', album.nominator]">Nominator: {{ album?.nominator }}</a></div>
+		<div>Round: {{ album?.round }}</div>
 	</div>
 
-</form>
+	<div class="pure-u-1"></div>
 
-<table>
-	<tr>
-		<th>#</th>
-		<th>Name</th>
-	</tr>
-	<!-- Iterate tracks -->
-	<tr *ngFor="let track of tracks">
-		<td>{{ track?.number }}</td>
-		<td>{{ track?.name }}</td>
-	</tr>
-</table>
+	<form [formGroup]="voteForm" (ngSubmit)="submit()" class="pure-form pure-form-aligned">
+		<fieldset>
+			<div class="pure-control-group">
+				<label>Fav #1 </label> 
+				<select formControlName="vote_one">
+					<option *ngFor="let track of tracks" [value]="track._id">{{ track.name }}</option>
+				</select>
+			</div>
+
+			<div class="pure-control-group">
+				<label>Fav #2 </label> 
+				<select formControlName="vote_two">
+					<option *ngFor="let track of tracks" [value]="track._id">{{ track.name }}</option>
+				</select>
+			</div>
+
+			<div class="pure-control-group">
+				<label>Fav #3 </label> 
+				<select formControlName="vote_three">
+					<option *ngFor="let track of tracks" [value]="track._id">{{ track.name }}</option>
+				</select>
+			</div>
+
+			<div class="pure-control-group">
+				<label>Unfave </label> 
+				<select formControlName="unfave">
+					<option *ngFor="let track of tracks" [value]="track._id">{{ track.name }}</option>
+				</select>
+			</div>
+
+			<div *ngIf="errorMsg" class="pure-control-group error">{{ errorMsg }}</div>
+
+			<div class="pure-controls">
+				<button type="submit" class="pure-button pure-button-primary">Submit</button>
+				<button type="button" (click)="reset()" class="pure-button">Reset</button>
+			</div>
+		</fieldset>
+	</form>
+
+	<div class="pure-u-1"></div>
+
+	<table class="pure-table pure-table-horizontal">
+		<tr>
+			<th>#</th>
+			<th>Name</th>
+		</tr>
+		<!-- Iterate tracks -->
+		<tr *ngFor="let track of tracks">
+			<td>{{ track?.number }}</td>
+			<td>{{ track?.name }}</td>
+		</tr>
+	</table>
+
+</div>
