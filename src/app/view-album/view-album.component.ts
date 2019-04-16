@@ -30,6 +30,10 @@ export class ViewAlbumComponent implements OnInit {
   img: string;
   nominator: User;
   round: Round;
+  sortFavesBoolean: boolean;
+  sortPointsBoolean: boolean;
+  sortUnfavesBoolean: boolean;
+  sortUserBoolean: boolean;
   tracks: Track[];
   users: User[];
   userID: string;
@@ -49,6 +53,10 @@ export class ViewAlbumComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('Album Game | View Album');
+    this.sortPointsBoolean = false;
+    this.sortFavesBoolean = false;
+    this.sortUnfavesBoolean = false;
+    this.sortUserBoolean = false;
   	this.route.params.subscribe(params => {
   		this.id = params['id'];
       this.img = environment.images + this.id + '.jpg';
@@ -111,12 +119,118 @@ export class ViewAlbumComponent implements OnInit {
                 track.votes[vote.user] = -2;
                 track.unfave += 1;
                 track.points -= 2;
+              } else {
+                track.votes[vote.user] = 0;
               }
             });
           });
         });
       });
   	});
+  }
+
+  sortPoints() {
+    if (this.sortPointsBoolean == false) {
+      this.tracks.sort((a,b) => {
+        if (a.points > b.points) {
+          return -1;
+        } else if (a.points < b.points) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+      this.sortPointsBoolean = true;
+    } else {
+      this.tracks.sort((a,b) => {
+        if (a.points > b.points) {
+          return 1;
+        } else if (a.points < b.points) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
+      this.sortPointsBoolean = false;
+    }
+  }
+
+  sortFaves() {
+    if (this.sortFavesBoolean == false) {
+      this.tracks.sort((a,b) => {
+        if (a.faves > b.faves) {
+          return -1;
+        } else if (a.faves < b.faves) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+      this.sortFavesBoolean = true;
+    } else {
+      this.tracks.sort((a,b) => {
+        if (a.faves > b.faves) {
+          return 1;
+        } else if (a.faves < b.faves) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
+      this.sortFavesBoolean = false;
+    }
+  }
+
+  sortUnfaves() {
+    if (this.sortUnfavesBoolean == false) {
+      this.tracks.sort((a,b) => {
+        if (a.unfave > b.unfave) {
+          return -1;
+        } else if (a.unfave < b.unfave) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+      this.sortUnfavesBoolean = true;
+    } else {
+      this.tracks.sort((a,b) => {
+        if (a.unfave > b.unfave) {
+          return 1;
+        } else if (a.unfave < b.unfave) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
+      this.sortUnfavesBoolean = false;
+    }
+  }
+
+  sortUser(user: string) {
+    if (this.sortUserBoolean == false) {
+      this.tracks.sort((a,b) => {
+        if (a.votes[user] > b.votes[user]) {
+          return -1;
+        } else if (a.votes[user] < b.votes[user]) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+      this.sortUserBoolean = true;
+    } else {
+      this.tracks.sort((a,b) => {
+        if (a.votes[user] > b.votes[user]) {
+          return 1;
+        } else if (a.votes[user] < b.votes[user]) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
+      this.sortUserBoolean = false;
+    }
   }
 
   viewArtist(name: string): void {

@@ -43,10 +43,10 @@
 				<tr>
 					<th>#</th>
 					<th>Name</th>
-					<th *ngFor="let user of users">{{ user.name }}</th>
-					<th>Points</th>
-					<th>Faves</th>
-					<th>Unfaves</th>
+					<th *ngFor="let user of users" (click)="sortUser(user._id)" class="pointer">{{ user.name }}</th>
+					<th (click)="sortPoints()" class="pointer">Points</th>
+					<th (click)="sortFaves()" class="pointer">Faves</th>
+					<th (click)="sortUnfaves()" class="pointer">Unfaves</th>
 				</tr>
 			</thead>
 			<!-- Iterate tracks -->
@@ -57,7 +57,7 @@
 				<td *ngFor="let user of users">
 					<!-- For each track, iterate votes -->
 					<div *ngFor="let item of track.votes | keyvalue">
-						<div *ngIf="item.key == user._id"> {{ item.value }} </div>
+						<div *ngIf="(item.key == user._id) && (item.value != 0)"> {{ item.value }} </div>
 					</div>
 				</td>
 				<td><div>{{ track?.points }}</div></td>
