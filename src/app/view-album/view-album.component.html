@@ -20,7 +20,21 @@
 	</div>
 
 	<div class="pure-u-1"></div>
-	<div *ngIf="canEdit"><a [routerLink]="['/edit-album', album?._id]">Edit Album</a><div class="pure-u-1"></div></div>
+
+	<div class="pure-u-1">
+		<div *ngIf="canEdit" class="pure-u-1-4">
+			<a [routerLink]="['/edit-album', album?._id]">
+				<button type="button" class="pure-button">Edit Album</button>
+			</a>
+		</div>
+		
+		<div *ngIf="canVote" class="pure-u-1-4">
+			<a [routerLink]="['/vote/', album?._id]">
+				<button type="button" class="pure-button pure-button-primary">Vote</button>
+			</a>
+		</div>
+	</div>
+
 	<div class="pure-u-1"></div>
 
 	<div class="pure-u-1">

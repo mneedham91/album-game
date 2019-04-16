@@ -25,6 +25,7 @@ export class ViewAlbumComponent implements OnInit {
   album: Album;
   artist: Artist;
   canEdit: boolean;
+  canVote: boolean;
   id: string;
   img: string;
   nominator: User;
@@ -80,7 +81,15 @@ export class ViewAlbumComponent implements OnInit {
         });
         this.voteSetService.getVoteSets({album: this.id}).subscribe(data => {
           this.votes = data;
-          this.tracks.forEach( (track) => {
+          if (this.userID) {
+            this.canVote = true;
+            this.votes.forEach(voteset => {
+              if (voteset.user == this.userID) {
+                this.canVote = false;
+              }
+            });
+          }
+          this.tracks.forEach(track => {
             track.votes = new Object();
             track.faves = 0;
             track.points = 0;
