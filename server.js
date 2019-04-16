@@ -172,7 +172,7 @@ app.patch(base_url + 'round/:id', passport.authenticate('jwt', {session: false})
 	var resp = factory.updateRound(req.params.id, req.body, res);
 });
 
-app.post(base_url + 'round/:id/image', passport.authenticate('jwt', {session: false}), upload.array('image', 1), function(req, res) {
+app.post(base_url + 'round/:id/image', passport.authenticate('jwt', {session: false}), upload.single('image'), function(req, res) {
 	var resp = res.json({message: 'Success'});
 });
 
