@@ -3,7 +3,12 @@
 	<div class="pure-u-1">Round {{ round?.number }} - {{ round?.name }}</div>
 	<div class="pure-u-1"></div>
 	
-	<div *ngIf="currentRound && userID"><a [routerLink]="['/add-album']">Add Album</a><div class="pure-u-1"></div></div>
+	<div *ngIf="currentRound && userID && (albums?.length < 4)">
+		<a [routerLink]="['/add-album']">
+			<button class="pure-button pure-button-primary">Add Album</button>
+		</a>
+		<div class="pure-u-1"></div>
+	</div>
 
 	<div class="pure-u-1"></div>
 	<div class="pure-u-1 center"><img class="pure-img" [src]="(img)"></div>
@@ -15,7 +20,11 @@
 	<div class="pure-u-1"></div>
 
 	<div class="pure-u-1"></div>
-	<div *ngIf="canEdit"><a [routerLink]="['/edit-round', round?._id]">Edit Round</a><div class="pure-u-1"></div></div>
+	<div *ngIf="canEdit">
+		<a [routerLink]="['/edit-round', round?._id]">
+			<button class="pure-button">Edit Round</button>
+		</a>
+		<div class="pure-u-1"></div></div>
 	<div class="pure-u-1"></div>
 
 	<div class="pure-u-1">
