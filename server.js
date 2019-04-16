@@ -23,6 +23,23 @@ var fs = require('fs');
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+var multer = require('multer');
+var multerS3 = require('multer-s3');
+
+var s3 = new aws.S3();
+var upload = multer({
+	storage: multerS3({
+		s3: s3,
+		bucket: AWS_BUCKET,
+		acl: 'public-read',
+		/*metadata: function(req, file, cb) {
+			cb(null, Object.assign({}, req.body));
+		},*/
+		key: function(req, file, cb) {
+			cb(null, req.params.id + '.png');
+		}
+	})
+});
 
 var distDir = __dirname + "/dist/";
 app.use(express.static(distDir));
@@ -155,21 +172,8 @@ app.patch(base_url + 'round/:id', passport.authenticate('jwt', {session: false})
 	var resp = factory.updateRound(req.params.id, req.body, res);
 });
 
-app.post(base_url + 'round/:id/image', passport.authenticate('jwt', {session: false}), function(req, res) {
-	console.log(req.body.image);
-	var s3 = new aws.S3();
-	s3.putObject({
-		Body: req.body.image,
-		Key: req.params.id + '.png',
-		Bucket: AWS_BUCKET,
-		ACL: 'public-read'
-	}, function(error, data) {
-		if (error) {
-			var resp = res.status(500).json(JSON.stringify(error));
-		} else {
-			var resp = res.json({message: 'Success'});
-		}
-	});
+app.post(base_url + 'round/:id/image', passport.authenticate('jwt', {session: false}), upload.array('image', 1), function(req, res) {
+	var resp = res.json({message: 'Success'});
 });
 
 app.delete(base_url + 'round/:id', passport.authenticate('jwt', {session: false}), function(req, res) {
