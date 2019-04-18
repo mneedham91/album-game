@@ -354,7 +354,8 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 
 	// User Functions
 	this.getUser = function(id, res) {
-		this.User.findById(id, function(error, output) {
+		var projection = '-hash -salt -reset_password_token -reset_password_expires';
+		this.User.findById(id, projection, function(error, output) {
 			if (error) {
 				res.json(error);
 			} else {
@@ -364,7 +365,8 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 	}
 
 	this.getUsers = function(query, res) {
-		this.User.find(query, function(error, output) {
+		var projection = '-hash -salt -reset_password_token -reset_password_expires';
+		this.User.find(query, projection, function(error, output) {
 			if (error) {
 				res.json(error);
 			} else {

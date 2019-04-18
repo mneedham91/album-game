@@ -11,7 +11,7 @@ var ExtractJWT = passportJWT.ExtractJwt;
 
 var aws = require('aws-sdk');
 aws.config.region = process.env.AWS_REGION;
-var AWS_BUCKET = process.env.AWS_BUCKET;
+var AWS_BUCKET = process.env.AWS_BUCKET || 'album-game';
 
 const cors = require('cors');
 app.use(cors());
