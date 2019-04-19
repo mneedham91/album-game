@@ -1,4 +1,4 @@
-require('dotenv').config();
+const result = require('dotenv').config();
 
 var sslRedirect = require('heroku-ssl-redirect');
 var express = require('express');
