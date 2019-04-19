@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms';
 import { GlobalService } from '../global.service';
 import { Router } from '@angular/router';
 import { RoundService } from '../round.service';
@@ -15,6 +15,7 @@ import { User } from '../user'
 })
 export class AddRoundComponent implements OnInit {
   addRoundForm: FormGroup;
+  errorMsg: string;
   roundNumber: number;
   token: string;
   userID: string;
@@ -49,18 +50,27 @@ export class AddRoundComponent implements OnInit {
     this.token = this.globalService.getItem('token');
   }
 
-  onSubmit() {
-  	this.addRoundForm.value['number'] = this.roundNumber;
-  	this.roundService.createRound(this.addRoundForm.value, this.token).subscribe( data => {
-  	  this.router.navigate(['view-albums']);
-  	});
+  submit() {
+    this.errorMsg = null;
+    Object.keys(this.addRoundForm.controls).forEach(key => {
+      let controlErrors: ValidationErrors = this.addRoundForm.get(key).errors;
+      if (controlErrors != null) {
+        this.errorMsg = 'Missing fields';
+      }
+    });
+    if (!this.errorMsg) {
+    	this.addRoundForm.value['number'] = this.roundNumber;
+    	this.roundService.createRound(this.addRoundForm.value, this.token).subscribe( data => {
+    	  this.router.navigate(['view-albums']);
+    	});
+    }
   }
 
   reset() {
     this.addRoundForm = this.formBuilder.group({
-      name: '',
-      description: '',
-      nominator: '',
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      nominator: ['', Validators.required],
       number: ''
     });
   }

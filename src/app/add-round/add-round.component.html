@@ -1,6 +1,6 @@
 <div class="pure-u-1">
 
-	<form [formGroup]="addRoundForm" (ngSubmit)="onSubmit()" class="pure-form pure-form-aligned">
+	<form [formGroup]="addRoundForm" (ngSubmit)="submit()" class="pure-form pure-form-aligned">
 		<fieldset>
 			<div class="pure-control-group">
 				<label>Round Name </label>
@@ -18,6 +18,8 @@
 				<label>Description </label>
 				<textarea formControlName="description"></textarea>
 			</div>
+
+			<div *ngIf="errorMsg" class="pure-control-group error">{{ errorMsg }}</div>
 
 			<div class="pure-controls">
 				<button type="submit">Submit</button>
