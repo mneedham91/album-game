@@ -1,4 +1,5 @@
-<div class="pure-g">
+<!-- Desktop Layout -->
+<div *ngIf="!isMobile" class="pure-g">
 	<!-- Left Sidebar -->
 	<div class="pure-u-1-8 sidebar"></div>
 
@@ -24,4 +25,27 @@
 
 	<!-- Right Sidebar -->
 	<div class="pure-u-1-8 sidebar"></div>
+</div>
+
+<!-- Mobile Layout -->
+<div *ngIf="isMobile" class="pure-g">
+	<!-- Middle -->
+	<div class="pure-u-1">
+		<!-- Header -->
+		<div class="pure-u-1">
+			<app-header></app-header>
+		</div>
+
+		<!-- Body with side bars -->
+		<div class="pure-u-1-8"></div>
+		<div class="pure-u-3-4">
+			<router-outlet></router-outlet>
+		</div>
+		<div class="pure-u-1-8"></div>
+
+		<!-- Footer -->
+		<div class="pure-u-1">
+			<app-footer></app-footer>
+		</div>
+	</div>
 </div>
