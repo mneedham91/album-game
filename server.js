@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 var sslRedirect = require('heroku-ssl-redirect');
 var express = require('express');
 var app = express();
@@ -284,8 +286,8 @@ app.post(base_url + 'resetPassword', function(req, res) {
 
 // Spotify Routes
 app.get(base_url + 'spotify/token', function(req, res) {
-	var client_id = 'd567aa85e73d41f082c2dd4618dcfd8e';
-	var client_secret = 'd5e30c806ecb4b0b8d99f508f4de03d5';
+	var client_id = process.env.SPOTIFY_ID;
+	var client_secret = process.env.SPOTIFY_SECRET;
 	var url = 'https://' + client_id + ':' + client_secret + '@accounts.spotify.com/api/token';
 	var options = {
 		method: 'post',
