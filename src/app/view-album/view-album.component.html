@@ -41,6 +41,8 @@
 		<table class="pure-table pure-table-horizontal">
 			<thead>
 				<tr>
+					<th *ngIf="canEdit">Edit</th>
+					<th *ngIf="canEdit">Delete</th>
 					<th>#</th>
 					<th>Name</th>
 					<th *ngFor="let user of users" (click)="sortUser(user._id)" class="pointer">{{ user.name }}</th>
@@ -51,6 +53,14 @@
 			</thead>
 			<!-- Iterate tracks -->
 			<tr *ngFor="let track of tracks">
+				<td *ngIf="canEdit">
+					<a [routerLink]="['/edit-track', track?._id]">
+						<button class="pure-button button-warning">E</button>
+					</a>
+				</td>
+				<td *ngIf="canEdit">
+					<button (click)="deleteTrack(track)" class="pure-button button-error">D</button>
+				</td>
 				<td>{{ track?.number }}</td>
 				<td>{{ track?.name }}</td>
 				<!-- Iterate users -->

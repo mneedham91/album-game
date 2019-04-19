@@ -82,7 +82,7 @@ var ObjectId = Schema.ObjectId;
 var Factory = require('./module.factory.js');
 
 mongoose_options = {'useFindAndModify': false, 'useNewUrlParser': true};
-mongoose.connect(process.env.MONGODB_URI ||, options=mongoose_options);
+mongoose.connect(process.env.MONGODB_URI, options=mongoose_options);
 var db = mongoose.connection;
 
 var async = require('async');

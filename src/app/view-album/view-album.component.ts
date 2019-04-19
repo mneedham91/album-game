@@ -34,6 +34,7 @@ export class ViewAlbumComponent implements OnInit {
   sortPointsBoolean: boolean;
   sortUnfavesBoolean: boolean;
   sortUserBoolean: boolean;
+  token: string;
   tracks: Track[];
   users: User[];
   userID: string;
@@ -64,11 +65,12 @@ export class ViewAlbumComponent implements OnInit {
     this.userID = this.globalService.getItem('userID');
   	this.albumService.getAlbum(this.id).subscribe(data => {
   		this.album = data;
-      if (this.album.nominator == this.userID) {
-        this.canEdit = true;
-      } else {
-        this.canEdit = false;
-      }
+      this.canEdit = (this.album.nominator == this.userID);
+      // if (this.album.nominator == this.userID) {
+      //   this.canEdit = true;
+      // } else {
+      //   this.canEdit = false;
+      // }
       this.artistService.getArtist(this.album.artist).subscribe(data => {
         this.artist = data;
       });
@@ -81,7 +83,16 @@ export class ViewAlbumComponent implements OnInit {
       this.roundService.getRound(this.album.round).subscribe(data => {
         this.round = data;
       });
-      this.trackService.getTracks({album: this.album._id}).subscribe(data => {
+      this.globalService.watchStorage().subscribe(data => {
+        this.token = this.globalService.getItem('token');
+      });
+      this.token = this.globalService.getItem('token');
+      this.loadTracks();
+  	});
+  }
+
+  loadTracks() {
+    this.trackService.getTracks({album: this.album._id}).subscribe(data => {
         this.tracks = data.sort((a, b) => {
           if (a.number < b.number) return -1;
           else if (a.number > b.number) return 1;
@@ -126,7 +137,14 @@ export class ViewAlbumComponent implements OnInit {
           });
         });
       });
-  	});
+  }
+
+  deleteTrack(track: Track) {
+    if(confirm('Are you sure you want to delete this track?')) {
+      this.trackService.deleteTrack(track._id, this.token).subscribe(data => {
+        this.loadTracks();
+      });
+    }
   }
 
   sortPoints() {
