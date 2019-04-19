@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../environments/environment';
-import { SpotifySearchResult } from './spotify-search-result';
+import { SpotifyAlbumSearchResult } from './spotify-album-search-result';
 import { SpotifyTracksSearchResult } from './spotify-tracks-search-result';
 
 @Injectable({
@@ -17,7 +17,7 @@ export class SpotifyService {
   }
 
   lookForAlbum(token: string, name: string) {
-  	return this.http.post<SpotifySearchResult>(this.baseUrl + 'lookForAlbum', { token: token, name: name } );
+  	return this.http.post<SpotifyAlbumSearchResult>(this.baseUrl + 'lookForAlbum', { token: token, name: name } );
   }
 
   getAlbumTracks(token: string, id: string) {

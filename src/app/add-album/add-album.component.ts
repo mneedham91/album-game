@@ -10,7 +10,7 @@ import { RoundService } from '../round.service';
 import { Router } from '@angular/router';
 import { SpotifyAlbum } from '../spotify-album';
 import { SpotifyService } from '../spotify.service';
-import { SpotifySearchResult } from '../spotify-search-result';
+import { SpotifyAlbumSearchResult } from '../spotify-album-search-result';
 import { SpotifyTracksSearchResult } from '../spotify-tracks-search-result';
 import { TrackService } from '../track.service';
 import { Track } from '../track';
@@ -25,7 +25,7 @@ export class AddAlbumComponent implements OnInit {
   currentRound: string;
   errorMsg: string;
   spotify_token: string;
-  spotifyResults: SpotifySearchResult;
+  spotifyResults: SpotifyAlbumSearchResult;
   spotifySearchAlbumForm: FormGroup;
   spotifyTracksResult: SpotifyTracksSearchResult;
   token: string;

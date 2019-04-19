@@ -1,52 +1,43 @@
-//import { SpotifyAlbum } from './spotify-album';
-
-/*export class SpotifyAlbumSearchResult {
-	href: string;
-	items: SpotifyAlbum[];
-	limit: number;
-	next: any;
-	offset: number;
-	previous: any;
-	total: number
-}*/
-
-export class SpotifyAlbumSearchResult {
-	href: string;
-	items: [
-		{
-			album_type: string;
-			artists: [
-				{
-					external_urls: any;
-					href: string;
-					id: string;
-					name: string;
-					type: string;
-					uri: string;
-				}
-			]
-			available_markets: any;
-			external_urls: any;
-			href: string;
-			id: string;
-			images: [
-				{
-					height: number;
-					width: number;
-					url: string;
-				}
-			]
-			name: string;
-			release_date: string;
-			release_date_precision: string;
-			total_tracks: number;
-			type: string;
-			uri: string;
-		}
-	]
-	limit: number;
-	next: any;
-	offset: number;
-	previous: any;
-	total: number
+export interface SpotifyAlbumSearchResult {
+  albums: Albums;
+}
+export interface Albums {
+  href: string;
+  items?: (ItemsEntity)[] | null;
+  limit: number;
+  next: string;
+  offset: number;
+  previous?: null;
+  total: number;
+}
+export interface ItemsEntity {
+  album_type: string;
+  artists?: (ArtistsEntity)[] | null;
+  available_markets?: (string)[] | null;
+  external_urls: ExternalUrls;
+  href: string;
+  id: string;
+  images?: (ImagesEntity)[] | null;
+  name: string;
+  release_date: string;
+  release_date_precision: string;
+  total_tracks: number;
+  type: string;
+  uri: string;
+}
+export interface ArtistsEntity {
+  external_urls: ExternalUrls;
+  href: string;
+  id: string;
+  name: string;
+  type: string;
+  uri: string;
+}
+export interface ExternalUrls {
+  spotify: string;
+}
+export interface ImagesEntity {
+  height: number;
+  url: string;
+  width: number;
 }
