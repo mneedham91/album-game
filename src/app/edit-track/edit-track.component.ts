@@ -56,9 +56,9 @@ export class EditTrackComponent implements OnInit {
     this.token = this.globalService.getItem('token');
   }
 
-  onSubmit() {
+  submit() {
   	this.trackService.editTrack(this.id, this.editTrackForm.value, this.token).subscribe( data => {
-  	  this.router.navigate(['view-track', this.id]);
+  	  this.router.navigate(['view-album', this.editTrackForm.value.album]);
   	});
   }
 
