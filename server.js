@@ -1,5 +1,8 @@
+var sslRedirect = require('heroku-ssl-redirect');
 var express = require('express');
 var app = express();
+
+app.use(sslRedirect());
 
 var passport = require('passport');
 var jwt = require('jsonwebtoken');
