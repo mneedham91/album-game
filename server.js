@@ -8,7 +8,7 @@ app.use(sslRedirect());
 
 var passport = require('passport');
 var jwt = require('jsonwebtoken');
-var jwt_secret = process.env.JWT_SECRET || 'A43101827';
+var jwt_secret = process.env.JWT_SECRET;
 var passportJWT = require('passport-jwt');
 var LocalStrategy = require('passport-local').Strategy;
 var JWTStrategy = passportJWT.Strategy;
@@ -16,7 +16,7 @@ var ExtractJWT = passportJWT.ExtractJwt;
 
 var aws = require('aws-sdk');
 aws.config.region = process.env.AWS_REGION;
-var AWS_BUCKET = process.env.AWS_BUCKET || 'album-game';
+var AWS_BUCKET = process.env.AWS_BUCKET;
 
 const cors = require('cors');
 app.use(cors());
@@ -82,7 +82,7 @@ var ObjectId = Schema.ObjectId;
 var Factory = require('./module.factory.js');
 
 mongoose_options = {'useFindAndModify': false, 'useNewUrlParser': true};
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/albumdb', options=mongoose_options);
+mongoose.connect(process.env.MONGODB_URI ||, options=mongoose_options);
 var db = mongoose.connection;
 
 var async = require('async');
@@ -393,7 +393,7 @@ app.use('/*',function(req, res) {
     var resp = res.sendfile(__dirname + '/dist/index.html');
 });
 
-app.listen(process.env.PORT || 8080);
+app.listen(process.env.PORT);
 
 db.on('error', function callback() {
 	console.log('Connection Error');
