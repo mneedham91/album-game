@@ -81,6 +81,14 @@ export class AddAlbumComponent implements OnInit {
     this.albums = null;
   }
 
+  sort_name(name: string): string {
+    if (name.startsWith('The ')) {
+      return name.substring(4);
+    } else {
+      return name;
+    }
+  }
+
   select(album: SpotifyAlbum) {
     this.errorMsg = null;
   	let newAlbum: Album = new Album();
@@ -96,6 +104,7 @@ export class AddAlbumComponent implements OnInit {
             artist_data => {
       				newAlbum.artist = artist_data['_id'];
               newAlbum.name = album.name;
+              newAlbum.sort_name = this.sort_name(album.name);
               newAlbum.round = this.currentRound;
               newAlbum.nominator = this.userID;
               this.albumService.createAlbum(newAlbum, this.token).subscribe(
@@ -105,6 +114,7 @@ export class AddAlbumComponent implements OnInit {
                       track_data.items.forEach(item => {
                         let newTrack: Track = new Track();
                         newTrack.name = item.name;
+                        newAlbum.sort_name = this.sort_name(album.name);
                         newTrack.number = item.track_number;
                         newTrack.album = create_data['_id'];
                         newTrack.spotify_id = item.id
