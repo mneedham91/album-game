@@ -5,6 +5,7 @@ import { AlbumService } from '../album.service';
 import { Album } from '../album';
 import { Artist } from '../artist';
 import { ArtistService } from '../artist.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { GlobalService } from '../global.service';
 import { RoundService } from '../round.service';
 import { Round } from '../round';
@@ -26,8 +27,10 @@ export class ViewAlbumComponent implements OnInit {
   artist: Artist;
   canEdit: boolean;
   canVote: boolean;
+  deviceInfo = null;
   id: string;
   img: string;
+  isMobile: boolean;
   nominator: User;
   round: Round;
   sortFavesBoolean: boolean;
@@ -43,6 +46,7 @@ export class ViewAlbumComponent implements OnInit {
   constructor(
   	private albumService: AlbumService,
     private artistService: ArtistService,
+    private deviceService: DeviceDetectorService,
     private globalService: GlobalService, 
   	private route: ActivatedRoute,
     private router: Router, 
@@ -54,6 +58,7 @@ export class ViewAlbumComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('Album Game | View Album');
+    this.getDeviceInfo();
     this.sortPointsBoolean = false;
     this.sortFavesBoolean = false;
     this.sortUnfavesBoolean = false;
@@ -89,6 +94,11 @@ export class ViewAlbumComponent implements OnInit {
       this.token = this.globalService.getItem('token');
       this.loadTracks();
   	});
+  }
+
+  getDeviceInfo() {
+    this.deviceInfo = this.deviceService.getDeviceInfo();
+    this.isMobile = this.deviceService.isMobile();
   }
 
   loadTracks() {
