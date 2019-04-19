@@ -45,7 +45,8 @@ export class EditAlbumComponent implements OnInit {
   		date: '',
   		name: '',
   		nominator: '',
-  		round: ''
+  		round: '',
+      sortname: ''
   	});
   	this.route.params.subscribe(params => {
   		this.id = params['id'];
@@ -88,7 +89,8 @@ export class EditAlbumComponent implements OnInit {
       date: date,
       name: this.album.name,
       nominator: this.album.nominator,
-      round: this.album.round
+      round: this.album.round,
+      sortname: this.album.sort_name
     });
   }
 
