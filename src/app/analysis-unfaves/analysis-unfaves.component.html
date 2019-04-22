@@ -1,3 +1,26 @@
-<p>
-  analysis-unfaves works!
-</p>
+<div class="pure-u-1 center">
+
+	<div class="pure-u-1">
+		<h3>{{ user_one.name }} and {{ user_two.name }}</h3>
+	</div>
+
+	<div class="pure-u-1">
+		<h3>{{ albums?.length }}</h3>
+	</div>
+
+	<div class="pure-u-1">
+		<button class="pure-button pointer" (click)="showHide()">
+			<div *ngIf="show">Hide</div>
+			<div *ngIf="!show">Show</div>
+		</button>
+	</div>
+
+	<div class="pure-u-1"></div>
+
+	<div *ngIf="albums && show" class="pure-u-1">
+		<div *ngFor="let album of albums">
+			<div>{{ album.name }}</div>
+		</div>
+	</div>
+
+</div>

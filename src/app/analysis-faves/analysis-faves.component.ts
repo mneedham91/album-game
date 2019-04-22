@@ -14,8 +14,7 @@ export class AnalysisFavesComponent implements OnInit {
   @Input() user_one: User;
   @Input() user_two: User;
 
-  constructor(
-  	private analysisService: AnalysisService) { }
+  constructor(private analysisService: AnalysisService) { }
 
   ngOnInit() {
   	this.show = false;
