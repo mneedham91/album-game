@@ -125,7 +125,7 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 					if (!v1 || !v2) {
 						resolve(null);
 					} else if (v1.unfave.equals(v2.unfave)) {
-						resolve(album);
+						resolve([v1.unfave, album]);
 					} else {
 						resolve(null);
 					}
@@ -145,7 +145,7 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 					if (!v1 || !v2) {
 						resolve(null);
 					} else if (v1.vote_one.equals(v2.vote_one)) {
-						resolve(album);
+						resolve([v1.vote_one, album]);
 					} else {
 						resolve(null);
 					}
@@ -173,7 +173,7 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 							}
 						} else {
 							if ( v1.vote_one.equals(v2.unfave) || v1.vote_two.equals(v2.unfave) || v1.vote_three.equals(v2.unfave) ) {
-								resolve(album);
+								resolve([v2.unfave, album]);
 							} else {
 								resolve(null);
 							}

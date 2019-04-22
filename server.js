@@ -37,9 +37,6 @@ var upload = multer({
 		s3: s3,
 		bucket: AWS_BUCKET,
 		acl: 'public-read',
-		/*metadata: function(req, file, cb) {
-			cb(null, Object.assign({}, req.body));
-		},*/
 		key: function(req, file, cb) {
 			cb(null, req.params.id + '.png');
 		}
