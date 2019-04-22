@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Album } from '../album';
-import { AnalysisService } from '../analysis.service';
 import { User } from '../user';
 import { UserService } from '../user.service';
 
@@ -20,7 +19,6 @@ export class AnalysisComponent implements OnInit {
   users: User[];
 
   constructor(
-  	private analysisService: AnalysisService,
   	private titleService: Title,
   	private userService: UserService) { }
 

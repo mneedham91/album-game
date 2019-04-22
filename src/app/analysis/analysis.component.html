@@ -1,24 +1,34 @@
 <div class="pure-u-1 center">
 
-	<div class="pure-u-1">
-		<h2>Faves in Common</h2>
-	</div>
-	<div *ngFor="let pair of simple_pairs" class="pure-u-1-3">
-		<app-analysis-comparison [user_one]="pair[0]" [user_two]="pair[1]" option="Faves"></app-analysis-comparison>
-	</div>
-
-	<div class="pure-u-1">
-		<h2>Unfaves in Common</h2>
-	</div>
-	<div *ngFor="let pair of simple_pairs" class="pure-u-1-3">
-		<app-analysis-comparison [user_one]="pair[0]" [user_two]="pair[1]" option="Unfaves"></app-analysis-comparison>
+	<div class="pure-u-1 border">
+		<div class="pure-u-1">
+			<h2>Faves in Common</h2>
+		</div>
+		<div *ngFor="let pair of simple_pairs" class="pure-u-1-3">
+			<app-analysis-comparison [user_one]="pair[0]" [user_two]="pair[1]" option="Faves"></app-analysis-comparison>
+		</div>
 	</div>
 
-	<div class="pure-u-1">
-		<h2>Disputes</h2>
+	<div class="pure-u-1"></div>
+
+	<div class="pure-u-1 border">
+		<div class="pure-u-1">
+			<h2>Unfaves in Common</h2>
+		</div>
+		<div *ngFor="let pair of simple_pairs" class="pure-u-1-3">
+			<app-analysis-comparison [user_one]="pair[0]" [user_two]="pair[1]" option="Unfaves"></app-analysis-comparison>
+		</div>
 	</div>
-	<div *ngFor="let pair of full_pairs" class="pure-u-1-3">
-		<app-analysis-comparison [user_one]="pair[0]" [user_two]="pair[1]" option="Mismatches"></app-analysis-comparison>
+
+	<div class="pure-u-1"></div>
+
+	<div class="pure-u-1 border">
+		<div class="pure-u-1">
+			<h2>Disputes</h2>
+		</div>
+		<div *ngFor="let pair of full_pairs" class="pure-u-1-3">
+			<app-analysis-comparison [user_one]="pair[0]" [user_two]="pair[1]" option="Mismatches"></app-analysis-comparison>
+		</div>
 	</div>
 
 </div>

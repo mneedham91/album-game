@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Album } from '../album';
 import { AnalysisService } from '../analysis.service';
+import { Track } from '../track';
 import { User } from '../user';
 
 @Component({
@@ -20,16 +21,16 @@ export class AnalysisComparisonComponent implements OnInit {
   ngOnInit() {
   	this.show = false;
   	if (this.option == 'Faves') {
-  	  this.analysisService.findSameFaves(this.user_one._id, this.user_two._id).subscribe(albums => {
-  	    this.albums = albums;
+  	  this.analysisService.findSameFaves(this.user_one._id, this.user_two._id).subscribe(data => {
+        this.albums = data;
   	  });
   	} else if (this.option == 'Unfaves') {
-  	  this.analysisService.findSameUnfaves(this.user_one._id, this.user_two._id).subscribe(albums => {
-  	    this.albums = albums;
+  	  this.analysisService.findSameUnfaves(this.user_one._id, this.user_two._id).subscribe(data => {
+        this.albums = data;
   	  });
   	} else if (this.option == 'Mismatches') {
-  	  this.analysisService.findMismatchVotes(this.user_one._id, this.user_two._id, false).subscribe(albums => {
-  		this.albums = albums;
+  	  this.analysisService.findMismatchVotes(this.user_one._id, this.user_two._id, false).subscribe(data => {
+        this.albums = data;
   	  });
   	}
   	

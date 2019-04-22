@@ -19,7 +19,7 @@
 
 	<div *ngIf="albums && show" class="pure-u-1">
 		<div *ngFor="let album of albums">
-			<div>{{ album.name }}</div>
+			<div><a [routerLink]="['/view-album', album._id]">{{ album.name }}</a></div>
 		</div>
 	</div>
 

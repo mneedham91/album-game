@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Album } from './album';
+import { Track } from './track';
 import { environment } from '../environments/environment';
 
 @Injectable({
