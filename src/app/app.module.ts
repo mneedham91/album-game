@@ -36,9 +36,7 @@ import { LoginComponent } from './login/login.component';
 import { AnalysisComponent } from './analysis/analysis.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { AnalysisFavesComponent } from './analysis-faves/analysis-faves.component';
-import { AnalysisUnfavesComponent } from './analysis-unfaves/analysis-unfaves.component';
-import { AnalysisMismatchesComponent } from './analysis-mismatches/analysis-mismatches.component';
+import { AnalysisComparisonComponent } from './analysis-comparison/analysis-comparison.component';
 
 @NgModule({
   declarations: [
@@ -73,9 +71,7 @@ import { AnalysisMismatchesComponent } from './analysis-mismatches/analysis-mism
     AnalysisComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    AnalysisFavesComponent,
-    AnalysisUnfavesComponent,
-    AnalysisMismatchesComponent
+    AnalysisComparisonComponent
   ],
   imports: [
     BrowserModule,
