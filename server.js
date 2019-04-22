@@ -118,6 +118,36 @@ passport.use(new JWTStrategy({
 
 var base_url = '/api/v1/'
 
+// Analysis Routes
+app.post(base_url + 'analysis/findSameFaves', function(req, res) {
+	var resp = factory.findSameFaves([req.body.usera, req.body.userb], res);
+});
+
+app.post(base_url + 'analysis/sameFave', function(req, res) {
+	var resp = factory.sameFave(req.body.album, [req.body.usera, req.body.userb], res);
+});
+
+app.post(base_url + 'analysis/findSameUnfaves', function(req, res) {
+	var resp = factory.findSameUnfaves([req.body.usera, req.body.userb], res);
+});
+
+app.post(base_url + 'analysis/sameUnfave', function(req, res) {
+	var resp = factory.sameUnfave(req.body.album, [req.body.usera, req.body.userb], res);
+});
+
+app.post(base_url + 'analysis/findMismatchVotes', function(req, res) {
+	if (req.body.strict) {
+		var resp = factory.findMismatchVotes([req.body.usera, req.body.userb], res, true);
+	} else {
+		var resp = factory.findMismatchVotes([req.body.usera, req.body.userb], res);
+	}
+	
+});
+
+app.post(base_url + 'analysis/mismatchVotes', function(req, res) {
+	var resp = factory.mismatchVotes(req.body.album, [req.body.usera, req.body.userb], res);
+});
+
 // Album Routes
 app.get(base_url + 'album', function(req, res) {
 	var resp = factory.getAlbums(req.query, res);

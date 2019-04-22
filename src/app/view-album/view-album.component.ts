@@ -71,11 +71,6 @@ export class ViewAlbumComponent implements OnInit {
   	this.albumService.getAlbum(this.id).subscribe(data => {
   		this.album = data;
       this.canEdit = (this.album.nominator == this.userID);
-      // if (this.album.nominator == this.userID) {
-      //   this.canEdit = true;
-      // } else {
-      //   this.canEdit = false;
-      // }
       this.artistService.getArtist(this.album.artist).subscribe(data => {
         this.artist = data;
       });
