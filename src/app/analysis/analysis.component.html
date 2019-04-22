@@ -1,5 +1,4 @@
 <div class="pure-u-1 center">
-	<h2 *ngIf="x">{{ x }}</h2>
 
 	<form [formGroup]="analysisForm" (ngSubmit)="submit()" class="pure-form pure-u-1">
 
@@ -13,7 +12,7 @@
 
 			<div class="pure-u-11-24 right">
 				<select formControlName="user_one">
-					<option *ngFor="let user of users" value="user._id">{{ user.name }}</option>
+					<option *ngFor="let user of users" value="{{user._id}}">{{ user.name }}</option>
 				</select>
 			</div>
 
@@ -21,7 +20,7 @@
 
 			<div class="pure-u-11-24 left">
 				<select formControlName="user_two">
-					<option *ngFor="let user of users" value="user._id">{{ user.name }}</option>
+					<option *ngFor="let user of users" value="{{user._id}}">{{ user.name }}</option>
 				</select>
 			</div>
 
@@ -30,6 +29,15 @@
 		<div class="pure-u-1"></div>
 
 		<button type="submit" class="pure-button pure-button-primary">Submit</button>
+
+		<div class="pure-u-1"><h2>{{ count }}</h2></div>
+
+		<div *ngIf="albums" class="pure-u-1">
+			<div *ngFor="let album of albums">
+				<div>{{ album.name }}</div>
+			</div>
+
+		</div>
 
 	</form>
 </div>

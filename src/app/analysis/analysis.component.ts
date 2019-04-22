@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { Album } from '../album';
+import { AnalysisService } from '../analysis.service';
 import { User } from '../user';
 import { UserService } from '../user.service';
 
@@ -10,13 +12,15 @@ import { UserService } from '../user.service';
   styleUrls: ['./analysis.component.css']
 })
 export class AnalysisComponent implements OnInit {
+  albums: Album[];
   analysisForm: FormGroup;
   choice: string;
+  count: number;
   options: string[];
   users: User[];
-  x: string;
 
   constructor(
+  	private analysisService: AnalysisService,
   	private formBuilder: FormBuilder,
   	private titleService: Title,
   	private userService: UserService) { }
@@ -28,25 +32,36 @@ export class AnalysisComponent implements OnInit {
   		this.users = users;
   	});
   	this.analysisForm = this.formBuilder.group({
-  		option: '',
+  		option: this.options[0],
   		user_one: '',
   		user_two: ''
   	});
   }
 
   submit() {
-  	this.choice = this.analysisForm.value['option'];
-  	switch (this.choice) {
-  		case 'Faves':
-  			this.x = 'F';
-  			break;
-  		case 'Unfaves':
-  			this.x = 'U';
-  			break;
-  		case 'Disagreements':
-  			this.x = 'D';
-  			break;
-  	}
+  	if (this.analysisForm.value['user_one'] && this.analysisForm.value['user_two']) {
+	  	this.choice = this.analysisForm.value['option'];
+	  	console.log(this.analysisForm.value);
+		if (this.choice == 'Faves') {
+			this.analysisService.findSameFaves(this.analysisForm.value['user_one'], this.analysisForm.value['user_two'])
+			.subscribe(albums => {
+				this.albums = albums;
+				this.count = albums.length;
+			});
+	  	} else if (this.choice == 'Unfaves') {
+			this.analysisService.findSameUnfaves(this.analysisForm.value['user_one'], this.analysisForm.value['user_two'])
+			.subscribe(albums => {
+				this.albums = albums;
+				this.count = albums.length;
+			});
+	  	} else if (this.choice == 'Disagreements') {
+			this.analysisService.findMismatchVotes(this.analysisForm.value['user_one'], this.analysisForm.value['user_two'], true)
+			.subscribe(albums => {
+				this.albums = albums;
+				this.count = albums.length;
+			});
+	  	}
+    }
   }
 
 }
