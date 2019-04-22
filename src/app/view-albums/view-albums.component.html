@@ -1,4 +1,9 @@
-<div class="pure-u-1" style="text-align: center">
+<div *ngIf="!complete" class="pure-u-1" style="text-align: center">
+	<h2>Loading...</h2>
+
+</div>
+
+<div *ngIf="complete" class="pure-u-1" style="text-align: center">
 
 	<div *ngFor="let row of rows" class="pure-u-1">
 		<div class="pure-u-1-5">
