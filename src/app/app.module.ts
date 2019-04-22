@@ -36,6 +36,9 @@ import { LoginComponent } from './login/login.component';
 import { AnalysisComponent } from './analysis/analysis.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { AnalysisFavesComponent } from './analysis-faves/analysis-faves.component';
+import { AnalysisUnfavesComponent } from './analysis-unfaves/analysis-unfaves.component';
+import { AnalysisMismatchesComponent } from './analysis-mismatches/analysis-mismatches.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +72,10 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     LoginComponent,
     AnalysisComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    AnalysisFavesComponent,
+    AnalysisUnfavesComponent,
+    AnalysisMismatchesComponent
   ],
   imports: [
     BrowserModule,
