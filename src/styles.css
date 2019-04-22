@@ -7,6 +7,14 @@
 	text-align: center;
 }
 
+.left {
+	text-align: left;
+}
+
+.right {
+	text-align: right;
+}
+
 .sidebar {
 	background-color: #b4b4b4;
 	min-height: 100vh;
