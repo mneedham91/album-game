@@ -1,4 +1,27 @@
 <div class="pure-u-1 center">
+	<h2>Faves in Common</h2>
+</div>
+<div *ngFor="let pair of pairs" class="pure-u-1-3">
+	<app-analysis-faves [user_one]="pair[0]" [user_two]="pair[1]"></app-analysis-faves>
+</div>
+
+<div class="pure-u-1 center">
+	<h2>Unfaves in Common</h2>
+</div>
+<div *ngFor="let pair of pairs" class="pure-u-1-3">
+	<app-analysis-faves [user_one]="pair[0]" [user_two]="pair[1]"></app-analysis-unfaves>
+</div>
+
+<div class="pure-u-1 center">
+	<h2>Mismatches</h2>
+</div>
+<div *ngFor="let pair of pairs" class="pure-u-1-3">
+	<app-analysis-faves [user_one]="pair[0]" [user_two]="pair[1]"></app-analysis-mismatches>
+</div>
+
+
+<!-- 
+<div class="pure-u-1 center">
 
 	<form [formGroup]="analysisForm" (ngSubmit)="submit()" class="pure-form pure-u-1">
 
@@ -41,3 +64,4 @@
 
 	</form>
 </div>
+-->

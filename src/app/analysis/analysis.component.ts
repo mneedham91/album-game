@@ -17,6 +17,7 @@ export class AnalysisComponent implements OnInit {
   choice: string;
   count: number;
   options: string[];
+  pairs: User[][];
   users: User[];
 
   constructor(
@@ -26,10 +27,18 @@ export class AnalysisComponent implements OnInit {
   	private userService: UserService) { }
 
   ngOnInit() {
+  	this.pairs = new Array();
   	this.titleService.setTitle('Album Game | Analysis');
   	this.options = ['Faves', 'Unfaves', 'Disagreements'];
   	this.userService.getUsers().subscribe(users => {
   		this.users = users;
+  		for (let a=0; a<users.length; a++) {
+  			for (let b=0; b<users.length; b++) {
+  				if ( (users[a] != users[b]) && (a < b) ) {
+  					this.pairs.push([users[a], users[b]]);
+  				}
+  			}
+  		}
   	});
   	this.analysisForm = this.formBuilder.group({
   		option: this.options[0],
