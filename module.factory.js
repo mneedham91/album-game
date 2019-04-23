@@ -84,7 +84,24 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 		this.Album.find({})
 		.then(albums => {
 			var promises = albums.map(album => {
-				return this.sameFave(album, users);
+				return this.sameFaves(album, users);
+			});
+			return Promise.all(promises);
+		})
+		.then(data => {
+			let results = data.filter(x => x);
+			res.json(results);
+		})
+		.catch(error => {
+			res.json({error: error});
+		})
+	}
+
+	this.findSameTopFaves = function(users, res) {
+		this.Album.find({})
+		.then(albums => {
+			var promises = albums.map(album => {
+				return this.sameTopFave(album, users);
 			});
 			return Promise.all(promises);
 		})
@@ -134,7 +151,7 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 		});
 	}
 
-	this.sameFave = function(album, users) {
+	this.sameTopFave = function(album, users) {
 		return new Promise((resolve, reject) => {
 			this.VoteSet.find({album: album}, function(error, votesets) {
 				if (error) {
@@ -148,6 +165,32 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 						resolve(album);
 					} else {
 						resolve(null);
+					}
+				}
+			});
+		});
+	}
+
+	this.sameFaves = function(album, users) {
+		return new Promise((resolve, reject) => {
+			this.VoteSet.find({album: album}, function(error, votesets) {
+				if (error) {
+					reject(error);
+				} else {
+					v1 = votesets.find((voteset) => voteset.user.equals(users[0]));
+					v2 = votesets.find((voteset) => voteset.user.equals(users[1]));
+					if (!v1 || !v2) {
+						resolve(null);
+					} else {
+					let count = 0;
+						for (let a of ['vote_one', 'vote_two', 'vote_three']) {
+							for (let b of ['vote_one', 'vote_two', 'vote_three']) {
+								if (v1[a].equals(v2[b])) {
+									count += 1;
+								} 
+							}
+						}
+						resolve([count, album]);
 					}
 				}
 			});

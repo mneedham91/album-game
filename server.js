@@ -117,7 +117,11 @@ var base_url = '/api/v1/'
 
 // Analysis Routes
 app.get(base_url + 'analysis/findSameFaves', function(req, res) {
-	var resp = factory.findSameFaves([req.query.user_one, req.query.user_two], res);
+	if (req.query.strict) {
+		var resp = factory.findSameFaves([req.query.user_one, req.query.user_two], res);
+	} else {
+		var resp = factory.findSameTopFaves([req.query.user_one, req.query.user_two], res);
+	}
 });
 
 app.get(base_url + 'analysis/sameFave', function(req, res) {
@@ -138,7 +142,6 @@ app.get(base_url + 'analysis/findMismatchVotes', function(req, res) {
 	} else {
 		var resp = factory.findMismatchVotes([req.query.user_one, req.query.user_two], res);
 	}
-	
 });
 
 app.get(base_url + 'analysis/mismatchVotes', function(req, res) {

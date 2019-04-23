@@ -4,8 +4,12 @@
 		<h3>{{ user_one.name }} and {{ user_two.name }}</h3>
 	</div>
 
-	<div class="pure-u-1">
+	<div *ngIf="!count" class="pure-u-1">
 		<h3>{{ albums?.length }}</h3>
+	</div>
+
+	<div *ngIf="total" class="pure-u-1">
+		<h3>{{ total }}</h3>
 	</div>
 
 	<div class="pure-u-1">

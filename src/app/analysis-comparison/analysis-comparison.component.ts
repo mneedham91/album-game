@@ -11,8 +11,10 @@ import { User } from '../user';
 })
 export class AnalysisComparisonComponent implements OnInit {
   albums: Album[];
+  count: number[];
   errorMsg: string;
   show: boolean;
+  total: number;
   @Input() option: string;
   @Input() user_one: User;
   @Input() user_two: User;
@@ -26,15 +28,30 @@ export class AnalysisComparisonComponent implements OnInit {
   }
 
   ngOnChanges() {
+    this.count = undefined;
+    this.total = undefined;
     this.getData();
   }
 
   getData() {
     if (this.option == 'Faves') {
-      this.analysisService.findSameFaves(this.user_one._id, this.user_two._id).subscribe(
-        data => this.albums = data,
-        error => this.errorMsg = error
-      );
+      if (this.strict) {
+        this.analysisService.findSameFavesStrict(this.user_one._id, this.user_two._id).subscribe(
+          data => {
+            this.count = data.map(entry => { return entry[0] });
+            this.albums = data.map(entry => { return entry[1] });
+            this.total = this.count.reduce((partial_sum, a) => partial_sum + a);
+          },
+          error => {
+            this.errorMsg = error;
+          }
+        );
+      } else {
+        this.analysisService.findSameFaves(this.user_one._id, this.user_two._id).subscribe(
+          data => this.albums = data,
+          error => this.errorMsg = error 
+        );
+      }
     } else if (this.option == 'Unfaves') {
       this.analysisService.findSameUnfaves(this.user_one._id, this.user_two._id).subscribe(
         data => this.albums = data,

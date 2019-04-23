@@ -16,7 +16,15 @@ export class AnalysisService {
   	let params = new HttpParams();
     params = params.append('user_one', user_one);
     params = params.append('user_two', user_two);
-  	return this.http.get<Album[]>(this.baseUrl + 'analysis/findSameFaves', { params });
+    return this.http.get<Album[]>(this.baseUrl + 'analysis/findSameFaves', { params });
+  }
+
+  findSameFavesStrict(user_one: string, user_two: string) {
+    let params = new HttpParams();
+    params = params.append('user_one', user_one);
+    params = params.append('user_two', user_two);
+    params = params.append('strict', 'true');
+    return this.http.get<[number, Album][]>(this.baseUrl + 'analysis/findSameFaves', { params });
   }
 
   findSameUnfaves(user_one: string, user_two: string) {
