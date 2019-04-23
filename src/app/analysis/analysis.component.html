@@ -3,8 +3,8 @@
 	<div class="pure-u-1 border">
 		<div class="pure-u-1">
 			<h2>Faves in Common</h2>
-			<button *ngIf="showHide.faves" (click)="flipShowHide('faves')" class="pure-button">Hide</button>
-			<button *ngIf="!showHide.faves" (click)="flipShowHide('faves')" class="pure-button">Show</button>
+			<button *ngIf="showHide['faves']" (click)="flipShowHide('faves')" class="pure-button">Hide</button>
+			<button *ngIf="!showHide['faves']" (click)="flipShowHide('faves')" class="pure-button">Show</button>
 			Strict? 
 			<select (change)="strictFaves($event.target.value)">
 				<option selected="true">Yes</option>
@@ -12,7 +12,7 @@
 			</select>
 		</div>
 
-		<div *ngIf="showHide.faves">
+		<div *ngIf="showHide['faves']">
 			<div *ngFor="let pair of simple_pairs" class="pure-u-1-3">
 				<app-analysis-comparison [user_one]="pair[0]" [user_two]="pair[1]" option="Faves" [strict]="strict['faves']"></app-analysis-comparison>
 			</div>
@@ -26,11 +26,11 @@
 	<div class="pure-u-1 border">
 		<div class="pure-u-1">
 			<h2>Unfaves in Common</h2>
-			<button *ngIf="showHide.unfaves" (click)="flipShowHide('unfaves')" class="pure-button">Hide</button>
-			<button *ngIf="!showHide.unfaves" (click)="flipShowHide('unfaves')" class="pure-button">Show</button>
+			<button *ngIf="showHide['unfaves']" (click)="flipShowHide('unfaves')" class="pure-button">Hide</button>
+			<button *ngIf="!showHide['unfaves']" (click)="flipShowHide('unfaves')" class="pure-button">Show</button>
 		</div>
 
-		<div *ngIf="showHide.unfaves">
+		<div *ngIf="showHide['unfaves']">
 			<div *ngFor="let pair of simple_pairs" class="pure-u-1-3">
 				<app-analysis-comparison [user_one]="pair[0]" [user_two]="pair[1]" option="Unfaves"></app-analysis-comparison>
 			</div>
@@ -44,8 +44,8 @@
 	<div class="pure-u-1 border">
 		<div class="pure-u-1">
 			<h2>Disputes</h2>
-			<button *ngIf="showHide.mismatches" (click)="flipShowHide('mismatches')" class="pure-button">Hide</button>
-			<button *ngIf="!showHide.mismatches" (click)="flipShowHide('mismatches')" class="pure-button">Show</button>
+			<button *ngIf="showHide['mismatches']" (click)="flipShowHide('mismatches')" class="pure-button">Hide</button>
+			<button *ngIf="!showHide['mismatches']" (click)="flipShowHide('mismatches')" class="pure-button">Show</button>
 			Strict? 
 			<select (change)="strictMismatches($event.target.value)">
 				<option>Yes</option>
@@ -53,9 +53,9 @@
 			</select>
 		</div>
 
-		<div *ngIf="showHide.mismatches">
+		<div *ngIf="showHide['mismatches']">
 			<div *ngFor="let pair of full_pairs" class="pure-u-1-3">
-				<app-analysis-comparison [user_one]="pair[0]" [user_two]="pair[1]" option="Mismatches" [strict]="strict.mismatches"></app-analysis-comparison>
+				<app-analysis-comparison [user_one]="pair[0]" [user_two]="pair[1]" option="Mismatches" [strict]="strict['mismatches']"></app-analysis-comparison>
 			</div>
 		</div>
 
