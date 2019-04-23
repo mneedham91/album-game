@@ -17,10 +17,16 @@
 
 	<div class="pure-u-1"></div>
 
-	<div *ngIf="albums && show" class="pure-u-1">
-		<div *ngFor="let album of albums">
-			<div><a [routerLink]="['/view-album', album._id]">{{ album.name }}</a></div>
+	<div *ngIf="errorMsg">{{ errorMsg }}</div>
+
+	<div *ngIf="!errorMsg">
+
+		<div *ngIf="albums && show" class="pure-u-1">
+			<div *ngFor="let album of albums">
+				<div><a [routerLink]="['/view-album', album._id]">{{ album.name }}</a></div>
+			</div>
 		</div>
+
 	</div>
 
 </div>

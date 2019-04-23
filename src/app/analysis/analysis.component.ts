@@ -16,6 +16,8 @@ export class AnalysisComponent implements OnInit {
   full_pairs: User[][];
   options: string[];
   simple_pairs: User[][];
+  showHide: Object;
+  strict: Object;
   users: User[];
 
   constructor(
@@ -23,6 +25,14 @@ export class AnalysisComponent implements OnInit {
   	private userService: UserService) { }
 
   ngOnInit() {
+    this.showHide = new Object({
+      faves: false,
+      unfaves: false,
+      mismatches: false});
+    this.strict = new Object({
+      faves: true,
+      mismatches: false
+    });
   	this.simple_pairs = new Array();
   	this.full_pairs = new Array();
   	this.titleService.setTitle('Album Game | Analysis');
@@ -39,6 +49,26 @@ export class AnalysisComponent implements OnInit {
   			}
   		}
   	});
+  }
+
+  strictFaves(val) {
+    if (val == 'Yes') {
+      this.strict['faves'] = true;
+    } else {
+      this.strict['faves'] = false;
+    }
+  }
+
+  strictMismatches(val) {
+    if (val == 'Yes') {
+      this.strict['mismatches'] = true;
+    } else {
+      this.strict['mismatches'] = false;
+    }
+  }
+
+  flipShowHide(section: string) {
+    this.showHide[section] = !this.showHide[section];
   }
 
 }

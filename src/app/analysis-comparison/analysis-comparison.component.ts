@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Album } from '../album';
 import { AnalysisService } from '../analysis.service';
 import { Track } from '../track';
@@ -11,29 +11,41 @@ import { User } from '../user';
 })
 export class AnalysisComparisonComponent implements OnInit {
   albums: Album[];
+  errorMsg: string;
   show: boolean;
   @Input() option: string;
   @Input() user_one: User;
   @Input() user_two: User;
+  @Input() strict: boolean;
 
   constructor(private analysisService: AnalysisService) { }
 
   ngOnInit() {
   	this.show = false;
-  	if (this.option == 'Faves') {
-  	  this.analysisService.findSameFaves(this.user_one._id, this.user_two._id).subscribe(data => {
-        this.albums = data;
-  	  });
-  	} else if (this.option == 'Unfaves') {
-  	  this.analysisService.findSameUnfaves(this.user_one._id, this.user_two._id).subscribe(data => {
-        this.albums = data;
-  	  });
-  	} else if (this.option == 'Mismatches') {
-  	  this.analysisService.findMismatchVotes(this.user_one._id, this.user_two._id, false).subscribe(data => {
-        this.albums = data;
-  	  });
-  	}
-  	
+  	this.getData();
+  }
+
+  ngOnChanges() {
+    this.getData();
+  }
+
+  getData() {
+    if (this.option == 'Faves') {
+      this.analysisService.findSameFaves(this.user_one._id, this.user_two._id).subscribe(
+        data => this.albums = data,
+        error => this.errorMsg = error
+      );
+    } else if (this.option == 'Unfaves') {
+      this.analysisService.findSameUnfaves(this.user_one._id, this.user_two._id).subscribe(
+        data => this.albums = data,
+        error => this.errorMsg = error
+      );
+    } else if (this.option == 'Mismatches') {
+      this.analysisService.findMismatchVotes(this.user_one._id, this.user_two._id, this.strict).subscribe(
+        data => this.albums = data,
+        error => this.errorMsg = error
+      );
+    }  
   }
 
   showHide() {
