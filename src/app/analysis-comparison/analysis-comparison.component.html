@@ -12,7 +12,7 @@
 		<h3>{{ total }}</h3>
 	</div>
 
-	<div class="pure-u-1">
+	<div *ngIf="!data" class="pure-u-1">
 		<button class="pure-button pointer" (click)="showHide()">
 			<div *ngIf="show">Hide</div>
 			<div *ngIf="!show">Show</div>
@@ -25,11 +25,18 @@
 
 	<div *ngIf="!errorMsg">
 
+		<div *ngIf="!data">
 		<div *ngIf="albums && show" class="pure-u-1">
 			<div *ngFor="let album of albums">
 				<div><a [routerLink]="['/view-album', album._id]">{{ album.name }}</a></div>
 			</div>
 		</div>
+		</div>
+		<!-- <div *ngIf="data">
+		<div *ngFor="let entry of data">
+			<div><a [routerLink]="['/view-album', entry[1]._id]">{{ entry[1].name }} ({{ entry[0] }})</a></div>
+		</div>
+		</div> -->
 
 	</div>
 

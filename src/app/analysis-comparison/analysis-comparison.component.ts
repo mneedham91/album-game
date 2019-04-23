@@ -12,6 +12,7 @@ import { User } from '../user';
 export class AnalysisComparisonComponent implements OnInit {
   albums: Album[];
   count: number[];
+  data: [number, Album][];
   errorMsg: string;
   show: boolean;
   total: number;
@@ -30,6 +31,7 @@ export class AnalysisComparisonComponent implements OnInit {
   ngOnChanges() {
     this.count = undefined;
     this.total = undefined;
+    this.data = undefined;
     this.getData();
   }
 
@@ -40,6 +42,7 @@ export class AnalysisComparisonComponent implements OnInit {
           data => {
             this.count = data.map(entry => { return entry[0] });
             this.albums = data.map(entry => { return entry[1] });
+            this.data = data;
             this.total = this.count.reduce((partial_sum, a) => partial_sum + a);
           },
           error => {
