@@ -10,6 +10,7 @@ import { RoundService } from '../round.service';
 import { TrackService } from '../track.service';
 import { Track } from '../track';
 import { UserService } from '../user.service';
+import { User } from '../user';
 import { VoteSetService } from '../vote-set.service';
 import { VoteSet } from '../vote-set';
 
@@ -25,6 +26,7 @@ export class AddVoteSetComponent implements OnInit {
   token: string;
   tracks: Track[];
   userID: any;
+  users: User[];
   voteForm: FormGroup;
 
   constructor(
@@ -42,12 +44,7 @@ export class AddVoteSetComponent implements OnInit {
 
   ngOnInit() {
   	this.titleService.setTitle('Album Game | Vote');
-  	this.voteForm = this.formBuilder.group({
-  		vote_one: ['', Validators.required],
-  		vote_two: ['', Validators.required],
-  		vote_three: ['', Validators.required],
-  		unfave: ['', Validators.required]
-  	});
+    this.reset();
   	this.route.params.subscribe(params => {
   		this.id = params['id'];
   	});
@@ -77,6 +74,9 @@ export class AddVoteSetComponent implements OnInit {
     });
     this.token = this.globalService.getItem('token');
     this.userID = this.globalService.getItem('userID');
+    this.userService.getUsers().subscribe(data => {
+      this.users = data;
+    });
   }
 
   submit() {
@@ -93,7 +93,6 @@ export class AddVoteSetComponent implements OnInit {
       if ( (vote_set.vote_one == vote_set.vote_two) || (vote_set.vote_one == vote_set.vote_three) || (vote_set.vote_one == vote_set.unfave) || (vote_set.vote_two == vote_set.vote_three) || (vote_set.vote_two == vote_set.unfave) || (vote_set.vote_three == vote_set.unfave) ) {
         this.errorMsg = 'Duplicate votes';
       } else {
-        vote_set.user = this.userID;
         vote_set.album = this.id;
     	  this.voteSetService.createVoteSet(vote_set, this.token).subscribe(data => {
     	    this.router.navigate(['view-album', this.id]);
@@ -103,11 +102,12 @@ export class AddVoteSetComponent implements OnInit {
   }
 
   reset() {
-    this.voteForm.setValue({
-     	vote_one: '',
-  		vote_two: '',
-  		vote_three: '',
-  		unfave: ''
+    this.voteForm = this.formBuilder.group({
+      user: [undefined, Validators.required],
+      vote_one: [undefined, Validators.required],
+      vote_two: [undefined, Validators.required],
+      vote_three: [undefined, Validators.required],
+      unfave: [undefined, Validators.required]
     });
   }
 

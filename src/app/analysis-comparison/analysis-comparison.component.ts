@@ -31,7 +31,7 @@ export class AnalysisComparisonComponent implements OnInit {
   ngOnChanges() {
     this.count = undefined;
     this.total = undefined;
-    this.data = undefined;
+    this.data = undefined;  
     this.getData();
   }
 
@@ -41,7 +41,6 @@ export class AnalysisComparisonComponent implements OnInit {
         this.analysisService.findSameFavesStrict(this.user_one._id, this.user_two._id).subscribe(
           data => {
             this.count = data.map(entry => { return entry[0] });
-            this.albums = data.map(entry => { return entry[1] });
             this.data = data;
             this.total = this.count.reduce((partial_sum, a) => partial_sum + a);
           },
