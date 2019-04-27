@@ -118,9 +118,9 @@ var base_url = '/api/v1/'
 // Analysis Routes
 app.get(base_url + 'analysis/findSameFaves', function(req, res) {
 	if (req.query.strict) {
-		var resp = factory.findSameFaves([req.query.user_one, req.query.user_two], res);
-	} else {
 		var resp = factory.findSameTopFaves([req.query.user_one, req.query.user_two], res);
+	} else {
+		var resp = factory.findSameFaves([req.query.user_one, req.query.user_two], res);
 	}
 });
 
