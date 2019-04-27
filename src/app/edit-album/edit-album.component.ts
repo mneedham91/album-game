@@ -40,14 +40,13 @@ export class EditAlbumComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('Album Game | Edit Album');
-  	this.editAlbumForm = this.formBuilder.group({
-  		artist: '',
-  		date: '',
-  		name: '',
-  		nominator: '',
-  		round: '',
-      sortname: ''
-  	});
+    this.editAlbumForm = this.formBuilder.group({
+      artist: undefined,
+      date: undefined,
+      name: undefined,
+      nominator: undefined,
+      round: undefined,
+    });
   	this.route.params.subscribe(params => {
   		this.id = params['id'];
   	});
@@ -83,14 +82,13 @@ export class EditAlbumComponent implements OnInit {
   }
 
   reset() {
-    let date = new DatePipe(navigator.language).transform(this.album.date, 'y-MM-dd');
-    this.editAlbumForm.setValue({
+    //let date = new DatePipe(navigator.language).transform(this.album.date, 'y-MM-dd');
+    this.editAlbumForm = this.formBuilder.group({
       artist: this.album.artist,
-      date: date,
+      date: undefined,
       name: this.album.name,
       nominator: this.album.nominator,
-      round: this.album.round,
-      sortname: this.album.sort_name
+      round: this.album.round
     });
   }
 

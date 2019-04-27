@@ -88,6 +88,19 @@ export class AddAlbumComponent implements OnInit {
     }
   }
 
+  parse_date(release_date: string, precision: string): Date {
+    console.log(release_date, precision);
+    if (precision == 'day') {
+      return new Date(release_date + 'T00:00:00');
+    } else if (precision == 'month') {
+      return new Date(release_date + '-01T00:00:00');
+    } else if (precision == 'year') {
+      return new Date(release_date + '01-01T00:00:00');
+    } else {
+      this.errorMsg = 'There was an error parsing the release date';
+    }
+  }
+
   select(album: ItemsEntity) {
     this.errorMsg = null;
   	let newAlbum: Album = new Album();
@@ -99,13 +112,14 @@ export class AddAlbumComponent implements OnInit {
     			let newArtist: Artist = new Artist();
     			newArtist.spotify_id = album.artists[0].id;
     			newArtist.name = album.artists[0].name;
+          newArtist.sort_name = this.sort_name(album.artists[0].name);
     			this.artistService.createArtist(newArtist, this.token).subscribe(
             artist_data => {
       				newAlbum.artist = artist_data['_id'];
               newAlbum.name = album.name;
-              newAlbum.sort_name = this.sort_name(album.name);
               newAlbum.round = this.currentRound;
               newAlbum.nominator = this.userID;
+              newAlbum.date = this.parse_date(album.release_date, album.release_date_precision);
               this.albumService.createAlbum(newAlbum, this.token).subscribe(
                 create_data => {
                   this.spotifyService.getAlbumTracks(this.spotify_token, album.id).subscribe(
@@ -113,7 +127,6 @@ export class AddAlbumComponent implements OnInit {
                       track_data.items.forEach(item => {
                         let newTrack: Track = new Track();
                         newTrack.name = item.name;
-                        newAlbum.sort_name = this.sort_name(album.name);
                         newTrack.number = item.track_number;
                         newTrack.album = create_data['_id'];
                         newTrack.spotify_id = item.id
@@ -146,7 +159,8 @@ export class AddAlbumComponent implements OnInit {
   	        newAlbum.name = album.name;
   	        newAlbum.round = this.currentRound;
   	        newAlbum.nominator = this.userID;
-  	        this.albumService.createAlbum(newAlbum, this.token).subscribe(
+            newAlbum.date = this.parse_date(album.release_date, album.release_date_precision);
+            this.albumService.createAlbum(newAlbum, this.token).subscribe(
               create_data => {
     	          this.spotifyService.getAlbumTracks(this.spotify_token, album.id).subscribe(
                   track_data => {

@@ -8,11 +8,6 @@
 			</div>
 
 			<div class="pure-control-group">
-				<label>Sort Name </label>
-				<input type="text" formControlName="sortname">
-			</div>
-
-			<div class="pure-control-group">
 				<label>Artist </label>
 				<select formControlName="artist">
 					<option *ngFor="let artist of artists" [value]="artist._id">{{ artist.name }}</option>
