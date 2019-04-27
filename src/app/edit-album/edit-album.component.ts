@@ -82,10 +82,10 @@ export class EditAlbumComponent implements OnInit {
   }
 
   reset() {
-    //let date = new DatePipe(navigator.language).transform(this.album.date, 'y-MM-dd');
+    let date = new DatePipe(navigator.language).transform(this.album.date, 'y-MM-dd');
     this.editAlbumForm = this.formBuilder.group({
       artist: this.album.artist,
-      date: undefined,
+      date: date,
       name: this.album.name,
       nominator: this.album.nominator,
       round: this.album.round
