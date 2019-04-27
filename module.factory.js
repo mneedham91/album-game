@@ -286,6 +286,7 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 					// Development
 					var filename = './src/assets/dev/' + id + '.jpg';
 				}
+				// TODO switch from old static album art delete to new AWS 
 				fs.unlink(filename, error => {
 					if (error) {
 						res.json( { message: 'No album art found' } );

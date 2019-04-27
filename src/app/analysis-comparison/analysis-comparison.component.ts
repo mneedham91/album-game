@@ -44,8 +44,6 @@ export class AnalysisComparisonComponent implements OnInit {
         );
       } else {
         this.analysisService.findSameFaves(this.user_one._id, this.user_two._id).subscribe(
-          // data => this.albums = data,
-          // error => this.errorMsg = error 
           data => {
             this.count = data.map(entry => { return entry[0] });
             this.data = data;
