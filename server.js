@@ -198,6 +198,27 @@ app.delete(base_url + 'artist/:id', passport.authenticate('jwt', {session: false
 	var resp = factory.deleteArtist(req.params.id, res);
 });
 
+// Rating Routes
+app.get(base_url + 'rating', function(req, res) {
+	var resp = factory.getRatings(req.query, res);
+});
+
+app.get(base_url + 'rating/:id', function(req, res) {
+	var resp = factory.getRating(req.params.id, res);
+});
+
+app.post(base_url + 'rating', passport.authenticate('jwt', {session: false}), function(req, res) {
+	var resp = factory.createRating(req.body, res);
+});
+
+app.patch(base_url + 'rating/:id', passport.authenticate('jwt', {session: false}), function(req, res) {
+	var resp = factory.updateRating(req.params.id, req.body, res);
+});
+
+app.delete(base_url + 'rating/:id', passport.authenticate('jwt', {session: false}), function(req, res) {
+	var resp = factory.deleteRating(req.params.id, res);
+});
+
 // Round Routes
 app.get(base_url + 'round', function(req, res) {
 	var resp = factory.getRounds(req.query, res);
