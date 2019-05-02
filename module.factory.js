@@ -27,6 +27,13 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 			user_two: Schema.ObjectId
 		});
 		this.Pair = mongoose.model('Pair', PairSchema);
+		RatingSchema = new this.Schema({
+			album: Schema.ObjectId,
+			count: number,
+			rating: number,
+			user: Schema.ObjectId
+		});
+		this.Rating = mongoose.model('Rating', RatingSchema);
 		RoundSchema = new this.Schema({
 			description: String,
 			name: String,
@@ -227,6 +234,65 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 		});
 	}
 
+	this.decades = function(res) {
+		this.User.find({})
+		.then(users => {
+			var promises = users.map(user => {
+				return this.calcDecades(user);
+			});
+			return Promise.all(promises);
+		})
+		.then(data => {
+			res.json(data);
+		})
+		.catch(error => {
+			res.json({error: error});
+		});
+	}
+
+	this.calcDecades = function(user) {
+		return new Promise((resolve, reject) => {
+			this.Album.find({nominator: user._id}, function(albums, error) {
+				let years = [1960, 1970, 1980, 1990, 2000, 2010, 2020];
+				let decades = [];
+				let data = new Object();
+				for (year of years) {
+					let date = new Date('01-01-' + year);
+					decades.push(date);
+					data[year] = [];
+				}
+				for (album of albums) {
+					for (year of years) {
+						if (album.date > decades[i] + album.date < decades[i + 1]) {
+							data[year].push(album._id);
+						} 
+					}
+				}
+			})
+		})
+	}
+
+	this.calcDecadesUser = function(userId) {
+		this.Album.find({nominator: Schema.ObjectId(userId)}, function(albums, error) {
+			console.log(albums);
+			let years = [1960, 1970, 1980, 1990, 2000, 2010, 2020];
+			let decades = [];
+			let data = new Object();
+			for (year of years) {
+				let date = new Date('01-01-' + year);
+				decades.push(date);
+				data[year] = [];
+			}
+			for (album of albums) {
+				for (year of years) {
+					if (album.date > decades[i] + album.date < decades[i + 1]) {
+						data[year].push(album._id);
+					}
+				}
+			}
+		});
+	}
+
 	// Album Functions
 	this.getAlbum = function(id, res) {
 		this.Album.findById(id, function(error, output) {
@@ -392,6 +458,57 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 
 	this.deleteMatch = function(id, res) {
 		this.Match.findByIdAndDelete(id, function(error, output) {
+			if (error) {
+				res.json({error: error});
+			} else {
+				res.json(output);
+			}
+		});
+	}
+
+	// Rating Functions
+	this.getRating = function(id, res) {
+		this.Rating.findById(id, function(error, output) {
+			if (error) {
+				res.json({error: error});
+			} else {
+				res.json(output);
+			}
+		});
+	}
+
+	this.getRatings = function(query, res) {
+		this.Rating.find(query, null, { sort: { number: -1} }, function(error, output) {
+			if (error) {
+				res.json({error: error});
+			} else {
+				res.json(output);
+			}
+		});
+	}
+
+	this.createRating = function(body, res) {
+		this.Rating(body).save(function(error, output) {
+			if (error) {
+				res.json({error: error});
+			} else {
+				res.json(output);
+			}
+		});
+	}
+
+	this.updateRating = function(id, body, res) {
+		this.Rating.findByIdAndUpdate(id, body, {new: true}, function(error, output) {
+			if (error) {
+				res.json({error: error});
+			} else {
+				res.json(output);
+			}
+		});
+	}
+
+	this.deleteRating = function(id, res) {
+		this.Rating.findByIdAndDelete(id, function(error, output) {
 			if (error) {
 				res.json({error: error});
 			} else {
