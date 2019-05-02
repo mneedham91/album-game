@@ -37,6 +37,7 @@ import { AnalysisComponent } from './analysis/analysis.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { AnalysisComparisonComponent } from './analysis-comparison/analysis-comparison.component';
+import { RateComponent } from './rate/rate.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { AnalysisComparisonComponent } from './analysis-comparison/analysis-comp
     AnalysisComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    AnalysisComparisonComponent
+    AnalysisComparisonComponent,
+    RateComponent
   ],
   imports: [
     BrowserModule,

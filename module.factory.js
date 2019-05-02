@@ -51,6 +51,7 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 		this.Track = mongoose.model('Track', TrackSchema);
 		UserSchema = new this.Schema({
 			name: String,
+			eloRatings: Boolean,
 			email: String,
 			hash: String,
 			salt: String,
