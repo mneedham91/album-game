@@ -73,15 +73,15 @@ export class RateComponent implements OnInit {
   	one['rating'] = this.ratings[this.theseRatings[0]].rating;
   	one['count'] = this.ratings[this.theseRatings[0]].count += 1;
   	let two = new Object();
-	two['rating'] = this.ratings[this.theseRatings[1]].rating;
-	two['count'] = this.ratings[this.theseRatings[1]].count += 1;
-	let result = forkJoin(
-	  this.ratingService.editRating(this.ratings[this.theseRatings[0]]._id, one, this.token),
-	  this.ratingService.editRating(this.ratings[this.theseRatings[1]]._id, two, this.token)
-	).subscribe(
-	  output => { location.reload() },
-	  error => { this.errorMsg = error }
-	);
+	  two['rating'] = this.ratings[this.theseRatings[1]].rating;
+	  two['count'] = this.ratings[this.theseRatings[1]].count += 1;
+	  let result = forkJoin(
+	    this.ratingService.editRating(this.ratings[this.theseRatings[0]]._id, one, this.token),
+	    this.ratingService.editRating(this.ratings[this.theseRatings[1]]._id, two, this.token)
+	  ).subscribe(
+	    output => { location.reload() },
+	    error => { this.errorMsg = error }
+	  );
   }
 
   click(id) {
@@ -102,7 +102,6 @@ export class RateComponent implements OnInit {
   	}
   }
 
-  // TODO
   tie() {
     let probA = this.probability(this.ratings[this.theseRatings[0]].rating, this.ratings[this.theseRatings[1]].rating);
     let probB = this.probability(this.ratings[this.theseRatings[1]].rating, this.ratings[this.theseRatings[0]].rating);
