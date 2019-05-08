@@ -7,6 +7,7 @@ import { Album } from '../album';
 import { GlobalService } from '../global.service';
 import { RatingService } from '../rating.service';
 import { Rating } from '../rating';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-rate',
@@ -26,12 +27,16 @@ export class RateComponent implements OnInit {
   	private albumService: AlbumService,
   	private globalService: GlobalService,
   	private ratingService: RatingService,
+    private router: Router,
   	private titleService: Title) { }
 
   ngOnInit() {
   	this.folder = environment.images;
   	this.titleService.setTitle('Album Game | Rate Albums');
   	this.userID = this.globalService.getItem('userID');
+    if (!this.userID) {
+      this.router.navigate(['/login']);
+    }
   	this.albums = [];
     this.globalService.watchStorage().subscribe(data => {
       this.token = this.globalService.getItem('token');

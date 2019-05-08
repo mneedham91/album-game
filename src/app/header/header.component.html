@@ -5,7 +5,9 @@
 
 	<!-- If logged in user -->
 	<div *ngIf="userID" class="pure-u-1 welcome">
-		{{ userName }}, welcome to the Album Game website! | <a (click)="logout()" class="pointer">Logout</a>
+		{{ userName }}, welcome to the Album Game website! 
+		<a (click)="logout()" class="pointer"><button class="pure-button button-error">Logout</button></a>
+		<a [routerLink]="['/rate']" class="pointer"><button class="pure-button">Compare</button></a>
 	</div>
 
 	<!-- If not logged in-->

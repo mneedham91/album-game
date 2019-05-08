@@ -36,6 +36,7 @@ export class HeaderComponent implements OnInit {
 
   logout() {
   	this.globalService.removeAll();
+    location.reload();
   }
 
 }
