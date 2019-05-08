@@ -50,7 +50,7 @@ export class ViewUserComponent implements OnInit {
         this.ratings = data;
         for (let rating of this.ratings) {
           this.albumService.getAlbum(rating.album).subscribe(album => {
-            rating.album = album.name;
+            rating.albumName = album.name;
           });
         }
       });

@@ -33,10 +33,18 @@
 		<div class="pure-u-1 center">
 			<h3>RANKINGS</h3>
 		</div>
-		<div *ngFor="let rating of ratings">
-			<div>{{ rating.album }}</div>
-			<div>{{ rating.rating | number:'1.0-0' }}</div>
-		</div>
+		<table class="pure-table">
+			<thead>
+				<th>Album</th>
+				<th>Rating</th>
+				<th>Votes</th>
+			</thead>
+			<tr *ngFor="let rating of ratings">
+				<td>{{ rating?.albumName }}</td>
+				<td>{{ rating.rating | number:'1.0-0' }}</td> 
+				<td>{{ rating.count }}</td>
+			</tr>
+		</table>
 	</div>
 	
 </div>
