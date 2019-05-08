@@ -1,6 +1,7 @@
 export class Album {
 	_id: string;
 	artist: string;
+	art: string;
 	date: Date;
 	name: string;
 	nominator: string;

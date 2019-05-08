@@ -19,6 +19,10 @@ export class RatingService {
   	return this.http.get<Rating[]>(this.baseUrl + 'rating', { params })
   }
 
+  getRankedAlbums(id: string) {
+    return this.http.get<Rating[]>(this.baseUrl + 'user/' + id + '/albums');
+  }
+
   getRating(id: string) {
   	return this.http.get<Rating>(this.baseUrl + 'rating/' + id);
   }

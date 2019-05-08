@@ -1,4 +1,26 @@
-<p>
-  rate works!
-</p>
-<div *ngFor="let album of albums">{{ album.name}}</div>
+<div class="pure-u-1 center">
+
+	<div *ngIf="errorMsg" class="pure-u-1 error">
+		{{ errorMsg }}
+	</div>
+
+	<div *ngFor="let album of albums" class="pure-u-1-2">
+		<a (click)="click(album._id)">
+			<img class="pure-img pointer" [src]="(album.art)" alt="{{ album.name }}">
+		</a>
+	</div>
+
+	<div class="pure-u-1"></div>
+
+	<div class="pure-u-1">
+		<div class="pure-u-1-4"></div>
+		<div class="pure-u-1-4">
+			<button class="pure-button pointer" (click)="tie()">Tie</button>
+		</div>
+		<div class="pure-u-1-4">
+			<button class="pure-button pointer" (click)="pass()">Pass</button>
+		</div>
+		<div class="pure-u-1-4"></div>
+	</div>
+
+</div>

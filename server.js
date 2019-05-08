@@ -274,6 +274,10 @@ app.get(base_url + 'user/:id', function(req, res) {
 	var resp = factory.getUser(req.params.id, res);
 });
 
+app.get(base_url + 'user/:id/albums', function(req, res) {
+	var resp = factory.getRankedAlbums(req.params.id, res);
+});
+
 app.post(base_url + 'user', passport.authenticate('jwt', {session: false}), function(req, res) {
 	var resp = factory.createUser(req.body, res);
 });
@@ -312,7 +316,7 @@ app.post(base_url + 'login', function(req, res) {
 	passport.authenticate('local', {session: false}, (error, user, info) => {
 		if (error || !user) {
 			res.status(400).json({
-				message: 'Login error: ' + error
+				error: 'Login error: ' + error
 			});
 		} else {
 			req.login(user, {session: false}, (err) => {

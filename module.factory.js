@@ -29,8 +29,8 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 		this.Pair = mongoose.model('Pair', PairSchema);
 		RatingSchema = new this.Schema({
 			album: Schema.ObjectId,
-			count: number,
-			rating: number,
+			count: Number,
+			rating: Number,
 			user: Schema.ObjectId
 		});
 		this.Rating = mongoose.model('Rating', RatingSchema);
@@ -698,6 +698,16 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 		this.User.findById(id, projection, function(error, output) {
 			if (error) {
 				res.json({error: error});
+			} else {
+				res.json(output);
+			}
+		});
+	}
+
+	this.getRankedAlbums = function(id, res) {
+		this.Rating.find({user: id}, null, { sort: { rating: -1} }, function(error, output) {
+			if (error) {
+				res.status(500).json({error: error});
 			} else {
 				res.json(output);
 			}
