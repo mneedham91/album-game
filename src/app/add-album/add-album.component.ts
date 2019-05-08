@@ -89,7 +89,6 @@ export class AddAlbumComponent implements OnInit {
   }
 
   parse_date(release_date: string, precision: string): Date {
-    console.log(release_date, precision);
     if (precision == 'day') {
       return new Date(release_date + 'T00:00:00');
     } else if (precision == 'month') {
