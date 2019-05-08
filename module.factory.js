@@ -316,12 +316,26 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 	}
 
 	this.createAlbum = function(body, res) {
-		this.Album(body).save(function(error, output) {
-			if (error) {
-				res.json({error: error});
-			} else {
-				res.json(output);
-			}
+		this.Album(body).save()
+		.then(album => {
+			a = Promise.resolve(album);
+			users = this.User.find({}).exec();
+			return Promise.all([a, users]);
+		})
+		.then(data => {
+			let album = data[0];
+			let users = data[1];
+			let promises = users.map(user => {
+				return this.Rating({album: album._id, user: user._id, count: 0, rating: 1500}).save();
+			});
+			return Promise.all([Promise.resolve(album), promises]);
+		})
+		.then(promises => {
+			res.json(promises[0]);
+		})
+		.catch(error => {
+			console.log(error);
+			res.status(500).json({error: error});
 		});
 	}
 
@@ -338,7 +352,12 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 	this.deleteAlbum = function(id, res) {
 		this.Track.deleteMany({album: id}, function(error, output) {
 			if (error) {
-				res.json({error: error});
+				res.status(500).json({error: error});
+			}
+		});
+		this.Rating.deleteMany({album: id}, function(error, output) {
+			if (error) {
+				res.status(500).json({error: error});
 			}
 		});
 		this.Album.findByIdAndDelete(id, function(error, output) {
