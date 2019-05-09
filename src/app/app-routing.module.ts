@@ -60,7 +60,8 @@ const routes: Routes = [
 	{ path: 'analysis', component: AnalysisComponent },
 	{ path: 'forgot-password', component: ForgotPasswordComponent },
 	{ path: 'reset-password', component: ResetPasswordComponent },
-	{ path: 'rate', component: RateComponent }
+	{ path: 'rate', component: RateComponent },
+	{ path: '**', component: ViewAlbumsComponent}
 ];
 
 @NgModule({
