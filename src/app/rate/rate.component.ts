@@ -46,6 +46,9 @@ export class RateComponent implements OnInit {
   	  data => {
   	  	this.ratings = data;
         this.theseRatings = [this.getRandomInt(data.length), this.getRandomInt(data.length)];
+        if (this.theseRatings[0] == this.theseRatings[1]) {
+          this.pass();
+        }
   	    this.albumService.getAlbum(this.ratings[this.theseRatings[0]].album).subscribe(output => {
   	      let album = output;
   	      album.art = this.folder + album._id + '.jpg';
