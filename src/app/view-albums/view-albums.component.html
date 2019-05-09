@@ -3,7 +3,9 @@
 
 </div>
 
-<div *ngIf="complete" class="pure-u-1" style="text-align: center">
+<div *ngIf="errorMsg" class="pure-u-1 error">{{ errorMsg }}</div>
+
+<div *ngIf="complete" class="pure-u-1 center">
 
 	<div *ngFor="let row of rows" class="pure-u-1">
 		<div class="pure-u-1-5">

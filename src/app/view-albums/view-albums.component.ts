@@ -15,6 +15,7 @@ import { environment } from '../../environments/environment';
 export class ViewAlbumsComponent implements OnInit {
   albums: Album[];
   complete: boolean;
+  errorMsg: string;
   rounds: Round[];
   rows: Object[];
   folder: string;
@@ -31,33 +32,36 @@ export class ViewAlbumsComponent implements OnInit {
     this.titleService.setTitle('Album Game | View Albums');
     this.roundService.getRounds().subscribe(data => {
       this.rounds = data;
-      this.rounds.forEach(round => {
+      for (let round of this.rounds) {
         this.albumService.getAlbums({round: round._id}).subscribe(
           query => {
             let row = new Object();
             row['albums'] = query;
-            row['albums'].forEach(album => {
+            for (let album of row['albums']) {
               album['img'] = this.folder + album['_id'] + '.jpg';
-            });
-            if (row['albums'].length < 4) {
-              let diff = 4 - row['albums'].length;
-              for (let i = 0; i < diff; i++) {
-                let a = new Album();
-                row['albums'].push(a);
-              }
+            }
+            let diff = 4 - row['albums'].length;
+            for (let i = 0; i < diff; i++) {
+              let a = new Album();
+              row['albums'].push(a);
             }
             row['round'] = round;
             row['round'].img = this.folder + row['round']._id + '.png';
             this.rows.push(row);
           },
           error => {
-            console.log(error);
-          },
-          () => {
-            this.complete = true;
+            this.errorMsg = error;
           }
         );
-      });
+        this.rows.sort((a,b) => {
+          if (a['round'].number > b['round'].number) {
+            return -1;
+          } else if (a['round'].number < b['round'].number) {
+            return 1;
+          }
+        });
+        this.complete = true;
+      }
     });
   }
 
