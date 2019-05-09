@@ -6,7 +6,7 @@
 
 	<div *ngFor="let album of albums" class="pure-u-1-2">
 		<a (click)="click(album._id)">
-			<img class="pure-img pointer" [src]="(album.art)" alt="{{ album.name }}" class="pure-img">
+			<img class="pure-img pointer" [src]="(album.art)" alt="{{ album.name }}" class="pure-img pointer">
 			<div class="pure-u-1"></div>
 			<div class="pure-u-1">{{ album.name }}</div>
 		</a>

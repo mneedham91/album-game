@@ -40,7 +40,7 @@
 				<th>Votes</th>
 			</thead>
 			<tr *ngFor="let rating of ratings">
-				<td>{{ rating?.albumName }}</td>
+				<td><a [routerLink]="['/view-album', rating?.album]">{{ rating?.albumName }}</a></td>
 				<td>{{ rating.rating | number:'1.0-0' }}</td> 
 				<td>{{ rating.count }}</td>
 			</tr>
