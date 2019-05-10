@@ -11,6 +11,8 @@
 				<option>No</option>
 			</select>
 		</div>
+		<div class='pure-u-1'></div>
+		<div class='pure-u-1 italic'>Strict compares Top Faves with Top Faves. Otherwise, all Faves are compared</div>
 
 		<div *ngIf="showHide['faves']">
 			<div *ngFor="let pair of simple_pairs" class="pure-u-1-3">
@@ -52,6 +54,8 @@
 				<option selected="true">No</option>
 			</select>
 		</div>
+		<div class='pure-u-1'></div>
+		<div class='pure-u-1 italic'>Strict compares Unfaves with Top Faves. Otherwise, Unfaves are compared with all Faves</div>
 
 		<div *ngIf="showHide['mismatches']">
 			<div *ngFor="let pair of full_pairs" class="pure-u-1-3">

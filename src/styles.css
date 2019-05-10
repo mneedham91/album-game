@@ -32,6 +32,10 @@ html {
 	cursor: pointer;
 }
 
+.italic {
+	font-style: italic;
+}
+
 .pure-button-error {
 	background-color: red;
 	color: white;
