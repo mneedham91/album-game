@@ -148,14 +148,6 @@ app.get(base_url + 'analysis/mismatchVotes', function(req, res) {
 	var resp = factory.mismatchVotes(req.query.album, [req.query.user_one, req.query.user_two], res);
 });
 
-app.get(base_url + 'analysis/decades', function(req, res) {
-	var resp = factory.decades(res);
-});
-
-app.post(base_url + 'analysis/decadesUser', function(req, res) {
-	var resp = factory.calcDecadesUser(req.body.user, res);
-});
-
 // Album Routes
 app.get(base_url + 'album', function(req, res) {
 	var resp = factory.getAlbums(req.query, res);

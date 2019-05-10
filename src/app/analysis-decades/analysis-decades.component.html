@@ -1,0 +1,13 @@
+<div class="pure-u-1">
+	<div *ngIf="errorMsg" class="pure-u-1 error">
+		{{ errorMsg }}
+	</div>
+
+	<div *ngIf="!errorMsg" class="pure-u-1">
+		<h3>{{ user.name }}</h3>
+		<div *ngFor="let decade of decades">
+			<div>{{ decade.label }}: {{ decade.count }}</div>
+		</div>
+	</div>
+
+</div>

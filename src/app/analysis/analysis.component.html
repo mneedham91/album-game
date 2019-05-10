@@ -66,4 +66,15 @@
 		<div class="pure-u-1"></div>
 	</div>
 
+	<div class="pure-u-1"></div>
+
+	<div class="pure-u-1 border">
+		<h2>Decades</h2>
+		<div *ngFor="let user of users" class="pure-u-1-4">
+			<app-analysis-decades [user]="user"></app-analysis-decades>
+		</div>
+	</div>
+
+	<div class="pure-u-1"></div>
+
 </div>

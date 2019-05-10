@@ -235,65 +235,6 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 		});
 	}
 
-	this.decades = function(res) {
-		this.User.find({})
-		.then(users => {
-			var promises = users.map(user => {
-				return this.calcDecades(user);
-			});
-			return Promise.all(promises);
-		})
-		.then(data => {
-			res.json(data);
-		})
-		.catch(error => {
-			res.json({error: error});
-		});
-	}
-
-	this.calcDecades = function(user) {
-		return new Promise((resolve, reject) => {
-			this.Album.find({nominator: user._id}, function(albums, error) {
-				let years = [1960, 1970, 1980, 1990, 2000, 2010, 2020];
-				let decades = [];
-				let data = new Object();
-				for (year of years) {
-					let date = new Date('01-01-' + year);
-					decades.push(date);
-					data[year] = [];
-				}
-				for (album of albums) {
-					for (year of years) {
-						if (album.date > decades[i] + album.date < decades[i + 1]) {
-							data[year].push(album._id);
-						} 
-					}
-				}
-			})
-		})
-	}
-
-	this.calcDecadesUser = function(userId) {
-		this.Album.find({nominator: Schema.ObjectId(userId)}, function(albums, error) {
-			console.log(albums);
-			let years = [1960, 1970, 1980, 1990, 2000, 2010, 2020];
-			let decades = [];
-			let data = new Object();
-			for (year of years) {
-				let date = new Date('01-01-' + year);
-				decades.push(date);
-				data[year] = [];
-			}
-			for (album of albums) {
-				for (year of years) {
-					if (album.date > decades[i] + album.date < decades[i + 1]) {
-						data[year].push(album._id);
-					}
-				}
-			}
-		});
-	}
-
 	// Album Functions
 	this.getAlbum = function(id, res) {
 		this.Album.findById(id, function(error, output) {
@@ -334,7 +275,6 @@ var Factory = function(Schema, mongoose, crypto, smtp) {
 			res.json(promises[0]);
 		})
 		.catch(error => {
-			console.log(error);
 			res.status(500).json({error: error});
 		});
 	}
