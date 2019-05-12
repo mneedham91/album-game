@@ -2,8 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Album } from '../album';
 import { AlbumService } from '../album.service';
 import { User } from '../user';
-import { arc, pie } from 'd3-shape';
-import { entries, select, scaleOrdinal } from 'd3';
 
 @Component({
   selector: 'app-analysis-decades',
