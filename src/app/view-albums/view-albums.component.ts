@@ -53,15 +53,15 @@ export class ViewAlbumsComponent implements OnInit {
             this.errorMsg = error;
           }
         );
-        this.rows.sort((a,b) => {
-          if (a['round'].number > b['round'].number) {
-            return -1;
-          } else if (a['round'].number < b['round'].number) {
-            return 1;
-          }
-        });
-        this.complete = true;
       }
+      this.rows.sort((a,b) => {
+        if (a['round'].number > b['round'].number) {
+          return -1;
+        } else if (a['round'].number < b['round'].number) {
+          return 1;
+        }
+      });
+      this.complete = true;
     });
   }
 
